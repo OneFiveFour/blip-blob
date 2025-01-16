@@ -25,15 +25,14 @@ internal class SessionRepositoryImplTest {
     fun `GIVEN a sessionTitle WHEN newSession is called THEN the call is delegated to sessionDataSource`() =
         runTest {
             // GIVEN
-            coEvery { sessionDataSource.insert(any(), any()) } returns Unit
+            coEvery { sessionDataSource.insert(any()) } returns Unit
             val title = "Sample Session"
-            val sortOrder = 1L
 
             // WHEN
             sut().newSession(title)
 
             // THEN
-            coVerify(exactly = 1) { sessionDataSource.insert(title, sortOrder) }
+            coVerify(exactly = 1) { sessionDataSource.insert(title) }
         }
 
     @Test

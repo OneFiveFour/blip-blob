@@ -25,11 +25,10 @@ internal class TaskRepositoryImplTest {
     fun `GIVEN task data WHEN newTask is called THEN the call is delegated to taskDataSource`() =
         runTest {
             // GIVEN
-            coEvery { taskDataSource.insert(any(), any(), any(), any()) } returns Unit
+            coEvery { taskDataSource.insert(any(), any(), any()) } returns Unit
             val title = "Sample Task"
             val durationInSeconds = 300
             val taskGroupId = 1L
-            val sortOrder = 1
 
             // WHEN
             sut().newTask(title, durationInSeconds, taskGroupId)
@@ -39,7 +38,6 @@ internal class TaskRepositoryImplTest {
                 taskDataSource.insert(
                     title = title,
                     durationInSeconds = durationInSeconds.toLong(),
-                    sortOrder = sortOrder.toLong(),
                     taskGroupId = taskGroupId
                 )
             }

@@ -45,7 +45,7 @@ internal class TaskDataSourceImplTest {
             val sortOrder = 1L
 
             // WHEN
-            sut().insert(taskTitle, duration, taskGroupId, sortOrder)
+            sut().insert(taskTitle, duration, taskGroupId)
 
             // THEN
             coVerify(exactly = 1) {

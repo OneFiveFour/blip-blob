@@ -23,13 +23,11 @@ internal class TaskGroupRepositoryImpl @Inject constructor(
         numberOfRandomTasks: Int,
         sessionId: Long
     ) {
-        val sortOrder = 1L // TODO find correct sort order
         taskGroupDataSource.insert(
             title = title,
             color = color,
             playMode = playMode.toString(),
             numberOfRandomTasks = numberOfRandomTasks.toLong(),
-            sortOrder = sortOrder,
             sessionId = sessionId
         )
     }

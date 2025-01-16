@@ -40,13 +40,12 @@ internal class SessionDataSourceImplTest {
             // GIVEN
             coEvery { sessionQueries.new(any(), any(), any()) } returns mockk()
             val title = "title"
-            val sortOrder = 1L
 
             // WHEN
-            sut().insert(title, sortOrder)
+            sut().insert(title)
 
             // THEN
-            coVerify(exactly = 1) { sessionQueries.new(null, title, sortOrder) }
+            coVerify(exactly = 1) { sessionQueries.new(null, title, 1L) }
         }
 
     @Test

@@ -25,12 +25,11 @@ internal class TaskGroupRepositoryImplTest {
     fun `GIVEN task group data WHEN newTaskGroup is called THEN the call is delegated to taskGroupDataSource`() =
         runTest {
             // GIVEN
-            coEvery { taskGroupDataSource.insert(any(), any(), any(), any(), any(), any()) } returns Unit
+            coEvery { taskGroupDataSource.insert(any(), any(), any(), any(), any()) } returns Unit
             val title = "Sample Task Group"
             val color = 0xFF0000L
             val playMode = PlayMode.SEQUENCE
             val numberOfRandomTasks = 3
-            val sortOrder = 1L
             val sessionId = 1L
 
             // WHEN
@@ -43,7 +42,6 @@ internal class TaskGroupRepositoryImplTest {
                     color = color,
                     playMode = playMode.toString(),
                     numberOfRandomTasks = numberOfRandomTasks.toLong(),
-                    sortOrder = sortOrder,
                     sessionId = sessionId
                 )
             }

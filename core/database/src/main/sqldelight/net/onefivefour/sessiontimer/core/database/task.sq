@@ -43,5 +43,5 @@ deleteByTaskGroupId:
 DELETE FROM task WHERE taskGroupId = :taskGroupId;
 
 findMaxSortOrder:
-SELECT MAX(sortOrder) FROM task;
+SELECT MAX(sortOrder) FROM task WHERE taskGroupId = :taskGroupId;
 

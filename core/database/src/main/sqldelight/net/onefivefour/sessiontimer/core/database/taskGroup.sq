@@ -71,4 +71,4 @@ getLastInsertRowId:
 SELECT last_insert_rowid();
 
 findMaxSortOrder:
-SELECT MAX(sortOrder) FROM taskGroup;
+SELECT MAX(sortOrder) FROM taskGroup WHERE sessionId = :sessionId;

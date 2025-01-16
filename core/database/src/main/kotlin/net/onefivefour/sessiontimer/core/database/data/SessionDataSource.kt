@@ -6,7 +6,7 @@ import net.onefivefour.sessiontimer.core.database.Session
 
 internal interface SessionDataSource {
 
-    suspend fun insert(title: String, sortOrder: Long)
+    suspend fun insert(title: String)
 
     fun getAll(): Flow<List<Session>>
 
@@ -19,6 +19,4 @@ internal interface SessionDataSource {
     suspend fun setSortOrders(sessionIds: List<Long>)
 
     fun getLastInsertId(): Long
-
-    suspend fun findMaxSortOrder(): Long
 }

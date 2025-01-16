@@ -13,7 +13,7 @@ import javax.inject.Inject
 
 internal class TaskGroupDataSourceImpl @Inject constructor(
     private val queries: TaskGroupQueries,
-    @IoDispatcher private val dispatcher: CoroutineDispatcher
+    @IoDispatcher private val dispatcher: CoroutineDispatcher,
 ) : TaskGroupDataSource {
 
     override suspend fun insert(
@@ -21,19 +21,21 @@ internal class TaskGroupDataSourceImpl @Inject constructor(
         color: Long,
         playMode: String,
         numberOfRandomTasks: Long,
-        sortOrder: Long,
-        sessionId: Long
+        sessionId: Long,
     ) {
         withContext(dispatcher) {
-            queries.new(
-                id = null,
-                title = title,
-                color = color,
-                playMode = playMode,
-                numberOfRandomTasks = numberOfRandomTasks,
-                sortOrder = sortOrder,
-                sessionId = sessionId
-            )
+            queries.transaction {
+                val maxSortOrder = queries.findMaxSortOrder(sessionId).executeAsOne().MAX ?: 0L
+                queries.new(
+                    id = null,
+                    title = title,
+                    color = color,
+                    playMode = playMode,
+                    numberOfRandomTasks = numberOfRandomTasks,
+                    sortOrder = maxSortOrder + 1,
+                    sessionId = sessionId
+                )
+            }
         }
     }
 
@@ -55,7 +57,7 @@ internal class TaskGroupDataSourceImpl @Inject constructor(
         color: Long,
         playMode: String,
         numberOfRandomTasks: Long,
-        sortOrder: Long
+        sortOrder: Long,
     ) {
         withContext(dispatcher) {
             queries.update(

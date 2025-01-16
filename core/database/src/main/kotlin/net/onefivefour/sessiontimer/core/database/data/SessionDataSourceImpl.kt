@@ -13,13 +13,16 @@ internal class SessionDataSourceImpl @Inject constructor(
     @IoDispatcher private val dispatcher: CoroutineDispatcher,
 ) : SessionDataSource {
 
-    override suspend fun insert(title: String, sortOrder: Long) {
+    override suspend fun insert(title: String) {
         withContext(dispatcher) {
-            queries.new(
-                id = null,
-                title = title,
-                sortOrder = sortOrder
-            )
+            queries.transaction {
+                val maxSortOrder = queries.findMaxSortOrder().executeAsOne().MAX ?: 0L
+                queries.new(
+                    id = null,
+                    title = title,
+                    sortOrder = maxSortOrder + 1
+                )
+            }
         }
     }
 
@@ -64,9 +67,4 @@ internal class SessionDataSourceImpl @Inject constructor(
     override fun getLastInsertId() = queries
         .getLastInsertRowId()
         .executeAsOne()
-
-    override suspend fun findMaxSortOrder() = queries
-        .findMaxSortOrder()
-        .executeAsOne()
-        .MAX ?: 0L
 }

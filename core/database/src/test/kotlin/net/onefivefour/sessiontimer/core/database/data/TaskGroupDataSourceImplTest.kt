@@ -63,7 +63,6 @@ internal class TaskGroupDataSourceImplTest {
                 color = color,
                 playMode = playMode,
                 numberOfRandomTasks = numberOfRandomTasks,
-                sortOrder = sortOrder,
                 sessionId = sessionId
             )
 

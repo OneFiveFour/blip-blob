@@ -1,7 +1,5 @@
 package net.onefivefour.sessiontimer.core.database.data
 
-import app.cash.sqldelight.coroutines.asFlow
-import app.cash.sqldelight.coroutines.mapToList
 import javax.inject.Inject
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.withContext
@@ -10,23 +8,25 @@ import net.onefivefour.sessiontimer.core.di.IoDispatcher
 
 internal class TaskDataSourceImpl @Inject constructor(
     private val queries: TaskQueries,
-    @IoDispatcher private val dispatcher: CoroutineDispatcher
+    @IoDispatcher private val dispatcher: CoroutineDispatcher,
 ) : TaskDataSource {
 
     override suspend fun insert(
         title: String,
         durationInSeconds: Long,
-        sortOrder: Long,
-        taskGroupId: Long
+        taskGroupId: Long,
     ) {
         withContext(dispatcher) {
-            queries.new(
-                id = null,
-                title = title,
-                durationInSeconds = durationInSeconds,
-                sortOrder = sortOrder,
-                taskGroupId = taskGroupId
-            )
+            queries.transaction {
+                val maxSortOrder = queries.findMaxSortOrder(taskGroupId).executeAsOne().MAX ?: 0L
+                queries.new(
+                    id = null,
+                    title = title,
+                    durationInSeconds = durationInSeconds,
+                    sortOrder = maxSortOrder + 1,
+                    taskGroupId = taskGroupId
+                )
+            }
         }
     }
 
@@ -34,7 +34,7 @@ internal class TaskDataSourceImpl @Inject constructor(
         taskId: Long,
         title: String,
         durationInSeconds: Long,
-        sortOrder: Long
+        sortOrder: Long,
     ) {
         withContext(dispatcher) {
             queries.update(

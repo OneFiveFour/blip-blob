@@ -11,7 +11,6 @@ internal interface TaskGroupDataSource {
         color: Long,
         playMode: String,
         numberOfRandomTasks: Long,
-        sortOrder: Long,
         sessionId: Long
     )
 
