@@ -1,0 +1,58 @@
+CREATE TABLE session (
+  id INTEGER PRIMARY KEY NOT NULL,
+  title TEXT NOT NULL,
+  sortOrder INTEGER NOT NULL
+);
+
+INSERT INTO session (
+    id,
+    title,
+    sortOrder
+)
+VALUES
+    (1, "Session 1", 1)
+;
+
+new:
+INSERT INTO session VALUES (?,?,?);
+
+getAll:
+SELECT * FROM session ORDER BY sortOrder;
+
+denormalizedSessionView:
+SELECT
+    S.id AS sessionId,
+    S.title AS sessionTitle,
+    S.sortOrder AS sessionSortOrder,
+    TG.id AS taskGroupId,
+    TG.title AS taskGroupTitle,
+    TG.color AS taskGroupColor,
+    TG.playMode AS taskGroupPlayMode,
+    TG.numberOfRandomTasks AS taskGroupNumberOfRandomTasks,
+    TG.sortOrder AS taskGroupSortOrder,
+    T.id AS taskId,
+    T.taskGroupId AS taskTaskGroupId,
+    T.title AS taskTitle,
+    T.durationInSeconds AS taskDuration,
+    T.sortOrder AS taskSortOrder
+FROM session S
+LEFT JOIN taskGroup TG ON TG.sessionId = S.id
+LEFT JOIN task T ON T.taskGroupId = TG.id
+WHERE S.id = :id
+ORDER BY
+    S.sortOrder,
+    TG.sortOrder,
+    T.sortOrder
+;
+
+deleteById:
+DELETE FROM session WHERE id = :id;
+
+getLastInsertRowId:
+SELECT last_insert_rowid();
+
+setTitle:
+UPDATE session SET title = :title WHERE id = :sessionId;
+
+setSortOrder:
+UPDATE session SET sortOrder = :sortOrder WHERE id = :sessionId;

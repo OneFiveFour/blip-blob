@@ -1,0 +1,110 @@
+[versions]
+androidMaterial = "1.12.0"
+androidXActivity = "1.9.3"
+androidXActivityCompose = "1.9.3"
+androidXArchCoreTesting = "2.2.0"
+androidXComposeBom = "2024.12.01"
+androidXCore = "1.15.0"
+androidXLifecycle="2.8.7"
+androidXNavigation = "2.8.5"
+composeNavigator="1.0.2-SNAPSHOT"
+coroutines = "1.8.1"
+dagger = "2.51.1"
+gradle = "8.7.3"
+hiltNavigation = "1.2.0"
+junit = "4.13.2"
+kotlin = "2.0.21"
+kotlinxDatetime = "0.5.0"
+kover = "0.8.3"
+ksp = "2.0.21-1.0.28"
+ktLint = "12.1.1"
+mockk = "1.13.8"
+robolectric = "4.14.1"
+serialization = "1.6.3"
+sqlDelight = "2.0.0"
+turbine="1.0.0"
+truth="1.1.5"
+reorderable = "2.4.2"
+
+[libraries]
+## Build Tools
+android-gradlePlugin = { module = "com.android.tools.build:gradle", version.ref = "gradle" }
+kotlin-gradlePlugin = { module = "org.jetbrains.kotlin:kotlin-gradle-plugin", version.ref = "kotlin" }
+
+## Android Basics
+androidX-activity = { module = "androidx.activity:activity-ktx", version.ref = "androidXActivity" }
+androidX-activity-compose = { module = "androidx.activity:activity-compose", version.ref = "androidXActivityCompose" }
+androidX-core = { module = "androidx.core:core-ktx", version.ref = "androidXCore" }
+
+## Android Lifecycle
+androidX-lifecycle-viewmodel = { module = "androidx.lifecycle:lifecycle-viewmodel-ktx", version.ref = "androidXLifecycle" }
+androidX-lifecycle-viewmodel-compose = { module = "androidx.lifecycle:lifecycle-viewmodel-compose", version.ref = "androidXLifecycle" }
+androidX-lifecycle-compose = { module = "androidx.lifecycle:lifecycle-runtime-compose", version.ref = "androidXLifecycle" }
+
+## Kotlin Coroutines
+coroutines-core = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-core", version.ref = "coroutines" }
+
+## Date Time
+kotlinx-datetime = { module = "org.jetbrains.kotlinx:kotlinx-datetime", version.ref = "kotlinxDatetime" }
+
+# UI
+reorderable = { module = "sh.calvin.reorderable:reorderable", version.ref = "reorderable" }
+
+## Compose
+androidX-compose-bom = { module = "androidx.compose:compose-bom", version.ref = "androidXComposeBom" }
+android-material = { module = "com.google.android.material:material", version.ref = "androidMaterial" }
+androidX-compose-material3 = { module = "androidx.compose.material3:material3" }
+androidX-compose-ui = { module = "androidx.compose.ui:ui" }
+androidX-compose-ui-tooling = { module = "androidx.compose.ui:ui-tooling" }
+androidX-compose-ui-tooling-preview = { module = "androidx.compose.ui:ui-tooling-preview" }
+androidX-compose-runtime = { module = "androidx.compose.runtime:runtime" }
+
+## Database
+sqlDelight-android = { module = "app.cash.sqldelight:android-driver", version.ref = "sqlDelight" }
+sqlDelight-coroutines = { module = "app.cash.sqldelight:coroutines-extensions", version.ref = "sqlDelight" }
+
+# Dependency Injection
+hilt-core = { module = "com.google.dagger:hilt-core", version.ref = "dagger" }
+hilt-android = { module = "com.google.dagger:hilt-android", version.ref = "dagger" }
+hilt-android-compiler = { module = "com.google.dagger:hilt-android-compiler", version.ref = "dagger" }
+hilt-compiler = { module = "com.google.dagger:hilt-compiler", version.ref = "dagger" }
+hilt-navigation = { module = "androidx.hilt:hilt-navigation-compose", version.ref ="hiltNavigation" }
+
+# Navigation
+androidX-navigation = { module = "androidx.navigation:navigation-compose", version.ref ="androidXNavigation" }
+androidX-navigation-common = { module = "androidx.navigation:navigation-common", version.ref ="androidXNavigation" }
+kotlinx-serialization-json = { module = "org.jetbrains.kotlinx:kotlinx-serialization-json", version.ref = "serialization"}
+
+# Testing
+coroutines-test = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-test", version.ref = "coroutines" }
+junit = { module = "junit:junit", version.ref="junit" }
+mockk = { module = "io.mockk:mockk", version.ref = "mockk" }
+sqlDelight-test = { module = "app.cash.sqldelight:sqlite-driver", version.ref = "sqlDelight" }
+hilt-android-testing = { module = "com.google.dagger:hilt-android-testing", version.ref = "dagger" }
+truth = { module = "com.google.truth:truth", version.ref = "truth"}
+androidX-arch-core-testing = { module = "androidx.arch.core:core-testing", version.ref = "androidXArchCoreTesting"}
+turbine = { module = "app.cash.turbine:turbine", version.ref = "turbine" }
+robolectric = { module = "org.robolectric:robolectric", version.ref = "robolectric" }
+compose-test-junit = { module = "androidx.compose.ui:ui-test-junit4" }
+compose-test-manifest = { module = "androidx.compose.ui:ui-test-manifest" }
+
+# Lint and Code Coverage
+ktLint-gradlePlugin = { module = "org.jlleitschuh.gradle:ktlint-gradle", version.ref = "ktLint" }
+kover-gradlePlugin = { module = "org.jetbrains.kotlinx:kover-gradle-plugin", version.ref = "kover" }
+
+
+[plugins]
+androidApplication = { id = "com.android.application", version.ref = "gradle" }
+androidLibrary = { id = "com.android.library", version.ref = "gradle" }
+dagger-hilt-android = { id = "com.google.dagger.hilt.android", version.ref = "dagger" }
+composeCompiler = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin" }
+kotlinAndroid = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
+kover = { id = "org.jetbrains.kotlinx.kover", version.ref = "kover" }
+ksp = { id = "com.google.devtools.ksp", version.ref = "ksp" }
+ktLint = { id = "org.jlleitschuh.gradle.ktlint", version.ref = "ktLint" }
+sqlDelight = { id = "app.cash.sqldelight", version.ref = "sqlDelight" }
+kotlin-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin" }
+
+
+[bundles]
+navigation = ["androidX-navigation", "androidX-navigation-common", "kotlinx-serialization-json"]

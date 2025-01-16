@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="title">Title</string>
+    <string name="color">Color</string>
+    <string name="play_mode">Playmode</string>
+    <string name="sequence">PlayMode Sequence</string>
+    <string name="shuffle">PlayMode Shuffle</string>
+    <string name="all">All</string>
+    <string name="minus">-</string>
+    <string name="plus">+</string>
+    <string name="add_random_task">Add random task</string>
+    <string name="subtract_random_task">subtract_random_task</string>
+    <string name="save">Save</string>
+    <string name="edit_task_group">Edit Task Group</string>
+</resources>

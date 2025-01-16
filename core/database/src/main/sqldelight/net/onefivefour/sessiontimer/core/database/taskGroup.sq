@@ -1,0 +1,71 @@
+CREATE TABLE taskGroup (
+  id INTEGER PRIMARY KEY NOT NULL,
+  title TEXT NOT NULL,
+  color INTEGER NOT NULL,
+  playMode TEXT NOT NULL,
+  numberOfRandomTasks INTEGER NOT NULL,
+  sortOrder INTEGER NOT NULL,
+  sessionId INTEGER NOT NULL
+);
+
+INSERT INTO taskGroup (
+    id,
+    title,
+    color,
+    playMode,
+    numberOfRandomTasks,
+    sortOrder,
+    sessionId
+)
+VALUES
+    (1,"TaskGroup 1", 16711680, "SEQUENCE", 1, 1, 1),
+    (2,"TaskGroup 2", 16711680, "SEQUENCE", 1, 2, 1)
+;
+
+new:
+INSERT INTO taskGroup VALUES (?,?,?,?,?,?,?);
+
+denormalizedTaskGroupView:
+SELECT
+    TG.id AS taskGroupId,
+    TG.title AS taskGroupTitle,
+    TG.color AS taskGroupColor,
+    TG.playMode AS taskGroupPlayMode,
+    TG.numberOfRandomTasks AS taskGroupNumberOfRandomTasks,
+    TG.sortOrder AS taskGroupSortOrder,
+    TG.sessionId AS sessionId,
+    T.id AS taskId,
+    T.title AS taskTitle,
+    T.durationInSeconds AS taskDuration,
+    T.sortOrder AS taskSortOrder
+FROM taskGroup TG
+LEFT JOIN task T ON T.taskGroupId = TG.id
+WHERE TG.id = :id
+ORDER BY
+    TG.sortOrder,
+    T.sortOrder
+;
+
+getBySessionId:
+SELECT * FROM taskGroup WHERE sessionId = :sessionId ORDER BY sortOrder;
+
+deleteById:
+DELETE FROM taskGroup WHERE id = :id;
+
+deleteBySessionId:
+SELECT * FROM taskGroup WHERE sessionId = :sessionId;
+
+update:
+UPDATE taskGroup SET
+    title = :title,
+    color = :color,
+    playMode = :playMode,
+    numberOfRandomTasks = :numberOfRandomTasks,
+    sortOrder = :sortOrder
+WHERE id = :id;
+
+setSortOrder:
+UPDATE taskGroup SET sortOrder = :sortOrder WHERE id = :taskGroupId;
+
+getLastInsertRowId:
+SELECT last_insert_rowid();
