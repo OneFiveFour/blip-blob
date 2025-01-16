@@ -13,6 +13,7 @@ import kotlinx.coroutines.launch
 import net.onefivefour.sessiontimer.core.usecases.api.session.GetSessionUseCase
 import net.onefivefour.sessiontimer.core.usecases.api.task.DeleteTaskUseCase
 import net.onefivefour.sessiontimer.core.usecases.api.task.NewTaskUseCase
+import net.onefivefour.sessiontimer.core.usecases.api.task.SetTaskSortOrdersUseCase
 import net.onefivefour.sessiontimer.core.usecases.api.task.UpdateTaskUseCase
 import net.onefivefour.sessiontimer.core.usecases.api.taskgroup.DeleteTaskGroupUseCase
 import net.onefivefour.sessiontimer.core.usecases.api.taskgroup.NewTaskGroupUseCase
@@ -31,7 +32,8 @@ internal class SessionEditorViewModel @Inject constructor(
     private val deleteTaskUseCase: DeleteTaskUseCase,
     private val deleteTaskGroupUseCase: DeleteTaskGroupUseCase,
     private val updateTaskUseCase: UpdateTaskUseCase,
-    private val setTaskGroupSortOrdersUseCase: SetTaskGroupSortOrdersUseCase
+    private val setTaskGroupSortOrdersUseCase: SetTaskGroupSortOrdersUseCase,
+    private val setTaskSortOrdersUseCase: SetTaskSortOrdersUseCase
 ) : ViewModel() {
 
     private val sessionId = savedStateHandle.toRoute<SessionEditorRoute>().sessionId
@@ -90,6 +92,12 @@ internal class SessionEditorViewModel @Inject constructor(
     fun updateTaskGroupSortOrders(taskGroupIds: List<Long>) {
         viewModelScope.launch {
             setTaskGroupSortOrdersUseCase.execute(taskGroupIds)
+        }
+    }
+
+    fun updateTaskSortOrders(taskIds: List<Long>) {
+        viewModelScope.launch {
+            setTaskSortOrdersUseCase.execute(taskIds)
         }
     }
 }

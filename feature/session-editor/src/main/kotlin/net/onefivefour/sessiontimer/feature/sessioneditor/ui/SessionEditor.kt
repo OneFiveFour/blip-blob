@@ -8,7 +8,8 @@ internal fun SessionEditor(
     uiState: UiState,
     onNewTask: (Long) -> Unit,
     onEditTaskGroup: (Long) -> Unit,
-    onUpdateTaskGroupSortOrders: (List<Long>) -> Unit
+    onUpdateTaskGroupSortOrders: (List<Long>) -> Unit,
+    onUpdateTaskSortOrders: (List<Long>) -> Unit
 ) {
     when (uiState) {
         UiState.Initial -> {
@@ -25,7 +26,8 @@ internal fun SessionEditor(
                 uiSession = uiState.uiSession,
                 onNewTask = onNewTask,
                 onEditTaskGroup = onEditTaskGroup,
-                onUpdateTaskGroupSortOrders = onUpdateTaskGroupSortOrders
+                onUpdateTaskGroupSortOrders = onUpdateTaskGroupSortOrders,
+                onUpdateTaskSortOrders = onUpdateTaskSortOrders
             )
         }
     }

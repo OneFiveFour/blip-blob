@@ -52,7 +52,6 @@ internal class SessionDataSourceImpl @Inject constructor(
         withContext(dispatcher) {
             queries.transaction {
                 sessionIds.forEachIndexed { index, sessionId ->
-                    println("+++ set sessionId $sessionId to sortOrder ${index.toLong()}")
                     queries.setSortOrder(
                         sessionId = sessionId,
                         sortOrder = index.toLong()

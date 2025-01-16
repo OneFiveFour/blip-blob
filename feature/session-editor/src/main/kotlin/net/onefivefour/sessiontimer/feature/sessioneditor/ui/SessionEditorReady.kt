@@ -24,6 +24,7 @@ internal fun SessionEditorReady(
     uiSession: UiSession,
     onNewTask: (Long) -> Unit,
     onEditTaskGroup: (Long) -> Unit,
+    onUpdateTaskSortOrders: (List<Long>) -> Unit,
     onUpdateTaskGroupSortOrders: (List<Long>) -> Unit
 ) {
 
@@ -68,6 +69,7 @@ internal fun SessionEditorReady(
                 isCollapsed = collapsedTaskGroupsIds.contains(taskGroup.id),
                 onNewTask = onNewTask,
                 onEditTaskGroup = onEditTaskGroup,
+                onUpdateTaskSortOrders = onUpdateTaskSortOrders,
                 onCollapseChanged = { isCollapsed ->
                     collapsedTaskGroupsIds = when {
                         isCollapsed -> collapsedTaskGroupsIds + taskGroup.id

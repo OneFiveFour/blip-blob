@@ -46,6 +46,7 @@ internal fun TaskGroupItem(
     isCollapsed: Boolean,
     onNewTask: (Long) -> Unit,
     onEditTaskGroup: (Long) -> Unit,
+    onUpdateTaskSortOrders: (List<Long>) -> Unit,
     onCollapseChanged: (Boolean) -> Unit
 ) {
 
@@ -125,6 +126,7 @@ internal fun TaskGroupItem(
                                 },
                                 onDragStopped = {
                                     haptic.performHapticFeedback(ReorderHapticFeedbackType.END)
+                                    onUpdateTaskSortOrders(taskList.map { it.id })
                                 },
                                 interactionSource = interactionSource
                             ),
@@ -155,6 +157,7 @@ private fun TaskGroupItemPreview() {
                 isCollapsed = false,
                 onNewTask = { },
                 onEditTaskGroup = { },
+                onUpdateTaskSortOrders = { },
                 onCollapseChanged = { }
             )
         }

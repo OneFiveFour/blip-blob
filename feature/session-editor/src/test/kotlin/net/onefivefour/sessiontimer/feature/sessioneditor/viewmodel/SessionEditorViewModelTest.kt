@@ -17,6 +17,7 @@ import net.onefivefour.sessiontimer.core.test.StandardTestDispatcherRule
 import net.onefivefour.sessiontimer.core.usecases.api.session.GetSessionUseCase
 import net.onefivefour.sessiontimer.core.usecases.api.task.DeleteTaskUseCase
 import net.onefivefour.sessiontimer.core.usecases.api.task.NewTaskUseCase
+import net.onefivefour.sessiontimer.core.usecases.api.task.SetTaskSortOrdersUseCase
 import net.onefivefour.sessiontimer.core.usecases.api.task.UpdateTaskUseCase
 import net.onefivefour.sessiontimer.core.usecases.api.taskgroup.DeleteTaskGroupUseCase
 import net.onefivefour.sessiontimer.core.usecases.api.taskgroup.NewTaskGroupUseCase
@@ -52,6 +53,8 @@ internal class SessionEditorViewModelTest {
 
     private val setTaskGroupSortOrdersUseCase: SetTaskGroupSortOrdersUseCase = mockk()
 
+    private val setTaskSortOrdersUseCase: SetTaskSortOrdersUseCase = mockk()
+
     private fun sut() = SessionEditorViewModel(
         savedStateHandleRule.savedStateHandleMock,
         getSessionUseCase,
@@ -60,7 +63,8 @@ internal class SessionEditorViewModelTest {
         deleteTaskUseCase,
         deleteTaskGroupUseCase,
         updateTaskUseCase,
-        setTaskGroupSortOrdersUseCase
+        setTaskGroupSortOrdersUseCase,
+        setTaskSortOrdersUseCase,
     )
 
     @Test

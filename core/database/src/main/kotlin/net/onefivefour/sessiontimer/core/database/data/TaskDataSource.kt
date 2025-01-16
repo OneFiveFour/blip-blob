@@ -19,6 +19,8 @@ internal interface TaskDataSource {
         sortOrder: Long
     )
 
+    suspend fun setTaskSortOrders(taskIds: List<Long>)
+    
     suspend fun deleteById(taskId: Long)
 
     suspend fun deleteByTaskGroupId(taskGroupId: Long)

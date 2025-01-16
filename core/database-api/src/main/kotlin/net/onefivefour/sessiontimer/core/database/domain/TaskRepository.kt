@@ -16,5 +16,7 @@ interface TaskRepository {
 
     suspend fun deleteTask(taskId: Long)
 
+    suspend fun setTaskSortOrders(taskIds: List<Long>)
+
     suspend fun deleteTasksByTaskGroupId(taskGroupId: Long)
 }

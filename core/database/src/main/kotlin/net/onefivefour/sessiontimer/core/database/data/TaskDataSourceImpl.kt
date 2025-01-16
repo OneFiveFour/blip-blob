@@ -46,6 +46,16 @@ internal class TaskDataSourceImpl @Inject constructor(
         }
     }
 
+    override suspend fun setTaskSortOrders(taskIds: List<Long>) {
+        withContext(dispatcher) {
+            queries.transaction {
+                taskIds.forEachIndexed { index, taskId ->
+                    queries.setSortOrder(index.toLong(), taskId)
+                }
+            }
+        }
+    }
+
     override suspend fun deleteById(taskId: Long) {
         withContext(dispatcher) {
             queries.deleteById(taskId)

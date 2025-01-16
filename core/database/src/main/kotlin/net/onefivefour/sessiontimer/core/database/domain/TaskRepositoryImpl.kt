@@ -1,14 +1,12 @@
 package net.onefivefour.sessiontimer.core.database.domain
 
-import kotlinx.coroutines.flow.distinctUntilChanged
+import net.onefivefour.sessiontimer.core.database.data.TaskDataSource
 import javax.inject.Inject
 import kotlin.time.Duration
 import kotlin.time.Duration.Companion.seconds
 import kotlin.time.DurationUnit
-import kotlinx.coroutines.flow.map
 import net.onefivefour.sessiontimer.core.common.domain.model.Task as DomainTask
 import net.onefivefour.sessiontimer.core.database.Task as DatabaseTask
-import net.onefivefour.sessiontimer.core.database.data.TaskDataSource
 
 internal class TaskRepositoryImpl @Inject constructor(
     private val taskDataSource: TaskDataSource
@@ -43,6 +41,9 @@ internal class TaskRepositoryImpl @Inject constructor(
                 durationInSeconds = duration.toLong(DurationUnit.SECONDS),
                 sortOrder = sortOrder.toLong()
             )
+
+    override suspend fun setTaskSortOrders(taskIds: List<Long>) = taskDataSource
+        .setTaskSortOrders(taskIds)
 
     override suspend fun deleteTask(taskId: Long) = taskDataSource
         .deleteById(taskId)

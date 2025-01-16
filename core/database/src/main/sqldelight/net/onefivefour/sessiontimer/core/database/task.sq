@@ -33,6 +33,9 @@ UPDATE task SET
     sortOrder = :sortOrder
 WHERE id = :id;
 
+setSortOrder:
+UPDATE task SET sortOrder = :sortOrder WHERE id = :taskId;
+
 deleteByIds:
 DELETE FROM task WHERE id IN ?;
 
