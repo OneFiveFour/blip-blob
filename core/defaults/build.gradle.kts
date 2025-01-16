@@ -16,4 +16,5 @@ dependencies {
 
     implementation(project(":core:common"))
     implementation(project(":core:database-api"))
+    implementation(project(":core:theme"))
 }

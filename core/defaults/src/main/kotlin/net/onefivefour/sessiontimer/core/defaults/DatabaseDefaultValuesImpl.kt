@@ -1,11 +1,17 @@
 package net.onefivefour.sessiontimer.core.defaults
 
 import android.content.Context
+import android.graphics.Color
+import androidx.compose.runtime.Composable
+import androidx.compose.ui.graphics.toArgb
 import dagger.hilt.android.qualifiers.ApplicationContext
 import javax.inject.Inject
 import javax.inject.Singleton
 import net.onefivefour.sessiontimer.core.common.domain.model.PlayMode.SEQUENCE
 import net.onefivefour.sessiontimer.core.database.domain.DatabaseDefaultValues
+import net.onefivefour.sessiontimer.core.theme.LocalTaskGroupColors
+import net.onefivefour.sessiontimer.core.theme.SessionTimerTheme
+import net.onefivefour.sessiontimer.core.theme.TaskGroupColors
 
 @Singleton
 internal class DatabaseDefaultValuesImpl @Inject constructor(
@@ -16,7 +22,7 @@ internal class DatabaseDefaultValuesImpl @Inject constructor(
 
     override fun getTaskGroupTitle() = context.getString(R.string.default_taskgroup_title)
 
-    override fun getTaskGroupColor() = 0xFF000000
+    override fun getTaskGroupColor() = TaskGroupColors().getAll().random().toArgb().toLong()
 
     override fun getTaskGroupPlayMode() = SEQUENCE
 
