@@ -64,4 +64,9 @@ internal class SessionDataSourceImpl @Inject constructor(
     override fun getLastInsertId() = queries
         .getLastInsertRowId()
         .executeAsOne()
+
+    override suspend fun findMaxSortOrder() = queries
+        .findMaxSortOrder()
+        .executeAsOne()
+        .MAX ?: 0L
 }

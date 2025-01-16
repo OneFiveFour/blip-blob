@@ -15,6 +15,7 @@
 ```
 
 # Open TODOs
+[ ] think about using MVI for VM communication
 [ ] unify package structure in feature
 [ ] write unit tests for sort order
 [ ] give new tasks Groups a default color

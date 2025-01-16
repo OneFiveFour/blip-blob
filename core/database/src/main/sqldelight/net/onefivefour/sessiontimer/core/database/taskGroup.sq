@@ -69,3 +69,6 @@ UPDATE taskGroup SET sortOrder = :sortOrder WHERE id = :taskGroupId;
 
 getLastInsertRowId:
 SELECT last_insert_rowid();
+
+findMaxSortOrder:
+SELECT MAX(sortOrder) FROM taskGroup;

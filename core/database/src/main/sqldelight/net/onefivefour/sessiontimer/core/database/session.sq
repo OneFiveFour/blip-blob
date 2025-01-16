@@ -56,3 +56,6 @@ UPDATE session SET title = :title WHERE id = :sessionId;
 
 setSortOrder:
 UPDATE session SET sortOrder = :sortOrder WHERE id = :sessionId;
+
+findMaxSortOrder:
+SELECT MAX(sortOrder) FROM session;

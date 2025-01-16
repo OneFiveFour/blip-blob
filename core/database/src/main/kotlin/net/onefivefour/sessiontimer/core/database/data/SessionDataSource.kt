@@ -19,4 +19,6 @@ internal interface SessionDataSource {
     suspend fun setSortOrders(sessionIds: List<Long>)
 
     fun getLastInsertId(): Long
+
+    suspend fun findMaxSortOrder(): Long
 }

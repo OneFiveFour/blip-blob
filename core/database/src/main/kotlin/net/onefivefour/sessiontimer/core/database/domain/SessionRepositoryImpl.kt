@@ -18,7 +18,7 @@ internal class SessionRepositoryImpl @Inject constructor(
 ) : SessionRepository {
 
     override suspend fun newSession(title: String) {
-        val sortOrder = 1L // TODO find correct sort order
+        val sortOrder = sessionDataSource.findMaxSortOrder() + 1
         sessionDataSource.insert(title, sortOrder)
     }
 

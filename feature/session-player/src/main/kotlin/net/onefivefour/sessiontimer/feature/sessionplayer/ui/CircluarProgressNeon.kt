@@ -22,6 +22,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import net.onefivefour.sessiontimer.core.theme.SessionTimerTheme
+import net.onefivefour.sessiontimer.core.theme.taskGroupColors
 import net.onefivefour.sessiontimer.feature.sessionplayer.ui.modifier.arc
 
 @Composable
@@ -120,8 +121,7 @@ private fun CircluarProgressNeonPreview() {
                     .padding(16.dp)
             ) {
                 CircluarProgressNeon(
-                    // TODO change to taskgroup color
-                    strokeColor = MaterialTheme.colorScheme.onPrimary,
+                    strokeColor = MaterialTheme.taskGroupColors.color03,
                     strokeWidth = 6.dp,
                     glowWidth = 10.dp,
                     glowRadius = 6.dp,
