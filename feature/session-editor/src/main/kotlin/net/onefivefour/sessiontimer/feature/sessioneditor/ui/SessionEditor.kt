@@ -7,6 +7,7 @@ import net.onefivefour.sessiontimer.feature.sessioneditor.viewmodel.UiState
 internal fun SessionEditor(
     uiState: UiState,
     onNewTask: (Long) -> Unit,
+    onNewTaskGroup: () -> Unit,
     onEditTaskGroup: (Long) -> Unit,
     onUpdateTaskGroupSortOrders: (List<Long>) -> Unit,
     onUpdateTaskSortOrders: (List<Long>) -> Unit
@@ -25,6 +26,7 @@ internal fun SessionEditor(
             SessionEditorReady(
                 uiSession = uiState.uiSession,
                 onNewTask = onNewTask,
+                onNewTaskGroup = onNewTaskGroup,
                 onEditTaskGroup = onEditTaskGroup,
                 onUpdateTaskGroupSortOrders = onUpdateTaskGroupSortOrders,
                 onUpdateTaskSortOrders = onUpdateTaskSortOrders
