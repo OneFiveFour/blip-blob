@@ -26,12 +26,8 @@ INSERT INTO task VALUES (?,?,?,?,?);
 deleteById:
 DELETE FROM task WHERE id = :id;
 
-update:
-UPDATE task SET
-    title = :title,
-    durationInSeconds = :durationInSeconds,
-    sortOrder = :sortOrder
-WHERE id = :id;
+setTaskTitle:
+UPDATE task SET title = :title WHERE id = :id;
 
 setSortOrder:
 UPDATE task SET sortOrder = :sortOrder WHERE id = :taskId;

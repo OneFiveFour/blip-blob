@@ -16,7 +16,8 @@ fun SessionEditorScreen(onEditTaskGroup: (Long) -> Unit) {
         onNewTask = viewModel::newTask,
         onNewTaskGroup = viewModel::newTaskGroup,
         onEditTaskGroup = onEditTaskGroup,
-        onUpdateTaskGroupSortOrders = viewModel::updateTaskGroupSortOrders,
-        onUpdateTaskSortOrders = viewModel::updateTaskSortOrders
+        onUpdateTaskGroupSortOrders = viewModel::setTaskGroupSortOrders,
+        onUpdateTaskSortOrders = viewModel::setTaskSortOrders,
+        onTaskTitleChanged = viewModel::setTaskTitle
     )
 }

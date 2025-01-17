@@ -26,17 +26,13 @@ internal class TaskDataSourceImpl @Inject constructor(
         }
     }
 
-    override suspend fun update(
+    override suspend fun setTaskTitle(
         taskId: Long,
-        title: String,
-        durationInSeconds: Long,
-        sortOrder: Long
+        title: String
     ) {
         withContext(dispatcher) {
-            queries.update(
+            queries.setTaskTitle(
                 title = title,
-                durationInSeconds = durationInSeconds,
-                sortOrder = sortOrder,
                 id = taskId
             )
         }

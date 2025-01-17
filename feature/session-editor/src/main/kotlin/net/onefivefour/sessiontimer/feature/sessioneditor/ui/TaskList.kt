@@ -22,6 +22,7 @@ import sh.calvin.reorderable.rememberReorderableLazyListState
 internal fun TaskList(
     taskGroup: UiTaskGroup,
     onUpdateTaskSortOrders: (List<Long>) -> Unit,
+    onTaskTitleChanged: (Long, String) -> Unit
 ) {
     val haptic = rememberReorderHapticFeedback()
 
@@ -61,7 +62,10 @@ internal fun TaskList(
                             },
                             interactionSource = interactionSource
                         ),
-                    uiTask = task
+                    uiTask = task,
+                    onTaskTitleChanged = { newTitle ->
+                        onTaskTitleChanged(task.id, newTitle)
+                    }
                 )
             }
         }

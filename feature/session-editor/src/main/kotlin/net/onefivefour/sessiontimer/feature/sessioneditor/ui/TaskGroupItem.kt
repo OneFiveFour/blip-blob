@@ -34,6 +34,7 @@ internal fun TaskGroupItem(
     onEditTaskGroup: (Long) -> Unit,
     onUpdateTaskSortOrders: (List<Long>) -> Unit,
     onCollapseChanged: (Boolean) -> Unit,
+    onTaskTitleChanged: (Long, String) -> Unit
 ) {
 
     val targetHeight = when {
@@ -90,7 +91,8 @@ internal fun TaskGroupItem(
 
             TaskList(
                 taskGroup,
-                onUpdateTaskSortOrders
+                onUpdateTaskSortOrders,
+                onTaskTitleChanged = onTaskTitleChanged
             )
         }
 
@@ -110,7 +112,8 @@ private fun TaskGroupItemPreview() {
                 onNewTask = { },
                 onEditTaskGroup = { },
                 onUpdateTaskSortOrders = { },
-                onCollapseChanged = { }
+                onCollapseChanged = { },
+                onTaskTitleChanged = { _, _ -> }
             )
         }
     }

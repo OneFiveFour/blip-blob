@@ -228,35 +228,4 @@ internal class SessionEditorViewModelTest {
             deleteTaskUseCase.execute(taskId)
         }
     }
-
-    @Test
-    fun `GIVEN a session and task data WHEN updateTask is called THEN UpdateTaskUseCase is executed`() =
-        runTest {
-            // GIVEN
-            val sessionId = 1L
-            val duration = 3.seconds
-            val title = "Task Title"
-            val taskId = 1L
-            val sortOrder = 1
-            coEvery { getSessionUseCase.execute(any()) } returns flowOf(
-                Session(sessionId, "Session 1", 1, emptyList())
-            )
-            coEvery { updateTaskUseCase.execute(any(), any(), any(), any()) } returns Unit
-
-            // WHEN
-            val sut = sut()
-            val uiTask = UiTask(
-                taskId,
-                title,
-                duration,
-                sortOrder
-            )
-            sut.updateTask(uiTask)
-            advanceUntilIdle()
-
-            // THEN
-            coVerify(exactly = 1) {
-                updateTaskUseCase.execute(taskId, title, duration, sortOrder)
-            }
-        }
 }

@@ -1,8 +1,6 @@
 package net.onefivefour.sessiontimer.core.database.domain
 
 import javax.inject.Inject
-import kotlin.time.Duration
-import kotlin.time.DurationUnit
 import net.onefivefour.sessiontimer.core.database.data.TaskDataSource
 
 internal class TaskRepositoryImpl @Inject constructor(
@@ -18,17 +16,13 @@ internal class TaskRepositoryImpl @Inject constructor(
             )
     }
 
-    override suspend fun updateTask(
+    override suspend fun setTaskTitle(
         taskId: Long,
-        title: String,
-        duration: Duration,
-        sortOrder: Int
+        title: String
     ) = taskDataSource
-        .update(
+        .setTaskTitle(
             taskId = taskId,
-            title = title,
-            durationInSeconds = duration.toLong(DurationUnit.SECONDS),
-            sortOrder = sortOrder.toLong()
+            title = title
         )
 
     override suspend fun setTaskSortOrders(taskIds: List<Long>) = taskDataSource

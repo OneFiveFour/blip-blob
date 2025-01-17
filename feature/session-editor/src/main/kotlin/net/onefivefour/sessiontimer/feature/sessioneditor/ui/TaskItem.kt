@@ -3,10 +3,12 @@ package net.onefivefour.sessiontimer.feature.sessioneditor.ui
 import android.content.res.Configuration.*
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.text.BasicTextField
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
@@ -16,8 +18,11 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.drawWithContent
+import androidx.compose.ui.graphics.SolidColor
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.TextRange
+import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -33,7 +38,8 @@ internal val TASK_ITEM_HEIGHT = 64.dp
 @Composable
 internal fun TaskItem(
     modifier: Modifier = Modifier,
-    uiTask: UiTask
+    uiTask: UiTask,
+    onTaskTitleChanged: (String) -> Unit
 ) {
 
     val glowColor = MaterialTheme.customColors.surfaceGlow
@@ -56,12 +62,17 @@ internal fun TaskItem(
 
         Spacer(modifier = Modifier.width(6.dp))
 
-        Text(
+        BasicTextField(
             modifier = Modifier.weight(1f),
-            text = uiTask.title,
-            style = MaterialTheme.typography.bodyMedium,
-            maxLines = 1,
-            overflow = TextOverflow.Ellipsis
+            value = TextFieldValue(
+                text = uiTask.title,
+                selection = TextRange(uiTask.title.length)
+            ),
+            onValueChange = { newText -> onTaskTitleChanged(newText.text) },
+            cursorBrush = SolidColor(MaterialTheme.colorScheme.onSurface),
+            singleLine = true,
+            textStyle = MaterialTheme.typography.bodyMedium
+                .copy(color = MaterialTheme.colorScheme.onSurface)
         )
 
         Icon(
@@ -80,7 +91,8 @@ private fun TaskItemPreview() {
     SessionTimerTheme {
         Surface {
             TaskItem(
-                uiTask = uiTask1
+                uiTask = uiTask1,
+                onTaskTitleChanged = { }
             )
         }
     }

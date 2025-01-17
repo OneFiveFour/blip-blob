@@ -15,12 +15,11 @@ import net.onefivefour.sessiontimer.core.usecases.api.session.GetSessionUseCase
 import net.onefivefour.sessiontimer.core.usecases.api.task.DeleteTaskUseCase
 import net.onefivefour.sessiontimer.core.usecases.api.task.NewTaskUseCase
 import net.onefivefour.sessiontimer.core.usecases.api.task.SetTaskSortOrdersUseCase
-import net.onefivefour.sessiontimer.core.usecases.api.task.UpdateTaskUseCase
+import net.onefivefour.sessiontimer.core.usecases.api.task.SetTaskTitleUseCase
 import net.onefivefour.sessiontimer.core.usecases.api.taskgroup.DeleteTaskGroupUseCase
 import net.onefivefour.sessiontimer.core.usecases.api.taskgroup.NewTaskGroupUseCase
 import net.onefivefour.sessiontimer.core.usecases.api.taskgroup.SetTaskGroupSortOrdersUseCase
 import net.onefivefour.sessiontimer.feature.sessioneditor.api.SessionEditorRoute
-import net.onefivefour.sessiontimer.feature.sessioneditor.model.UiTask
 import net.onefivefour.sessiontimer.feature.sessioneditor.model.toUiSession
 
 @HiltViewModel
@@ -31,7 +30,7 @@ internal class SessionEditorViewModel @Inject constructor(
     private val newTaskUseCase: NewTaskUseCase,
     private val deleteTaskUseCase: DeleteTaskUseCase,
     private val deleteTaskGroupUseCase: DeleteTaskGroupUseCase,
-    private val updateTaskUseCase: UpdateTaskUseCase,
+    private val setTaskTitleUseCase: SetTaskTitleUseCase,
     private val setTaskGroupSortOrdersUseCase: SetTaskGroupSortOrdersUseCase,
     private val setTaskSortOrdersUseCase: SetTaskSortOrdersUseCase
 ) : ViewModel() {
@@ -78,26 +77,24 @@ internal class SessionEditorViewModel @Inject constructor(
         }
     }
 
-    fun updateTask(task: UiTask) {
-        viewModelScope.launch {
-            updateTaskUseCase.execute(
-                task.id,
-                task.title,
-                task.duration,
-                task.sortOrder
-            )
-        }
-    }
-
-    fun updateTaskGroupSortOrders(taskGroupIds: List<Long>) {
+    fun setTaskGroupSortOrders(taskGroupIds: List<Long>) {
         viewModelScope.launch {
             setTaskGroupSortOrdersUseCase.execute(taskGroupIds)
         }
     }
 
-    fun updateTaskSortOrders(taskIds: List<Long>) {
+    fun setTaskSortOrders(taskIds: List<Long>) {
         viewModelScope.launch {
             setTaskSortOrdersUseCase.execute(taskIds)
+        }
+    }
+
+    fun setTaskTitle(taskId: Long, newTitle: String) {
+        viewModelScope.launch {
+            setTaskTitleUseCase.execute(
+                taskId = taskId,
+                title = newTitle
+            )
         }
     }
 }
