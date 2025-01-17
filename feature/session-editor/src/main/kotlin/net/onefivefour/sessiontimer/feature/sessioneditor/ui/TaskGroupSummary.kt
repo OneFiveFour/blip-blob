@@ -1,13 +1,14 @@
 package net.onefivefour.sessiontimer.feature.sessioneditor.ui
 
 import android.content.res.Configuration
+import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
@@ -15,7 +16,9 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.drawWithContent
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
@@ -27,7 +30,6 @@ import net.onefivefour.sessiontimer.core.ui.components.button.drawGlowingSides
 import net.onefivefour.sessiontimer.core.ui.components.dragger.Dragger
 import net.onefivefour.sessiontimer.feature.sessioneditor.R
 import net.onefivefour.sessiontimer.feature.sessioneditor.model.UiTaskGroup
-import net.onefivefour.sessiontimer.core.ui.R as UiR
 
 @Composable
 internal fun TaskGroupSummary(
@@ -49,30 +51,14 @@ internal fun TaskGroupSummary(
                     backgroundColor = backgroundColor
                 )
             }
-            .padding(16.dp)
+            .padding(10.dp)
+            .clip(RoundedCornerShape(8.dp))
             .clickable { onEditTaskGroup(uiTaskGroup.id) },
         verticalAlignment = Alignment.CenterVertically
     ) {
         Dragger()
 
-        Box {
-            val playModeIconRes = when (uiTaskGroup.playMode) {
-                PlayMode.SEQUENCE -> UiR.drawable.ic_play_mode_sequence
-                PlayMode.N_TASKS_SHUFFLED -> UiR.drawable.ic_play_mode_shuffle
-            }
-
-            val playModeStringRes = when (uiTaskGroup.playMode) {
-                PlayMode.SEQUENCE -> UiR.string.play_mode_sequence
-                PlayMode.N_TASKS_SHUFFLED -> UiR.string.play_mode_shuffle
-            }
-
-
-            Icon(
-                painter = painterResource(id = playModeIconRes),
-                tint = MaterialTheme.colorScheme.onSurface,
-                contentDescription = stringResource(id = playModeStringRes)
-            )
-        }
+        PlayModeIcon(uiTaskGroup)
 
         Spacer(modifier = Modifier.width(6.dp))
 
@@ -90,12 +76,15 @@ internal fun TaskGroupSummary(
 
         Icon(
             modifier = Modifier
-                .padding(4.dp)
-                .clickable { onCollapseChanged(!isCollapsed) },
+                .clip(RoundedCornerShape(8.dp))
+                .clickable { onCollapseChanged(!isCollapsed) }
+                .padding(8.dp),
             painter = painterResource(id = collapseIconRes),
             tint = MaterialTheme.colorScheme.onSurface,
             contentDescription = stringResource(id = R.string.collapse)
         )
+
+        Spacer(modifier = Modifier.width(6.dp))
     }
 }
 
