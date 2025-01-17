@@ -3,7 +3,6 @@ package net.onefivefour.sessiontimer.core.ui.components.button
 import android.content.res.Configuration.UI_MODE_NIGHT_YES
 import androidx.annotation.DrawableRes
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.indication
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
@@ -41,7 +40,7 @@ fun PrimaryButton(
             .clickable(
                 onClick = onClick,
                 interactionSource = interactionSource,
-                indication = PrimaryButtonIndicationNodeFactory(
+                indication = GlowingButtonIndicationNodeFactory(
                     backgroundColor = MaterialTheme.colorScheme.surface,
                     glowColor = MaterialTheme.customColors.surfaceGlow
                 )

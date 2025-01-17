@@ -24,6 +24,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import net.onefivefour.sessiontimer.core.theme.SessionTimerTheme
 import net.onefivefour.sessiontimer.core.theme.customColors
+import net.onefivefour.sessiontimer.core.ui.components.button.GlowingButtonIndicationNodeFactory
 import net.onefivefour.sessiontimer.core.ui.components.dragger.Dragger
 
 @Composable
@@ -45,9 +46,9 @@ internal fun SessionItem(
         modifier = modifier
             .clickable(
                 interactionSource = interactionSource,
-                indication = SessionItemIndicationNodeFactory(
-                    glowColor = MaterialTheme.customColors.surfaceGlow,
-                    backgroundColor = MaterialTheme.colorScheme.surface
+                indication = GlowingButtonIndicationNodeFactory(
+                    backgroundColor = MaterialTheme.colorScheme.surface,
+                    glowColor = MaterialTheme.customColors.surfaceGlow
                 )
             ) { onStartSession(session.id) }
             .padding(

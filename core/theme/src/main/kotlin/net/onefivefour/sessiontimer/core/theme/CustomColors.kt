@@ -22,9 +22,9 @@ val MaterialTheme.customColors: CustomColors
     get() = LocalCustomColors.current
 
 internal val CustomColorsLight = CustomColors(
-    surfaceGlow = Color(0xFFE0E0E0)
+    surfaceGlow = Color(0xFF000000).copy(alpha = 0.1f)
 )
 
 internal val CustomColorsDark = CustomColors(
-    surfaceGlow = Color(0xFF535353)
+    surfaceGlow = Color(0xFFFFFFFF).copy(alpha = 0.05f)
 )

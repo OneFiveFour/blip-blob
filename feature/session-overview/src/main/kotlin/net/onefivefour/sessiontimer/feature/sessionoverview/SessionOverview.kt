@@ -2,6 +2,7 @@ package net.onefivefour.sessiontimer.feature.sessionoverview
 
 import android.content.res.Configuration
 import androidx.compose.foundation.interaction.MutableInteractionSource
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
@@ -50,8 +51,13 @@ internal fun SessionOverview(
     }
 
     Column(
-        Modifier.fillMaxSize().padding(bottom = 16.dp),
-        horizontalAlignment = Alignment.CenterHorizontally
+        Modifier.fillMaxSize().padding(
+            bottom = 16.dp,
+            start = 16.dp,
+            end = 16.dp
+        ),
+        horizontalAlignment = Alignment.CenterHorizontally,
+        verticalArrangement = Arrangement.spacedBy(12.dp)
     ) {
         Text(
             text = stringResource(id = R.string.sessions),
