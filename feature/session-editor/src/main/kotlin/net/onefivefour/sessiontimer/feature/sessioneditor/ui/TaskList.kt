@@ -1,6 +1,7 @@
 package net.onefivefour.sessiontimer.feature.sessioneditor.ui
 
 import androidx.compose.foundation.interaction.MutableInteractionSource
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.rememberLazyListState
@@ -10,6 +11,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.unit.dp
 import net.onefivefour.sessiontimer.core.ui.haptic.ReorderHapticFeedbackType
 import net.onefivefour.sessiontimer.core.ui.haptic.rememberReorderHapticFeedback
 import net.onefivefour.sessiontimer.feature.sessioneditor.model.UiTaskGroup
@@ -36,6 +38,7 @@ internal fun TaskList(
         }
 
     LazyColumn(
+        modifier = Modifier.padding(start = 16.dp),
         state = lazyListState
     ) {
         items(
@@ -58,7 +61,7 @@ internal fun TaskList(
                             },
                             interactionSource = interactionSource
                         ),
-                    task = task
+                    uiTask = task
                 )
             }
         }

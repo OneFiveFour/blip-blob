@@ -60,19 +60,24 @@ internal fun SessionEditorReady(
             key(taskGroup.id) {
                 val interactionSource = remember { MutableInteractionSource() }
 
+                var isDragging by remember { mutableStateOf(false) }
+
                 TaskGroupItem(
                     modifier = Modifier
                         .longPressDraggableHandle(
                             onDragStarted = {
                                 haptic.performHapticFeedback(ReorderHapticFeedbackType.START)
+                                isDragging = true
                             },
                             onDragStopped = {
                                 haptic.performHapticFeedback(ReorderHapticFeedbackType.END)
+                                isDragging = false
                             },
                             interactionSource = interactionSource
                         ),
                     taskGroup = taskGroup,
                     isCollapsed = collapsedTaskGroupsIds.contains(taskGroup.id),
+                    isDragging = isDragging,
                     onNewTask = onNewTask,
                     onEditTaskGroup = onEditTaskGroup,
                     onUpdateTaskSortOrders = onUpdateTaskSortOrders,

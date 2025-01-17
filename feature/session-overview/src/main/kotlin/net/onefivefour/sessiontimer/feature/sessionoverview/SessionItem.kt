@@ -20,6 +20,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import net.onefivefour.sessiontimer.core.theme.SessionTimerTheme
@@ -63,7 +64,9 @@ internal fun SessionItem(
             modifier = Modifier.weight(1f),
             color = MaterialTheme.colorScheme.onBackground,
             text = session.title,
-            style = MaterialTheme.typography.titleMedium
+            style = MaterialTheme.typography.titleMedium,
+            maxLines = 1,
+            overflow = TextOverflow.Ellipsis
         )
 
         Icon(

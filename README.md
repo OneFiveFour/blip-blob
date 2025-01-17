@@ -15,6 +15,7 @@
 ```
 
 # Open TODOs
+- [ ] fix icon sized to be naturally sized
 - [ ] check saved state handle for running session
 - [ ] blur scrolling content behind primary buttons and headlines
 - [ ] keep ALL shuffle selected

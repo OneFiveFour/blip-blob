@@ -2,4 +2,5 @@
 <resources>
     <string name="collapse">Collapse</string>
     <string name="max_badge_value">99+</string>
+    <string name="set_duration">Set Duration</string>
 </resources>

@@ -28,6 +28,7 @@ import net.onefivefour.sessiontimer.feature.sessioneditor.model.UiTaskGroup
 
 @Composable
 internal fun RowScope.PlayModeIcon(uiTaskGroup: UiTaskGroup) {
+
     val playModeIconRes = when (uiTaskGroup.playMode) {
         PlayMode.SEQUENCE -> R.drawable.ic_play_mode_sequence
         PlayMode.N_TASKS_SHUFFLED -> R.drawable.ic_play_mode_shuffle
@@ -60,10 +61,10 @@ internal fun RowScope.PlayModeIcon(uiTaskGroup: UiTaskGroup) {
 
         Box(
             modifier = Modifier
-                .offset(x = (-14).dp, y = (-2).dp)
+                .offset(x = (-15).dp, y = (-3).dp)
                 .size(16.dp)
                 .background(
-                    color = uiTaskGroup.color,
+                    color = MaterialTheme.colorScheme.onSurface,
                     shape = CircleShape
                 )
                 .align(Alignment.Bottom),
@@ -71,7 +72,7 @@ internal fun RowScope.PlayModeIcon(uiTaskGroup: UiTaskGroup) {
         ) {
             Text(
                 text = badgeText,
-                color = MaterialTheme.colorScheme.onPrimary,
+                color = MaterialTheme.colorScheme.surface,
                 style = MaterialTheme.typography.labelSmall,
                 fontSize = 10.sp
             )

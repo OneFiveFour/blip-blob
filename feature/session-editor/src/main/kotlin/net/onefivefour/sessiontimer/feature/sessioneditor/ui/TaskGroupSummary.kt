@@ -1,7 +1,6 @@
 package net.onefivefour.sessiontimer.feature.sessioneditor.ui
 
 import android.content.res.Configuration
-import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -18,15 +17,16 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.drawWithContent
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.max
 import net.onefivefour.sessiontimer.core.common.domain.model.PlayMode
 import net.onefivefour.sessiontimer.core.theme.SessionTimerTheme
 import net.onefivefour.sessiontimer.core.theme.customColors
-import net.onefivefour.sessiontimer.core.ui.components.button.drawGlowingSides
+import net.onefivefour.sessiontimer.core.ui.components.glow.drawGlowingSides
 import net.onefivefour.sessiontimer.core.ui.components.dragger.Dragger
 import net.onefivefour.sessiontimer.feature.sessioneditor.R
 import net.onefivefour.sessiontimer.feature.sessioneditor.model.UiTaskGroup
@@ -66,7 +66,9 @@ internal fun TaskGroupSummary(
             modifier = Modifier.weight(1f),
             color = MaterialTheme.colorScheme.onSurface,
             text = uiTaskGroup.title,
-            style = MaterialTheme.typography.titleMedium
+            style = MaterialTheme.typography.titleMedium,
+            maxLines = 1,
+            overflow = TextOverflow.Ellipsis
         )
 
         val collapseIconRes = when {
@@ -113,6 +115,7 @@ private fun TaskGroupSummaryCollapsedPreview() {
         Surface {
             TaskGroupSummary(
                 uiTaskGroup = fakeUiTaskGroup().copy(
+                    title = "Very Very Long Title that would need several lines of text",
                     playMode = PlayMode.N_TASKS_SHUFFLED,
                     numberOfRandomTasks = 2
                 ),
