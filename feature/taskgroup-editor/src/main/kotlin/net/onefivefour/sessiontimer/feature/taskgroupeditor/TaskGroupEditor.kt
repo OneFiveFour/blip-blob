@@ -30,6 +30,7 @@ import net.onefivefour.sessiontimer.core.taskgroupeditor.R
 import net.onefivefour.sessiontimer.core.theme.SessionTimerTheme
 import net.onefivefour.sessiontimer.core.theme.taskGroupColors
 import net.onefivefour.sessiontimer.core.ui.components.button.PrimaryButton
+import net.onefivefour.sessiontimer.core.ui.components.modifier.clearFocusOnKeyboardDismiss
 import net.onefivefour.sessiontimer.core.ui.R as UiR
 
 @OptIn(ExperimentalLayoutApi::class)
@@ -74,7 +75,9 @@ internal fun TaskGroupEditor(
         Spacer(modifier = Modifier.weight(1f))
 
         BasicTextField(
-            modifier = Modifier.fillMaxWidth(),
+            modifier = Modifier
+                .fillMaxWidth()
+                .clearFocusOnKeyboardDismiss(),
             value = TextFieldValue(
                 text = taskGroup.title,
                 selection = TextRange(taskGroup.title.length)
