@@ -3,7 +3,6 @@ package net.onefivefour.sessiontimer.feature.sessioneditor.ui
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
@@ -30,9 +29,8 @@ internal fun SessionEditorReady(
     onNewTaskGroup: () -> Unit,
     onEditTaskGroup: (Long) -> Unit,
     onUpdateTaskSortOrders: (List<Long>) -> Unit,
-    onUpdateTaskGroupSortOrders: (List<Long>) -> Unit,
+    onUpdateTaskGroupSortOrders: (List<Long>) -> Unit
 ) {
-
     val haptic = rememberReorderHapticFeedback()
 
     var taskGroupList by remember(uiSession.taskGroups) { mutableStateOf(uiSession.taskGroups) }
@@ -42,7 +40,6 @@ internal fun SessionEditorReady(
     Column(
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-
         ReorderableColumn(
             modifier = Modifier
                 .weight(1f)
@@ -58,7 +55,7 @@ internal fun SessionEditorReady(
             onMove = {
                 haptic.performHapticFeedback(ReorderHapticFeedbackType.MOVE)
             },
-            verticalArrangement = Arrangement.spacedBy(8.dp),
+            verticalArrangement = Arrangement.spacedBy(8.dp)
         ) { _, taskGroup, _ ->
             key(taskGroup.id) {
                 val interactionSource = remember { MutableInteractionSource() }
@@ -72,7 +69,7 @@ internal fun SessionEditorReady(
                             onDragStopped = {
                                 haptic.performHapticFeedback(ReorderHapticFeedbackType.END)
                             },
-                            interactionSource = interactionSource,
+                            interactionSource = interactionSource
                         ),
                     taskGroup = taskGroup,
                     isCollapsed = collapsedTaskGroupsIds.contains(taskGroup.id),

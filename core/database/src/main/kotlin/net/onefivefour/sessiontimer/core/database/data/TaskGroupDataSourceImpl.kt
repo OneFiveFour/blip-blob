@@ -2,6 +2,7 @@ package net.onefivefour.sessiontimer.core.database.data
 
 import app.cash.sqldelight.coroutines.asFlow
 import app.cash.sqldelight.coroutines.mapToList
+import javax.inject.Inject
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.withContext
@@ -9,11 +10,10 @@ import net.onefivefour.sessiontimer.core.database.DenormalizedTaskGroupView
 import net.onefivefour.sessiontimer.core.database.TaskGroup
 import net.onefivefour.sessiontimer.core.database.TaskGroupQueries
 import net.onefivefour.sessiontimer.core.di.IoDispatcher
-import javax.inject.Inject
 
 internal class TaskGroupDataSourceImpl @Inject constructor(
     private val queries: TaskGroupQueries,
-    @IoDispatcher private val dispatcher: CoroutineDispatcher,
+    @IoDispatcher private val dispatcher: CoroutineDispatcher
 ) : TaskGroupDataSource {
 
     override suspend fun insert(
@@ -21,7 +21,7 @@ internal class TaskGroupDataSourceImpl @Inject constructor(
         color: Long,
         playMode: String,
         numberOfRandomTasks: Long,
-        sessionId: Long,
+        sessionId: Long
     ) {
         withContext(dispatcher) {
             queries.transaction {
@@ -39,7 +39,9 @@ internal class TaskGroupDataSourceImpl @Inject constructor(
         }
     }
 
-    override suspend fun getDenormalizedTaskGroup(taskGroupId: Long): Flow<List<DenormalizedTaskGroupView>> {
+    override suspend fun getDenormalizedTaskGroup(
+        taskGroupId: Long
+    ): Flow<List<DenormalizedTaskGroupView>> {
         return withContext(dispatcher) {
             queries.denormalizedTaskGroupView(taskGroupId).asFlow().mapToList(dispatcher)
         }
@@ -57,7 +59,7 @@ internal class TaskGroupDataSourceImpl @Inject constructor(
         color: Long,
         playMode: String,
         numberOfRandomTasks: Long,
-        sortOrder: Long,
+        sortOrder: Long
     ) {
         withContext(dispatcher) {
             queries.update(

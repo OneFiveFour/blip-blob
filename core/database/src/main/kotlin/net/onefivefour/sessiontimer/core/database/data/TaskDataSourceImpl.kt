@@ -8,14 +8,10 @@ import net.onefivefour.sessiontimer.core.di.IoDispatcher
 
 internal class TaskDataSourceImpl @Inject constructor(
     private val queries: TaskQueries,
-    @IoDispatcher private val dispatcher: CoroutineDispatcher,
+    @IoDispatcher private val dispatcher: CoroutineDispatcher
 ) : TaskDataSource {
 
-    override suspend fun insert(
-        title: String,
-        durationInSeconds: Long,
-        taskGroupId: Long,
-    ) {
+    override suspend fun insert(title: String, durationInSeconds: Long, taskGroupId: Long) {
         withContext(dispatcher) {
             queries.transaction {
                 val maxSortOrder = queries.findMaxSortOrder(taskGroupId).executeAsOne().MAX ?: 0L
@@ -34,7 +30,7 @@ internal class TaskDataSourceImpl @Inject constructor(
         taskId: Long,
         title: String,
         durationInSeconds: Long,
-        sortOrder: Long,
+        sortOrder: Long
     ) {
         withContext(dispatcher) {
             queries.update(

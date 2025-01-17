@@ -3,8 +3,6 @@
     <string name="title">Title</string>
     <string name="color">Color</string>
     <string name="play_mode">Playmode</string>
-    <string name="sequence">PlayMode Sequence</string>
-    <string name="shuffle">PlayMode Shuffle</string>
     <string name="all">All</string>
     <string name="minus">-</string>
     <string name="plus">+</string>

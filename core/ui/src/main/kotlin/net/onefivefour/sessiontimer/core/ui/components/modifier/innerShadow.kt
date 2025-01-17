@@ -35,7 +35,6 @@ fun Modifier.innerShadow(
     offsetX: Dp = 0.dp,
     spread: Dp = 0.dp
 ) = this.drawWithContent {
-
     drawContent()
 
     drawIntoCanvas { canvas ->

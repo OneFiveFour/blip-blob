@@ -8,7 +8,6 @@ import net.onefivefour.sessiontimer.feature.sessioneditor.viewmodel.SessionEdito
 
 @Composable
 fun SessionEditorScreen(onEditTaskGroup: (Long) -> Unit) {
-
     val viewModel: SessionEditorViewModel = hiltViewModel()
     val sessionEditorState by viewModel.uiState.collectAsStateWithLifecycle()
 

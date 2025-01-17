@@ -32,9 +32,7 @@ internal fun SessionItem(
     modifier: Modifier = Modifier,
     session: UiSession,
     onStartSession: (Long) -> Unit,
-    onSetSessionTitle: (UiSession, String) -> Unit,
-    onEditSession: (Long) -> Unit,
-    onDeleteSession: (Long) -> Unit
+    onEditSession: (Long) -> Unit
 ) {
     val cornerRadius = 8.dp
 
@@ -77,9 +75,6 @@ internal fun SessionItem(
             tint = MaterialTheme.colorScheme.onBackground,
             contentDescription = stringResource(id = R.string.edit_session)
         )
-
-        // avoid unused var message
-        Log.d("+++", "remove me: $onDeleteSession, $onSetSessionTitle")
     }
 }
 
@@ -96,9 +91,7 @@ private fun SessionItemPreview() {
                     sortOrder = 1
                 ),
                 onEditSession = {},
-                onStartSession = {},
-                onDeleteSession = {},
-                onSetSessionTitle = { _, _ -> }
+                onStartSession = {}
             )
         }
     }

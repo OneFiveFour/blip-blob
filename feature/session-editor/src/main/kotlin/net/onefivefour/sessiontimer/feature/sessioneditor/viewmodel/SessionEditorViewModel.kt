@@ -5,6 +5,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.navigation.toRoute
 import dagger.hilt.android.lifecycle.HiltViewModel
+import javax.inject.Inject
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.collectLatest
@@ -21,7 +22,6 @@ import net.onefivefour.sessiontimer.core.usecases.api.taskgroup.SetTaskGroupSort
 import net.onefivefour.sessiontimer.feature.sessioneditor.api.SessionEditorRoute
 import net.onefivefour.sessiontimer.feature.sessioneditor.model.UiTask
 import net.onefivefour.sessiontimer.feature.sessioneditor.model.toUiSession
-import javax.inject.Inject
 
 @HiltViewModel
 internal class SessionEditorViewModel @Inject constructor(

@@ -133,21 +133,22 @@ internal class SessionTimerImplTest {
     }
 
     @Test
-    fun `GIVEN a finished timer WHEN updating this timer THEN its state changes to pause`() = runTest {
-        // GIVEN
-        val sut = sut()
-        sut.init(5.seconds)
-        sut.start()
-        advanceTimeBy(6_000)
-        assertThat(sut.state.first().mode).isEqualTo(TimerMode.FINISHED)
+    fun `GIVEN a finished timer WHEN updating this timer THEN its state changes to pause`() =
+        runTest {
+            // GIVEN
+            val sut = sut()
+            sut.init(5.seconds)
+            sut.start()
+            advanceTimeBy(6_000)
+            assertThat(sut.state.first().mode).isEqualTo(TimerMode.FINISHED)
 
-        // WHEN
-        val expectedDuration = 3.seconds
-        sut.seekTo(expectedDuration)
+            // WHEN
+            val expectedDuration = 3.seconds
+            sut.seekTo(expectedDuration)
 
-        // THEN
-        val state = sut.state.first()
-        assertThat(state.mode).isEqualTo(TimerMode.PAUSED)
-        assertThat(state.elapsedDuration).isEqualTo(expectedDuration)
-    }
+            // THEN
+            val state = sut.state.first()
+            assertThat(state.mode).isEqualTo(TimerMode.PAUSED)
+            assertThat(state.elapsedDuration).isEqualTo(expectedDuration)
+        }
 }

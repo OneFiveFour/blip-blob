@@ -1,16 +1,16 @@
 package net.onefivefour.sessiontimer.core.database.domain
 
+import javax.inject.Inject
+import kotlin.time.Duration.Companion.seconds
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.mapNotNull
 import net.onefivefour.sessiontimer.core.common.domain.model.PlayMode
-import net.onefivefour.sessiontimer.core.database.DenormalizedTaskGroupView
-import net.onefivefour.sessiontimer.core.database.data.TaskGroupDataSource
-import javax.inject.Inject
-import kotlin.time.Duration.Companion.seconds
 import net.onefivefour.sessiontimer.core.common.domain.model.Task as DomainTask
 import net.onefivefour.sessiontimer.core.common.domain.model.TaskGroup as DomainTaskGroup
+import net.onefivefour.sessiontimer.core.database.DenormalizedTaskGroupView
 import net.onefivefour.sessiontimer.core.database.TaskGroup as DatabaseTaskGroup
+import net.onefivefour.sessiontimer.core.database.data.TaskGroupDataSource
 
 internal class TaskGroupRepositoryImpl @Inject constructor(
     private val taskGroupDataSource: TaskGroupDataSource

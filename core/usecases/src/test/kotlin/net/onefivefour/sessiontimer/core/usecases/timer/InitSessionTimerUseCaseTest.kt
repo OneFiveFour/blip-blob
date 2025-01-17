@@ -1,17 +1,10 @@
 package net.onefivefour.sessiontimer.core.usecases.timer
 
-import app.cash.turbine.test
-import com.google.common.truth.Truth.assertThat
-import io.mockk.coEvery
 import io.mockk.mockk
 import io.mockk.verify
-import kotlinx.coroutines.flow.flowOf
-import kotlinx.coroutines.test.runTest
-import net.onefivefour.sessiontimer.core.timer.api.SessionTimer
-import net.onefivefour.sessiontimer.core.timer.api.model.TimerMode
-import net.onefivefour.sessiontimer.core.timer.api.model.TimerState
-import org.junit.Test
 import kotlin.time.Duration.Companion.seconds
+import net.onefivefour.sessiontimer.core.timer.api.SessionTimer
+import org.junit.Test
 
 internal class InitSessionTimerUseCaseTest {
 

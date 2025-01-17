@@ -11,12 +11,7 @@ class UpdateTaskUseCaseImpl @Inject constructor(
     private val taskRepository: TaskRepository
 ) : UpdateTaskUseCase {
 
-    override suspend fun execute(
-        taskId: Long,
-        title: String,
-        duration: Duration,
-        sortOrder: Int
-    ) {
+    override suspend fun execute(taskId: Long, title: String, duration: Duration, sortOrder: Int) {
         taskRepository.updateTask(taskId, title, duration, sortOrder)
     }
 }

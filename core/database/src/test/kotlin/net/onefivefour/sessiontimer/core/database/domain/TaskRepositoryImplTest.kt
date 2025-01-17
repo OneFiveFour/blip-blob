@@ -1,15 +1,11 @@
 package net.onefivefour.sessiontimer.core.database.domain
 
-import app.cash.turbine.test
-import com.google.common.truth.Truth.assertThat
 import io.mockk.coEvery
 import io.mockk.coVerify
 import io.mockk.mockk
 import kotlin.time.Duration.Companion.minutes
 import kotlin.time.DurationUnit
-import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.test.runTest
-import net.onefivefour.sessiontimer.core.database.Task as DatabaseTask
 import net.onefivefour.sessiontimer.core.database.data.TaskDataSource
 import org.junit.Test
 

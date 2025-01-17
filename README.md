@@ -15,6 +15,7 @@
 ```
 
 # Open TODOs
+- [ ] check saved state handle for running session
 - [ ] blur scrolling content behind primary buttons and headlines
 - [ ] keep ALL shuffle selected
 - [ ] think about using MVI for VM communication
@@ -27,3 +28,4 @@
 - [ ] 'setter for statusBarColor: Int' is deprecated. Deprecated in Java
 - [ ] give sessionItem a bit of color to make each session distinguishable
 - [ ] infinite pulsing animation for pause state
+- [ ] rename package name to blip blob

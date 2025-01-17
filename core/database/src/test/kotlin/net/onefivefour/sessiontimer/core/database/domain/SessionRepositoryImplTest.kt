@@ -121,10 +121,12 @@ internal class SessionRepositoryImplTest {
             )
 
             // THEN
-            coVerify(exactly = 1) { sessionDataSource.setTitle(
-                sessionId = sessionId,
-                title = title
-            ) }
+            coVerify(exactly = 1) {
+                sessionDataSource.setTitle(
+                    sessionId = sessionId,
+                    title = title
+                )
+            }
         }
 
     @Test

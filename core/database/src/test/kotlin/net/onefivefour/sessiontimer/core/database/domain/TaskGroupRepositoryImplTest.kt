@@ -65,7 +65,8 @@ internal class TaskGroupRepositoryImplTest {
                     taskTitle = "Task 1",
                     taskDuration = 10,
                     taskSortOrder = 1
-                ), DenormalizedTaskGroupView(
+                ),
+                DenormalizedTaskGroupView(
                     taskGroupId = 1L,
                     taskGroupTitle = "Task Group 1",
                     taskGroupColor = 0xFF00FFL,

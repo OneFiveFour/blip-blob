@@ -20,9 +20,9 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import net.onefivefour.sessiontimer.core.common.domain.model.PlayMode
 import net.onefivefour.sessiontimer.core.taskgroupeditor.R
+import net.onefivefour.sessiontimer.core.ui.R as UiR
 import net.onefivefour.sessiontimer.core.theme.SessionTimerTheme
 
 @Composable
@@ -42,8 +42,8 @@ internal fun PlayModeSelection(
             contentAlignment = Alignment.Center
         ) {
             Icon(
-                painter = painterResource(id = R.drawable.ic_play_mode_sequence),
-                contentDescription = stringResource(R.string.sequence),
+                painter = painterResource(id = UiR.drawable.ic_play_mode_sequence),
+                contentDescription = stringResource(id = UiR.string.play_mode_sequence),
                 tint = MaterialTheme.colorScheme.onSurface
             )
         }
@@ -56,8 +56,8 @@ internal fun PlayModeSelection(
             Row(verticalAlignment = Alignment.CenterVertically) {
                 Icon(
                     modifier = Modifier.background(MaterialTheme.colorScheme.onSurfaceVariant),
-                    painter = painterResource(id = R.drawable.ic_play_mode_shuffle),
-                    contentDescription = stringResource(R.string.shuffle),
+                    painter = painterResource(id = UiR.drawable.ic_play_mode_shuffle),
+                    contentDescription = stringResource(UiR.string.play_mode_shuffle),
                     tint = MaterialTheme.colorScheme.onSurface
                 )
 

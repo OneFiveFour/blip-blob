@@ -2,6 +2,7 @@ package net.onefivefour.sessiontimer.core.ui.components.button
 
 import android.graphics.BlurMaskFilter
 import androidx.compose.animation.core.Animatable
+import androidx.compose.animation.core.AnimationVector1D
 import androidx.compose.animation.core.spring
 import androidx.compose.animation.core.tween
 import androidx.compose.foundation.interaction.InteractionSource
@@ -27,7 +28,7 @@ internal class GlowingButtonIndicationNode(
     private val glowColor: Color
 ) : Modifier.Node(), DrawModifierNode {
 
-    private val animatedPercent = Animatable(0f)
+    private val animatedPercent: Animatable<Float, AnimationVector1D> = Animatable(0f)
 
     override fun onAttach() {
         coroutineScope.launch {
@@ -56,60 +57,75 @@ internal class GlowingButtonIndicationNode(
     }
 
     override fun ContentDrawScope.draw() {
-        val cornerRadiusPx = 8.dp.toPx()
-        val blurRadius = 12.dp.toPx()
-        val paint = Paint().also {
-            with(it.asFrameworkPaint()) {
-                maskFilter = BlurMaskFilter(blurRadius, BlurMaskFilter.Blur.NORMAL)
-                color = glowColor.toArgb()
-            }
-        }
-        val rectPadding = 10.dp.toPx()
-
-        val animatedTranslate = animatedPercent.value * 2.dp.toPx()
-
-        drawIntoCanvas { canvas ->
-
-            canvas.drawRoundRect(
-                left = rectPadding - 2.dp.toPx() + animatedTranslate,
-                top = rectPadding + 2.dp.toPx(),
-                right = size.width * 0.25f + animatedTranslate,
-                bottom = size.height - rectPadding - 2.dp.toPx(),
-                radiusX = cornerRadiusPx,
-                radiusY = cornerRadiusPx,
-                paint = paint
-            )
-
-            canvas.drawRoundRect(
-                left = size.width * 0.75f - animatedTranslate,
-                top = rectPadding + 2.dp.toPx(),
-                right = size.width - rectPadding + 2.dp.toPx() - animatedTranslate,
-                bottom = size.height - rectPadding - 2.dp.toPx(),
-                radiusX = cornerRadiusPx,
-                radiusY = cornerRadiusPx,
-                paint = paint
-            )
-        }
-
-        val rectOffset = Offset(
-            x = rectPadding + animatedTranslate,
-            y = rectPadding
+        drawGlowingSides(
+            glowColor = glowColor,
+            backgroundColor = backgroundColor,
+            animatedPercent = animatedPercent
         )
-        val rectHeight = this.size.height - (2 * rectPadding)
-        val rectWidth = this.size.width - (2 * rectPadding)
+    }
+}
 
-        drawRoundRect(
-            size = Size(rectWidth - (animatedTranslate * 2f), rectHeight),
-            topLeft = rectOffset,
-            cornerRadius = CornerRadius(cornerRadiusPx),
-            color = backgroundColor,
-            alpha = 1f
+fun ContentDrawScope.drawGlowingSides(
+    glowColor: Color,
+    backgroundColor: Color,
+    animatedPercent: Animatable<Float, AnimationVector1D>? = null
+) {
+    val cornerRadiusPx = 8.dp.toPx()
+    val blurRadius = 12.dp.toPx()
+    val paint = Paint().also {
+        with(it.asFrameworkPaint()) {
+            maskFilter = BlurMaskFilter(blurRadius, BlurMaskFilter.Blur.NORMAL)
+            color = glowColor.toArgb()
+        }
+    }
+    val rectPadding = 10.dp.toPx()
+
+    val animatedTranslate = when (animatedPercent) {
+        null -> 0f
+        else -> animatedPercent.value * 2.dp.toPx()
+    }
+
+    drawIntoCanvas { canvas ->
+
+        canvas.drawRoundRect(
+            left = rectPadding - 2.dp.toPx() + animatedTranslate,
+            top = rectPadding + 2.dp.toPx(),
+            right = size.width * 0.25f + animatedTranslate,
+            bottom = size.height - rectPadding - 2.dp.toPx(),
+            radiusX = cornerRadiusPx,
+            radiusY = cornerRadiusPx,
+            paint = paint
         )
 
-        translate(
-            top = animatedTranslate
-        ) {
-            this@draw.drawContent()
-        }
+        canvas.drawRoundRect(
+            left = size.width * 0.75f - animatedTranslate,
+            top = rectPadding + 2.dp.toPx(),
+            right = size.width - rectPadding + 2.dp.toPx() - animatedTranslate,
+            bottom = size.height - rectPadding - 2.dp.toPx(),
+            radiusX = cornerRadiusPx,
+            radiusY = cornerRadiusPx,
+            paint = paint
+        )
+    }
+
+    val rectOffset = Offset(
+        x = rectPadding + animatedTranslate,
+        y = rectPadding
+    )
+    val rectHeight = this.size.height - (2 * rectPadding)
+    val rectWidth = this.size.width - (2 * rectPadding)
+
+    drawRoundRect(
+        size = Size(rectWidth - (animatedTranslate * 2f), rectHeight),
+        topLeft = rectOffset,
+        cornerRadius = CornerRadius(cornerRadiusPx),
+        color = backgroundColor,
+        alpha = 1f
+    )
+
+    translate(
+        top = animatedTranslate
+    ) {
+        this@drawGlowingSides.drawContent()
     }
 }

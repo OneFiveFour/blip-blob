@@ -5,6 +5,7 @@ import com.google.common.truth.Truth.assertThat
 import io.mockk.coEvery
 import io.mockk.coVerify
 import io.mockk.mockk
+import kotlin.time.Duration.Companion.seconds
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.test.advanceUntilIdle
@@ -26,7 +27,6 @@ import net.onefivefour.sessiontimer.feature.sessioneditor.api.SessionEditorRoute
 import net.onefivefour.sessiontimer.feature.sessioneditor.model.UiTask
 import org.junit.Rule
 import org.junit.Test
-import kotlin.time.Duration.Companion.seconds
 
 @OptIn(ExperimentalCoroutinesApi::class)
 internal class SessionEditorViewModelTest {
@@ -64,7 +64,7 @@ internal class SessionEditorViewModelTest {
         deleteTaskGroupUseCase,
         updateTaskUseCase,
         setTaskGroupSortOrdersUseCase,
-        setTaskSortOrdersUseCase,
+        setTaskSortOrdersUseCase
     )
 
     @Test
@@ -193,7 +193,7 @@ internal class SessionEditorViewModelTest {
         val sessionId = 1L
         val taskGroupId = 2L
         coEvery { getSessionUseCase.execute(any()) } returns flowOf(
-            Session(sessionId, "Session 1", 1,emptyList())
+            Session(sessionId, "Session 1", 1, emptyList())
         )
         coEvery { newTaskUseCase.execute(any()) } returns Unit
 
@@ -214,7 +214,7 @@ internal class SessionEditorViewModelTest {
         val sessionId = 1L
         val taskId = 2L
         coEvery { getSessionUseCase.execute(any()) } returns flowOf(
-            Session(sessionId, "Session 1", 1,emptyList())
+            Session(sessionId, "Session 1", 1, emptyList())
         )
         coEvery { deleteTaskUseCase.execute(any()) } returns Unit
 
@@ -239,7 +239,7 @@ internal class SessionEditorViewModelTest {
             val taskId = 1L
             val sortOrder = 1
             coEvery { getSessionUseCase.execute(any()) } returns flowOf(
-                Session(sessionId, "Session 1", 1,emptyList())
+                Session(sessionId, "Session 1", 1, emptyList())
             )
             coEvery { updateTaskUseCase.execute(any(), any(), any(), any()) } returns Unit
 

@@ -10,11 +10,9 @@ import kotlinx.coroutines.test.advanceUntilIdle
 import kotlinx.coroutines.test.runTest
 import net.onefivefour.sessiontimer.core.common.domain.model.Session
 import net.onefivefour.sessiontimer.core.test.StandardTestDispatcherRule
-import net.onefivefour.sessiontimer.core.usecases.api.session.DeleteSessionUseCase
 import net.onefivefour.sessiontimer.core.usecases.api.session.GetAllSessionsUseCase
 import net.onefivefour.sessiontimer.core.usecases.api.session.NewSessionUseCase
 import net.onefivefour.sessiontimer.core.usecases.api.session.SetSessionSortOrdersUseCase
-import net.onefivefour.sessiontimer.core.usecases.api.session.SetSessionTitleUseCase
 import org.junit.Rule
 import org.junit.Test
 
@@ -28,17 +26,11 @@ internal class SessionOverviewViewModelTest {
 
     private val newSessionUseCase: NewSessionUseCase = mockk()
 
-    private val deleteSessionUseCase: DeleteSessionUseCase = mockk()
-
-    private val setSessionTitleUseCase: SetSessionTitleUseCase = mockk()
-
     private val setSessionSortOrdersUseCase: SetSessionSortOrdersUseCase = mockk()
 
     private fun sut() = SessionOverviewViewModel(
         getAllSessionsUseCase,
         newSessionUseCase,
-        deleteSessionUseCase,
-        setSessionTitleUseCase,
         setSessionSortOrdersUseCase
     )
 
@@ -98,52 +90,6 @@ internal class SessionOverviewViewModelTest {
             // THEN
             coVerify(exactly = 1) {
                 newSessionUseCase.execute()
-            }
-        }
-
-    @Test
-    fun `GIVEN a sessionId WHEN deleteSession is calles THEN DeleteSessionUseCase is executed with that sessionId`() =
-        runTest {
-            // GIVEN
-            val sessionId = 1L
-            coEvery { getAllSessionsUseCase.execute() } returns flowOf(emptyList())
-            coEvery { deleteSessionUseCase.execute(any()) } returns Unit
-
-            // WHEN
-            val sut = sut()
-            sut.deleteSession(sessionId)
-            advanceUntilIdle()
-
-            // THEN
-            coVerify(exactly = 1) {
-                deleteSessionUseCase.execute(sessionId)
-            }
-        }
-
-    @Test
-    fun `GIVEN session data WHEN setSessionTitle is called THEN UpdateSessionUseCase is executed with that data`() =
-        runTest {
-            // GIVEN
-            coEvery { getAllSessionsUseCase.execute() } returns flowOf(emptyList())
-            coEvery { setSessionTitleUseCase.execute(any(), any()) } returns Unit
-            val session = UiSession(
-                id = 1L,
-                title = "Test Session Title",
-                sortOrder = 1
-            )
-            val newTitle = "Test Session Title 2"
-            
-            // WHEN
-            val sut = sut()
-            sut.setSessionTitle(session, newTitle)
-            advanceUntilIdle()
-
-            // THEN
-            coVerify(exactly = 1) {
-                setSessionTitleUseCase.execute(
-                    sessionId = session.id,
-                    title = newTitle
-                )
             }
         }
 

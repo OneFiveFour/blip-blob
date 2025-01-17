@@ -24,20 +24,18 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import net.onefivefour.sessiontimer.core.theme.SessionTimerTheme
+import net.onefivefour.sessiontimer.core.ui.R as UiR
 import net.onefivefour.sessiontimer.core.ui.components.button.PrimaryButton
 import net.onefivefour.sessiontimer.core.ui.haptic.ReorderHapticFeedbackType
 import net.onefivefour.sessiontimer.core.ui.haptic.rememberReorderHapticFeedback
 import sh.calvin.reorderable.ReorderableItem
 import sh.calvin.reorderable.rememberReorderableLazyListState
-import net.onefivefour.sessiontimer.core.ui.R as UiR
 
 @Composable
 internal fun SessionOverview(
     uiState: UiState,
     onEditSession: (Long) -> Unit,
     onNewSession: () -> Unit,
-    onDeleteSession: (Long) -> Unit,
-    onSetSessionTitle: (UiSession, String) -> Unit,
     onUpdateSessionSortOrders: (List<Long>) -> Unit,
     onStartSession: (Long) -> Unit
 ) {
@@ -87,7 +85,6 @@ internal fun SessionOverview(
                 .weight(1f),
             state = lazyListState
         ) {
-
             items(
                 items = sessionList,
                 key = { session -> session.id }
@@ -110,9 +107,7 @@ internal fun SessionOverview(
                             ),
                         session = session,
                         onStartSession = onStartSession,
-                        onSetSessionTitle = onSetSessionTitle,
-                        onEditSession = onEditSession,
-                        onDeleteSession = onDeleteSession
+                        onEditSession = onEditSession
                     )
                 }
             }
@@ -148,8 +143,6 @@ private fun SessionOverviewPreview() {
             ),
             onEditSession = {},
             onNewSession = {},
-            onDeleteSession = {},
-            onSetSessionTitle = { _, _ -> },
             onUpdateSessionSortOrders = { _ -> },
             onStartSession = { _ -> }
         )

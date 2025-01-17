@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="play_mode_sequence">PlayMode Sequence</string>
+    <string name="play_mode_shuffle">PlayMode Shuffle</string>
+
+</resources>

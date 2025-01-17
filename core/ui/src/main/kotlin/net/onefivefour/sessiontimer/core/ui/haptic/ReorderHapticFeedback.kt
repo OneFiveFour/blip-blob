@@ -9,7 +9,7 @@ import androidx.core.view.ViewCompat
 enum class ReorderHapticFeedbackType {
     START,
     MOVE,
-    END,
+    END
 }
 
 @Composable

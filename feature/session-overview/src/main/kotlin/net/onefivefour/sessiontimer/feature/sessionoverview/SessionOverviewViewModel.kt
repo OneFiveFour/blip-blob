@@ -19,9 +19,7 @@ import net.onefivefour.sessiontimer.core.usecases.api.session.SetSessionTitleUse
 internal class SessionOverviewViewModel @Inject constructor(
     private val getAllSessionsUseCase: GetAllSessionsUseCase,
     private val newSessionUseCase: NewSessionUseCase,
-    private val deleteSessionUseCase: DeleteSessionUseCase,
-    private val setSessionTitleUseCase: SetSessionTitleUseCase,
-    private val setSessionSortOrdersUseCase: SetSessionSortOrdersUseCase,
+    private val setSessionSortOrdersUseCase: SetSessionSortOrdersUseCase
 ) : ViewModel() {
 
     private var _uiState = MutableStateFlow<UiState>(UiState.Initial)
@@ -41,21 +39,6 @@ internal class SessionOverviewViewModel @Inject constructor(
     fun newSession() {
         viewModelScope.launch {
             newSessionUseCase.execute()
-        }
-    }
-
-    fun deleteSession(sessionId: Long) {
-        viewModelScope.launch {
-            deleteSessionUseCase.execute(sessionId)
-        }
-    }
-
-    fun setSessionTitle(session: UiSession, title: String) {
-        viewModelScope.launch {
-            setSessionTitleUseCase.execute(
-                sessionId = session.id,
-                title = title
-            )
         }
     }
 

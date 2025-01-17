@@ -6,7 +6,7 @@ internal data class UiSession(
     val taskGroups: List<UiTaskGroup>
 )
 
-internal fun Session.toUiSession() : UiSession {
+internal fun Session.toUiSession(): UiSession {
     return UiSession(
         this.taskGroups.toUiTaskGroups()
     )
