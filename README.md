@@ -15,12 +15,13 @@
 ```
 
 # Open TODOs
-[ ] think about using MVI for VM communication
-[ ] unify package structure in feature
-[ ] write unit tests for sort order
-[ ] give new tasks Groups a default color
-[ ] add UI for Initial states
-[ ] add UI for Error states
-[ ] create design language for dimensions
-[ ] move common icons to core/ui package
-[ ] 'setter for statusBarColor: Int' is deprecated. Deprecated in Java
+- [ ] keep ALL shuffle selected
+- [ ] think about using MVI for VM communication
+- [ ] unify package structure in feature
+- [ ] write unit tests for sort order
+- [x] give new tasks Groups a default color
+- [ ] add UI for Initial states
+- [ ] add UI for Error states
+- [ ] create design language for dimensions
+- [ ] move common icons to core/ui package
+- [ ] 'setter for statusBarColor: Int' is deprecated. Deprecated in Java

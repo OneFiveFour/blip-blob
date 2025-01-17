@@ -1,11 +1,15 @@
 package net.onefivefour.sessiontimer.feature.taskgroupeditor
 
 import android.content.res.Configuration.UI_MODE_NIGHT_YES
+import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.ExperimentalLayoutApi
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.isImeVisible
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.text.BasicTextField
 import androidx.compose.material3.MaterialTheme
@@ -28,13 +32,14 @@ import net.onefivefour.sessiontimer.core.theme.taskGroupColors
 import net.onefivefour.sessiontimer.core.ui.components.button.PrimaryButton
 import net.onefivefour.sessiontimer.core.ui.R as UiR
 
+@OptIn(ExperimentalLayoutApi::class)
 @Composable
 internal fun TaskGroupEditor(
     uiState: UiState,
     onTitleChanged: (String) -> Unit,
     onColorChanged: (Color) -> Unit,
     onPlayModeChanged: (PlayMode, Int) -> Unit,
-    onSave: () -> Unit
+    onSave: () -> Unit,
 ) {
     when (uiState) {
         UiState.Initial -> {
@@ -83,37 +88,41 @@ internal fun TaskGroupEditor(
 
         LabelLine(labelRes = R.string.title)
 
-        ColorGrid(
-            colors = MaterialTheme.taskGroupColors.getAll(),
-            selectedColor = taskGroup.color,
-            columnsCount = 6,
-            onColorClick = { color -> onColorChanged(color) }
-        )
+        AnimatedVisibility(!WindowInsets.isImeVisible) {
+            Column {
+                ColorGrid(
+                    colors = MaterialTheme.taskGroupColors.getAll(),
+                    selectedColor = taskGroup.color,
+                    columnsCount = 6,
+                    onColorClick = { color -> onColorChanged(color) }
+                )
 
-        LabelLine(
-            modifier = Modifier.padding(top = 8.dp),
-            labelRes = R.string.color
-        )
+                LabelLine(
+                    modifier = Modifier.padding(top = 8.dp),
+                    labelRes = R.string.color
+                )
 
-        PlayModeSelection(
-            playMode = taskGroup.playMode,
-            numberOfRandomTasks = taskGroup.numberOfRandomTasks,
-            numberOfTasks = taskGroup.tasks.size,
-            onPlayModeChanged = onPlayModeChanged
-        )
+                PlayModeSelection(
+                    playMode = taskGroup.playMode,
+                    numberOfRandomTasks = taskGroup.numberOfRandomTasks,
+                    numberOfTasks = taskGroup.tasks.size,
+                    onPlayModeChanged = onPlayModeChanged
+                )
 
-        LabelLine(
-            modifier = Modifier.padding(top = 8.dp),
-            labelRes = R.string.play_mode
-        )
+                LabelLine(
+                    modifier = Modifier.padding(top = 8.dp),
+                    labelRes = R.string.play_mode
+                )
 
-        PrimaryButton(
-            modifier = Modifier.align(Alignment.CenterHorizontally),
-            text = stringResource(R.string.save),
-            iconRes = UiR.drawable.ic_save,
-            contentDescription = stringResource(R.string.save),
-            onClick = onSave
-        )
+                PrimaryButton(
+                    modifier = Modifier.align(Alignment.CenterHorizontally),
+                    text = stringResource(R.string.save),
+                    iconRes = UiR.drawable.ic_save,
+                    contentDescription = stringResource(R.string.save),
+                    onClick = onSave
+                )
+            }
+        }
     }
 }
 
