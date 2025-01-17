@@ -43,27 +43,21 @@ internal class TaskRepositoryImplTest {
     fun `GIVEN task data WHEN updateTask is called THEN the call is delegated to taskDataSource`() =
         runTest {
             // GIVEN
-            coEvery { taskDataSource.update(any(), any(), any(), any()) } returns Unit
+            coEvery { taskDataSource.setTaskTitle(any(), any()) } returns Unit
             val taskId = 1L
             val title = "Updated Task"
-            val duration = 5.minutes
-            val sortOrder = 1
 
             // WHEN
-            sut().updateTask(
+            sut().setTaskTitle(
                 taskId = taskId,
-                title = title,
-                duration = duration,
-                sortOrder = sortOrder
+                title = title
             )
 
             // THEN
             coVerify(exactly = 1) {
-                taskDataSource.update(
+                taskDataSource.setTaskTitle(
                     taskId = taskId,
-                    title = title,
-                    durationInSeconds = duration.toLong(DurationUnit.SECONDS),
-                    sortOrder = sortOrder.toLong()
+                    title = title
                 )
             }
         }

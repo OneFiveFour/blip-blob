@@ -60,20 +60,18 @@ internal class TaskDataSourceImplTest {
         }
 
     @Test
-    fun `GIVEN task data WHEN update is called THEN the call is delegated to taskQueries`() =
+    fun `GIVEN task data WHEN setTaskTitle is called THEN the call is delegated to taskQueries`() =
         runTest {
             // GIVEN
-            coEvery { taskQueries.update(any(), any(), any(), any()) } returns mockk()
+            coEvery { taskQueries.setTaskTitle(any(), any()) } returns mockk()
             val taskId = 123L
             val title = "Test Title"
-            val duration = 3L
-            val sortOrder = 1L
 
             // WHEN
-            sut().update(taskId, title, duration, sortOrder)
+            sut().setTaskTitle(taskId, title)
 
             // THEN
-            coVerify(exactly = 1) { taskQueries.update(title, duration, sortOrder, taskId) }
+            coVerify(exactly = 1) { taskQueries.setTaskTitle(title, taskId) }
         }
 
     @Test

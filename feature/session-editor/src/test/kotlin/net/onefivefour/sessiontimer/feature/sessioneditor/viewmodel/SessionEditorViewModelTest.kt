@@ -5,7 +5,6 @@ import com.google.common.truth.Truth.assertThat
 import io.mockk.coEvery
 import io.mockk.coVerify
 import io.mockk.mockk
-import kotlin.time.Duration.Companion.seconds
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.test.advanceUntilIdle
@@ -19,12 +18,11 @@ import net.onefivefour.sessiontimer.core.usecases.api.session.GetSessionUseCase
 import net.onefivefour.sessiontimer.core.usecases.api.task.DeleteTaskUseCase
 import net.onefivefour.sessiontimer.core.usecases.api.task.NewTaskUseCase
 import net.onefivefour.sessiontimer.core.usecases.api.task.SetTaskSortOrdersUseCase
-import net.onefivefour.sessiontimer.core.usecases.api.task.UpdateTaskUseCase
+import net.onefivefour.sessiontimer.core.usecases.api.task.SetTaskTitleUseCase
 import net.onefivefour.sessiontimer.core.usecases.api.taskgroup.DeleteTaskGroupUseCase
 import net.onefivefour.sessiontimer.core.usecases.api.taskgroup.NewTaskGroupUseCase
 import net.onefivefour.sessiontimer.core.usecases.api.taskgroup.SetTaskGroupSortOrdersUseCase
 import net.onefivefour.sessiontimer.feature.sessioneditor.api.SessionEditorRoute
-import net.onefivefour.sessiontimer.feature.sessioneditor.model.UiTask
 import org.junit.Rule
 import org.junit.Test
 
@@ -49,7 +47,7 @@ internal class SessionEditorViewModelTest {
 
     private val deleteTaskGroupUseCase: DeleteTaskGroupUseCase = mockk()
 
-    private val updateTaskUseCase: UpdateTaskUseCase = mockk()
+    private val setTaskTitleUseCase: SetTaskTitleUseCase = mockk()
 
     private val setTaskGroupSortOrdersUseCase: SetTaskGroupSortOrdersUseCase = mockk()
 
@@ -62,7 +60,7 @@ internal class SessionEditorViewModelTest {
         newTaskUseCase,
         deleteTaskUseCase,
         deleteTaskGroupUseCase,
-        updateTaskUseCase,
+        setTaskTitleUseCase,
         setTaskGroupSortOrdersUseCase,
         setTaskSortOrdersUseCase
     )
