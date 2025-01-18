@@ -30,7 +30,8 @@ internal fun SessionEditorReady(
     onEditTaskGroup: (Long) -> Unit,
     onUpdateTaskSortOrders: (List<Long>) -> Unit,
     onUpdateTaskGroupSortOrders: (List<Long>) -> Unit,
-    onTaskTitleChanged: (Long, String) -> Unit
+    onTaskTitleChanged: (Long, String) -> Unit,
+    onDeleteTask: (Long) -> Unit
 ) {
     val haptic = rememberReorderHapticFeedback()
 
@@ -92,7 +93,8 @@ internal fun SessionEditorReady(
                             else -> collapsedTaskGroupsIds - taskGroup.id
                         }
                     },
-                    onTaskTitleChanged = onTaskTitleChanged
+                    onTaskTitleChanged = onTaskTitleChanged,
+                    onDeleteTask = onDeleteTask
                 )
             }
         }

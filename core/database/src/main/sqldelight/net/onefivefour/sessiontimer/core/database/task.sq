@@ -3,7 +3,8 @@ CREATE TABLE task (
   title TEXT NOT NULL,
   durationInSeconds INTEGER NOT NULL,
   sortOrder INTEGER NOT NULL,
-  taskGroupId INTEGER NOT NULL
+  taskGroupId INTEGER NOT NULL,
+  createdAt INTEGER NOT NULL
 );
 
 INSERT INTO task (
@@ -11,17 +12,18 @@ INSERT INTO task (
     title,
     durationInSeconds,
     sortOrder,
-    taskGroupId
+    taskGroupId,
+    createdAt
 )
 VALUES
-    (1,"Task 1", 1, 1, 1),
-    (2,"Task 2", 2, 2, 1),
-    (3,"Task 3", 3, 3, 2),
-    (4,"Task 4", 4, 4, 2)
+    (1,"Task 1", 1, 1, 1, 0),
+    (2,"Task 2", 2, 2, 1, 1),
+    (3,"Task 3", 3, 3, 2, 2),
+    (4,"Task 4", 4, 4, 2, 3)
 ;
 
 new:
-INSERT INTO task VALUES (?,?,?,?,?);
+INSERT INTO task VALUES (?,?,?,?,?,?);
 
 deleteById:
 DELETE FROM task WHERE id = :id;

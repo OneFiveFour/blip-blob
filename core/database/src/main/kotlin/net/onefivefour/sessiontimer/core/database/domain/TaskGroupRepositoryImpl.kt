@@ -5,6 +5,7 @@ import kotlin.time.Duration.Companion.seconds
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.mapNotNull
+import kotlinx.datetime.Instant
 import net.onefivefour.sessiontimer.core.common.domain.model.PlayMode
 import net.onefivefour.sessiontimer.core.common.domain.model.Task as DomainTask
 import net.onefivefour.sessiontimer.core.common.domain.model.TaskGroup as DomainTaskGroup
@@ -110,13 +111,15 @@ internal fun List<DenormalizedTaskGroupView>.toDomainTaskGroup(): DomainTaskGrou
         checkNotNull(it.taskTitle)
         checkNotNull(it.taskDuration)
         checkNotNull(it.taskSortOrder)
+        checkNotNull(it.taskCreatedAt)
 
         DomainTask(
             id = it.taskId,
             title = it.taskTitle,
             duration = it.taskDuration.seconds,
             sortOrder = it.taskSortOrder.toInt(),
-            taskGroupId = id
+            taskGroupId = id,
+            createdAt = Instant.fromEpochMilliseconds(it.taskCreatedAt)
         )
     }
 

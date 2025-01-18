@@ -29,10 +29,9 @@ import androidx.compose.ui.unit.dp
 import kotlinx.coroutines.delay
 
 @Composable
-fun <T> SwipeToDeleteContainer(
+fun <T> SwipeToDismissContainer(
     item: T,
     onDelete: (T) -> Unit,
-    animationDuration: Int = 500,
     content: @Composable () -> Unit
 ) {
 
@@ -52,27 +51,18 @@ fun <T> SwipeToDeleteContainer(
     )
 
     LaunchedEffect(key1 = isRemoved) {
-        if(isRemoved) {
-            delay(animationDuration.toLong())
+        if (isRemoved) {
             onDelete(item)
         }
     }
 
-    AnimatedVisibility(
-        visible = !isRemoved,
-        exit = shrinkVertically(
-            animationSpec = tween(durationMillis = animationDuration),
-            shrinkTowards = Alignment.Top
-        ) + fadeOut()
-    ) {
-        SwipeToDismissBox(
-            state = state,
-            backgroundContent = {
-                DeleteBackground(swipeDismissState = state)
-            },
-            enableDismissFromStartToEnd = true,
-        ) { content() }
-    }
+    SwipeToDismissBox(
+        state = state,
+        backgroundContent = {
+            DeleteBackground(swipeDismissState = state)
+        },
+        enableDismissFromStartToEnd = true,
+    ) { content() }
 }
 
 @Composable

@@ -2,6 +2,7 @@ package net.onefivefour.sessiontimer.feature.sessioneditor.ui
 
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
+import kotlinx.datetime.Clock
 import net.onefivefour.sessiontimer.core.common.domain.model.PlayMode
 import net.onefivefour.sessiontimer.core.theme.taskGroupColors
 import kotlin.time.Duration.Companion.seconds
@@ -12,21 +13,24 @@ internal val uiTask1 = UiTask(
     id = 1L,
     title = "Test Task 1L",
     duration = 10.seconds,
-    sortOrder = 1
+    sortOrder = 1,
+    createdAt = Clock.System.now().plus(1.seconds)
 )
 
 internal val uiTask2 = UiTask(
     id = 2L,
     title = "Test Task 2L",
     duration = 20.seconds,
-    sortOrder = 2
+    sortOrder = 2,
+    createdAt = Clock.System.now().plus(2.seconds)
 )
 
 internal val uiTask3 = UiTask(
     id = 3L,
     title = "Test Task 3L",
     duration = 30.seconds,
-    sortOrder = 3
+    sortOrder = 3,
+    createdAt = Clock.System.now().plus(3.seconds)
 )
 
 internal val fakeUiTasks = listOf(

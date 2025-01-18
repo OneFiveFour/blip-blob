@@ -19,6 +19,9 @@ dependencies {
     implementation(project(":core:usecases-api"))
     implementation(project(":feature:session-editor-api"))
 
+    // Date Time
+    implementation(libs.kotlinx.datetime)
+
     // Navigation
     implementation(libs.bundles.navigation)
 

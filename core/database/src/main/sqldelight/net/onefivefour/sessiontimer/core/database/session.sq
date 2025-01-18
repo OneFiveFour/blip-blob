@@ -16,14 +16,7 @@ VALUES
 ;
 
 new:
-INSERT INTO session (
-    id,
-    title,
-    sortOrder,
-    createdAt
-)
-VALUES (?,?,?,?)
-;
+INSERT INTO session VALUES (?,?,?,?);
 
 getAll:
 SELECT * FROM session ORDER BY sortOrder;
@@ -44,7 +37,8 @@ SELECT
     T.taskGroupId AS taskTaskGroupId,
     T.title AS taskTitle,
     T.durationInSeconds AS taskDuration,
-    T.sortOrder AS taskSortOrder
+    T.sortOrder AS taskSortOrder,
+    T.createdAt AS taskCreatedAt
 FROM session S
 LEFT JOIN taskGroup TG ON TG.sessionId = S.id
 LEFT JOIN task T ON T.taskGroupId = TG.id

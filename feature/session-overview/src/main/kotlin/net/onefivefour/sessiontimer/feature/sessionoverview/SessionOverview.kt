@@ -24,13 +24,12 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import kotlinx.datetime.Clock
-import kotlinx.datetime.Instant
 import net.onefivefour.sessiontimer.core.theme.SessionTimerTheme
 import net.onefivefour.sessiontimer.core.ui.R as UiR
 import net.onefivefour.sessiontimer.core.ui.button.PrimaryButton
 import net.onefivefour.sessiontimer.core.ui.haptic.ReorderHapticFeedbackType
 import net.onefivefour.sessiontimer.core.ui.haptic.rememberReorderHapticFeedback
-import net.onefivefour.sessiontimer.core.ui.swipedismiss.SwipeToDeleteContainer
+import net.onefivefour.sessiontimer.core.ui.swipedismiss.SwipeToDismissContainer
 import sh.calvin.reorderable.ReorderableItem
 import sh.calvin.reorderable.rememberReorderableLazyListState
 import kotlin.time.Duration.Companion.seconds
@@ -100,7 +99,7 @@ internal fun SessionOverview(
                 ReorderableItem(reorderableLazyColumnState, session.id) {
                     val interactionSource = remember { MutableInteractionSource() }
 
-                    SwipeToDeleteContainer(
+                    SwipeToDismissContainer(
                         item = session,
                         onDelete = { onDeleteSession(session.id) }
                     ) {

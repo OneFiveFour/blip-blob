@@ -34,7 +34,8 @@ internal fun TaskGroupItem(
     onEditTaskGroup: () -> Unit,
     onUpdateTaskSortOrders: (List<Long>) -> Unit,
     onCollapseChanged: (Boolean) -> Unit,
-    onTaskTitleChanged: (Long, String) -> Unit
+    onTaskTitleChanged: (Long, String) -> Unit,
+    onDeleteTask: (Long) -> Unit
 ) {
 
     val targetHeight = when {
@@ -60,11 +61,13 @@ internal fun TaskGroupItem(
     )
 
     val glowColor = uiTaskGroup.color
-        .copy(alpha = lerp(
-            start = 0.3f,
-            stop = 0.9f,
-            fraction = animatedDrag
-        ))
+        .copy(
+            alpha = lerp(
+                start = 0.3f,
+                stop = 0.9f,
+                fraction = animatedDrag
+            )
+        )
 
     val blurRadius = lerp(
         start = 12.dp.toPx(),
@@ -94,10 +97,8 @@ internal fun TaskGroupItem(
             TaskList(
                 taskGroup = uiTaskGroup,
                 onUpdateTaskSortOrders = onUpdateTaskSortOrders,
-                onTaskTitleChanged = onTaskTitleChanged
-            )
-
-            AddTaskButton(
+                onTaskTitleChanged = onTaskTitleChanged,
+                onDeleteTask = onDeleteTask,
                 onNewTask = onNewTask
             )
         }
@@ -119,7 +120,8 @@ private fun TaskGroupItemPreview() {
                 onEditTaskGroup = { },
                 onUpdateTaskSortOrders = { },
                 onCollapseChanged = { },
-                onTaskTitleChanged = { _, _ -> }
+                onTaskTitleChanged = { _, _ -> },
+                onDeleteTask = { _ -> }
             )
         }
     }

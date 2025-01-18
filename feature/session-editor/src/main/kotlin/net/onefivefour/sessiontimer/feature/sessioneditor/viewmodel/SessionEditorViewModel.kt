@@ -97,4 +97,10 @@ internal class SessionEditorViewModel @Inject constructor(
             )
         }
     }
+
+    fun onDeleteTask(taskId: Long) {
+        viewModelScope.launch {
+            deleteTaskUseCase.execute(taskId)
+        }
+    }
 }

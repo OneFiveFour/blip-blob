@@ -33,7 +33,6 @@ internal fun AddTaskButton(
 
     Box(
         modifier = Modifier
-            .padding(start = 16.dp)
             .size(TASK_ITEM_HEIGHT)
             .drawWithContent {
                 drawGlowingSides(

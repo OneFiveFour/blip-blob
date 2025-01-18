@@ -93,13 +93,15 @@ internal fun List<DenormalizedSessionView>.toDomainSession(): DomainSession? {
                 checkNotNull(taskRow.taskTitle)
                 checkNotNull(taskRow.taskDuration)
                 checkNotNull(taskRow.taskSortOrder)
+                checkNotNull(taskRow.taskCreatedAt)
 
                 Task(
                     id = taskId,
                     title = taskRow.taskTitle,
                     duration = taskRow.taskDuration.seconds,
                     sortOrder = taskRow.taskSortOrder.toInt(),
-                    taskGroupId = taskGroupId
+                    taskGroupId = taskGroupId,
+                    createdAt = Instant.fromEpochMilliseconds(taskRow.taskCreatedAt)
                 )
             }
 

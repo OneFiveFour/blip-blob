@@ -37,7 +37,8 @@ SELECT
     T.id AS taskId,
     T.title AS taskTitle,
     T.durationInSeconds AS taskDuration,
-    T.sortOrder AS taskSortOrder
+    T.sortOrder AS taskSortOrder,
+    T.createdAt AS taskCreatedAt
 FROM taskGroup TG
 LEFT JOIN task T ON T.taskGroupId = TG.id
 WHERE TG.id = :id

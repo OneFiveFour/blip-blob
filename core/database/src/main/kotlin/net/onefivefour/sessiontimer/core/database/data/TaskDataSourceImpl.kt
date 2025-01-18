@@ -3,6 +3,7 @@ package net.onefivefour.sessiontimer.core.database.data
 import javax.inject.Inject
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.withContext
+import kotlinx.datetime.Clock
 import net.onefivefour.sessiontimer.core.database.TaskQueries
 import net.onefivefour.sessiontimer.core.di.IoDispatcher
 
@@ -15,12 +16,14 @@ internal class TaskDataSourceImpl @Inject constructor(
         withContext(dispatcher) {
             queries.transaction {
                 val maxSortOrder = queries.findMaxSortOrder(taskGroupId).executeAsOne().MAX ?: 0L
+                val createdAt = Clock.System.now().toEpochMilliseconds()
                 queries.new(
                     id = null,
                     title = title,
                     durationInSeconds = durationInSeconds,
                     sortOrder = maxSortOrder + 1,
-                    taskGroupId = taskGroupId
+                    taskGroupId = taskGroupId,
+                    createdAt = createdAt
                 )
             }
         }
