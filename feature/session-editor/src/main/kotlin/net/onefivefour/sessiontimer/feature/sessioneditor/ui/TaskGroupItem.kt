@@ -18,8 +18,8 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.util.lerp
 import net.onefivefour.sessiontimer.core.theme.SessionTimerTheme
-import net.onefivefour.sessiontimer.core.ui.components.glow.drawGlowingSides
-import net.onefivefour.sessiontimer.core.ui.components.utils.toPx
+import net.onefivefour.sessiontimer.core.ui.glow.drawGlowingSides
+import net.onefivefour.sessiontimer.core.ui.utils.toPx
 import net.onefivefour.sessiontimer.feature.sessioneditor.model.UiTaskGroup
 
 internal val TASK_GROUP_ITEM_HEIGHT = 64.dp

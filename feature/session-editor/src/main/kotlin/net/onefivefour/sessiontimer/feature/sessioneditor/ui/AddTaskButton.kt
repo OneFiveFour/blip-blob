@@ -22,7 +22,7 @@ import androidx.compose.ui.unit.dp
 import net.onefivefour.sessiontimer.core.theme.SessionTimerTheme
 import net.onefivefour.sessiontimer.core.theme.customColors
 import net.onefivefour.sessiontimer.core.ui.R
-import net.onefivefour.sessiontimer.core.ui.components.glow.drawGlowingSides
+import net.onefivefour.sessiontimer.core.ui.glow.drawGlowingSides
 
 @Composable
 internal fun AddTaskButton(

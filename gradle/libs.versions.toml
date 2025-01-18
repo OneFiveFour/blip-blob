@@ -1,9 +1,9 @@
 [versions]
 androidMaterial = "1.12.0"
-androidXActivity = "1.9.3"
-androidXActivityCompose = "1.9.3"
+androidXActivity = "1.10.0"
+androidXActivityCompose = "1.10.0"
 androidXArchCoreTesting = "2.2.0"
-androidXComposeBom = "2024.12.01"
+androidXComposeBom = "2025.01.00"
 androidXCore = "1.15.0"
 androidXLifecycle="2.8.7"
 androidXNavigation = "2.8.5"

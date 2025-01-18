@@ -1,4 +1,4 @@
-package net.onefivefour.sessiontimer.core.ui.components.glow
+package net.onefivefour.sessiontimer.core.ui.glow
 
 import android.graphics.BlurMaskFilter
 import androidx.compose.animation.core.Animatable

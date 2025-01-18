@@ -26,8 +26,8 @@ import androidx.compose.ui.unit.max
 import net.onefivefour.sessiontimer.core.common.domain.model.PlayMode
 import net.onefivefour.sessiontimer.core.theme.SessionTimerTheme
 import net.onefivefour.sessiontimer.core.theme.customColors
-import net.onefivefour.sessiontimer.core.ui.components.glow.drawGlowingSides
-import net.onefivefour.sessiontimer.core.ui.components.dragger.Dragger
+import net.onefivefour.sessiontimer.core.ui.glow.drawGlowingSides
+import net.onefivefour.sessiontimer.core.ui.dragger.Dragger
 import net.onefivefour.sessiontimer.feature.sessioneditor.R
 import net.onefivefour.sessiontimer.feature.sessioneditor.model.UiTaskGroup
 

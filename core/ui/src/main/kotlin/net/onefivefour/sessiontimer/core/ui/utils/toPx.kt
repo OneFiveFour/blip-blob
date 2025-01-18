@@ -1,4 +1,4 @@
-package net.onefivefour.sessiontimer.core.ui.components.utils
+package net.onefivefour.sessiontimer.core.ui.utils
 
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.platform.LocalDensity

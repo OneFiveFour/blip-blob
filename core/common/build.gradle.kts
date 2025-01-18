@@ -9,5 +9,9 @@ android {
 }
 
 dependencies {
+
+    // Date Time
+    implementation(libs.kotlinx.datetime)
+
     testImplementation(project(":core:common-test"))
 }

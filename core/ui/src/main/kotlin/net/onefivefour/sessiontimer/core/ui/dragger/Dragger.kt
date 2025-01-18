@@ -1,4 +1,4 @@
-package net.onefivefour.sessiontimer.core.ui.components.dragger
+package net.onefivefour.sessiontimer.core.ui.dragger
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box

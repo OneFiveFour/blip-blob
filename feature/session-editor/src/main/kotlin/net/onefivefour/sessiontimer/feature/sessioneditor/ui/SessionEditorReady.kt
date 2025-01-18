@@ -16,7 +16,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import net.onefivefour.sessiontimer.core.ui.R
-import net.onefivefour.sessiontimer.core.ui.components.button.PrimaryButton
+import net.onefivefour.sessiontimer.core.ui.button.PrimaryButton
 import net.onefivefour.sessiontimer.core.ui.haptic.ReorderHapticFeedbackType
 import net.onefivefour.sessiontimer.core.ui.haptic.rememberReorderHapticFeedback
 import net.onefivefour.sessiontimer.feature.sessioneditor.model.UiSession

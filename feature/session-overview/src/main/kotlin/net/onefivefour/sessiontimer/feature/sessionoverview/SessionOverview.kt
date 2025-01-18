@@ -23,13 +23,17 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import kotlinx.datetime.Clock
+import kotlinx.datetime.Instant
 import net.onefivefour.sessiontimer.core.theme.SessionTimerTheme
 import net.onefivefour.sessiontimer.core.ui.R as UiR
-import net.onefivefour.sessiontimer.core.ui.components.button.PrimaryButton
+import net.onefivefour.sessiontimer.core.ui.button.PrimaryButton
 import net.onefivefour.sessiontimer.core.ui.haptic.ReorderHapticFeedbackType
 import net.onefivefour.sessiontimer.core.ui.haptic.rememberReorderHapticFeedback
+import net.onefivefour.sessiontimer.core.ui.swipedismiss.SwipeToDeleteContainer
 import sh.calvin.reorderable.ReorderableItem
 import sh.calvin.reorderable.rememberReorderableLazyListState
+import kotlin.time.Duration.Companion.seconds
 
 @Composable
 internal fun SessionOverview(
@@ -37,7 +41,8 @@ internal fun SessionOverview(
     onEditSession: (Long) -> Unit,
     onNewSession: () -> Unit,
     onUpdateSessionSortOrders: (List<Long>) -> Unit,
-    onStartSession: (Long) -> Unit
+    onStartSession: (Long) -> Unit,
+    onDeleteSession: (Long) -> Unit
 ) {
     if (uiState == UiState.Initial) {
         SessionOverviewInitial()
@@ -49,11 +54,13 @@ internal fun SessionOverview(
     }
 
     Column(
-        Modifier.fillMaxSize().padding(
-            bottom = 16.dp,
-            start = 16.dp,
-            end = 16.dp
-        ),
+        Modifier
+            .fillMaxSize()
+            .padding(
+                bottom = 16.dp,
+                start = 16.dp,
+                end = 16.dp
+            ),
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.spacedBy(12.dp)
     ) {
@@ -87,28 +94,34 @@ internal fun SessionOverview(
         ) {
             items(
                 items = sessionList,
-                key = { session -> session.id }
+                key = { session -> session.createdAt.toEpochMilliseconds() }
             ) { session ->
 
                 ReorderableItem(reorderableLazyColumnState, session.id) {
                     val interactionSource = remember { MutableInteractionSource() }
 
-                    SessionItem(
-                        modifier = Modifier
-                            .longPressDraggableHandle(
-                                onDragStarted = {
-                                    haptic.performHapticFeedback(ReorderHapticFeedbackType.START)
-                                },
-                                onDragStopped = {
-                                    haptic.performHapticFeedback(ReorderHapticFeedbackType.END)
-                                    onUpdateSessionSortOrders(sessionList.map { it.id })
-                                },
-                                interactionSource = interactionSource
-                            ),
-                        session = session,
-                        onStartSession = onStartSession,
-                        onEditSession = onEditSession
-                    )
+                    SwipeToDeleteContainer(
+                        item = session,
+                        onDelete = { onDeleteSession(session.id) }
+                    ) {
+
+                        SessionItem(
+                            modifier = Modifier
+                                .longPressDraggableHandle(
+                                    onDragStarted = {
+                                        haptic.performHapticFeedback(ReorderHapticFeedbackType.START)
+                                    },
+                                    onDragStopped = {
+                                        haptic.performHapticFeedback(ReorderHapticFeedbackType.END)
+                                        onUpdateSessionSortOrders(sessionList.map { it.id })
+                                    },
+                                    interactionSource = interactionSource
+                                ),
+                            uiSession = session,
+                            onStartSession = onStartSession,
+                            onEditSession = onEditSession
+                        )
+                    }
                 }
             }
         }
@@ -135,16 +148,37 @@ private fun SessionOverviewPreview() {
         SessionOverview(
             uiState = UiState.Success(
                 listOf(
-                    UiSession(1, "A session", 1),
-                    UiSession(1, "A session", 2),
-                    UiSession(1, "A session", 3),
-                    UiSession(1, "A session", 4)
+                    UiSession(
+                        id = 1,
+                        title = "A session",
+                        sortOrder = 1,
+                        createdAt = Clock.System.now().plus(1.seconds)
+                    ),
+                    UiSession(
+                        id = 1,
+                        title = "A session",
+                        sortOrder = 2,
+                        createdAt = Clock.System.now().plus(2.seconds)
+                    ),
+                    UiSession(
+                        id = 1,
+                        title = "A session",
+                        sortOrder = 3,
+                        createdAt = Clock.System.now().plus(3.seconds)
+                    ),
+                    UiSession(
+                        id = 1,
+                        title = "A session",
+                        sortOrder = 4,
+                        createdAt = Clock.System.now().plus(4.seconds)
+                    )
                 )
             ),
             onEditSession = {},
             onNewSession = {},
             onUpdateSessionSortOrders = { _ -> },
-            onStartSession = { _ -> }
+            onStartSession = { _ -> },
+            onDeleteSession = { _ -> }
         )
     }
 }

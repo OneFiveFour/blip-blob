@@ -22,7 +22,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import net.onefivefour.sessiontimer.core.theme.SessionTimerTheme
 import net.onefivefour.sessiontimer.core.theme.taskGroupColors
-import net.onefivefour.sessiontimer.core.ui.components.modifier.innerShadow
+import net.onefivefour.sessiontimer.core.ui.modifier.innerShadow
 
 @Composable
 internal fun ColorGrid(

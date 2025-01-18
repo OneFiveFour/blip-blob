@@ -13,8 +13,9 @@ fun SessionOverviewScreen(onEditSession: (Long) -> Unit, onPlaySession: (Long) -
     SessionOverview(
         uiState = sessionOverviewState,
         onEditSession = onEditSession,
-        onNewSession = { viewModel.newSession() },
+        onNewSession = viewModel::newSession,
         onUpdateSessionSortOrders = { sessionIds -> viewModel.updateSessionSortOrders(sessionIds) },
-        onStartSession = onPlaySession
+        onStartSession = onPlaySession,
+        onDeleteSession = viewModel::onDeleteSession
     )
 }

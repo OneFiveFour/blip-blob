@@ -1,4 +1,4 @@
-package net.onefivefour.sessiontimer.core.ui.components.button
+package net.onefivefour.sessiontimer.core.ui.button
 
 import androidx.compose.animation.core.Animatable
 import androidx.compose.animation.core.AnimationVector1D
@@ -12,7 +12,7 @@ import androidx.compose.ui.graphics.drawscope.ContentDrawScope
 import androidx.compose.ui.node.DrawModifierNode
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
-import net.onefivefour.sessiontimer.core.ui.components.glow.drawGlowingSides
+import net.onefivefour.sessiontimer.core.ui.glow.drawGlowingSides
 
 internal class GlowingButtonIndicationNode(
     private val interactionSource: InteractionSource,

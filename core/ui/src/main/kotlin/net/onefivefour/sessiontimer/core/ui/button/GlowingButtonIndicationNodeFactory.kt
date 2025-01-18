@@ -1,4 +1,4 @@
-package net.onefivefour.sessiontimer.core.ui.components.button
+package net.onefivefour.sessiontimer.core.ui.button
 
 import androidx.compose.foundation.IndicationNodeFactory
 import androidx.compose.foundation.interaction.InteractionSource

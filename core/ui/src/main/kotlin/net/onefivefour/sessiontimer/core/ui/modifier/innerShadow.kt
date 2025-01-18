@@ -1,4 +1,4 @@
-package net.onefivefour.sessiontimer.core.ui.components.modifier
+package net.onefivefour.sessiontimer.core.ui.modifier
 
 import android.graphics.BlurMaskFilter
 import android.graphics.PorterDuff

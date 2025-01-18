@@ -1,7 +1,6 @@
 package net.onefivefour.sessiontimer.feature.sessionoverview
 
 import android.content.res.Configuration.*
-import android.util.Log
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Row
@@ -23,19 +22,20 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import kotlinx.datetime.Clock
 import net.onefivefour.sessiontimer.core.theme.SessionTimerTheme
 import net.onefivefour.sessiontimer.core.theme.customColors
-import net.onefivefour.sessiontimer.core.ui.components.button.GlowingButtonIndicationNodeFactory
-import net.onefivefour.sessiontimer.core.ui.components.dragger.Dragger
+import net.onefivefour.sessiontimer.core.ui.button.GlowingButtonIndicationNodeFactory
+import net.onefivefour.sessiontimer.core.ui.dragger.Dragger
+import net.onefivefour.sessiontimer.core.ui.R as UiR
 
 @Composable
 internal fun SessionItem(
     modifier: Modifier = Modifier,
-    session: UiSession,
+    uiSession: UiSession,
     onStartSession: (Long) -> Unit,
     onEditSession: (Long) -> Unit
 ) {
-    val cornerRadius = 8.dp
 
     val interactionSource = remember {
         MutableInteractionSource()
@@ -49,7 +49,7 @@ internal fun SessionItem(
                     backgroundColor = MaterialTheme.colorScheme.surface,
                     glowColor = MaterialTheme.customColors.surfaceGlow
                 )
-            ) { onStartSession(session.id) }
+            ) { onStartSession(uiSession.id) }
             .padding(
                 horizontal = 16.dp,
                 vertical = 20.dp
@@ -63,7 +63,7 @@ internal fun SessionItem(
         Text(
             modifier = Modifier.weight(1f),
             color = MaterialTheme.colorScheme.onBackground,
-            text = session.title,
+            text = uiSession.title,
             style = MaterialTheme.typography.titleMedium,
             maxLines = 1,
             overflow = TextOverflow.Ellipsis
@@ -71,10 +71,10 @@ internal fun SessionItem(
 
         Icon(
             modifier = Modifier
-                .clip(RoundedCornerShape(cornerRadius))
-                .clickable { onEditSession(session.id) }
+                .clip(RoundedCornerShape(8.dp))
+                .clickable { onEditSession(uiSession.id) }
                 .padding(4.dp),
-            painter = painterResource(id = net.onefivefour.sessiontimer.core.ui.R.drawable.ic_edit),
+            painter = painterResource(id = UiR.drawable.ic_edit),
             tint = MaterialTheme.colorScheme.onBackground,
             contentDescription = stringResource(id = R.string.edit_session)
         )
@@ -88,10 +88,11 @@ private fun SessionItemPreview() {
     SessionTimerTheme {
         Surface {
             SessionItem(
-                session = UiSession(
+                uiSession = UiSession(
                     id = 1,
                     title = "A Session",
-                    sortOrder = 1
+                    sortOrder = 1,
+                    createdAt = Clock.System.now()
                 ),
                 onEditSession = {},
                 onStartSession = {}

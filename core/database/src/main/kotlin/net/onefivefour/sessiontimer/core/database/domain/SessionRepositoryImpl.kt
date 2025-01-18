@@ -5,6 +5,7 @@ import kotlin.time.Duration.Companion.seconds
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.mapNotNull
+import kotlinx.datetime.Instant
 import net.onefivefour.sessiontimer.core.common.domain.model.PlayMode
 import net.onefivefour.sessiontimer.core.common.domain.model.Session as DomainSession
 import net.onefivefour.sessiontimer.core.common.domain.model.Task
@@ -50,6 +51,7 @@ internal fun List<DenormalizedSessionView>.toDomainSession(): DomainSession? {
     val sessionId = firstSession.sessionId
     val sessionTitle = firstSession.sessionTitle
     val sessionSortOrder = firstSession.sessionSortOrder.toInt()
+    val sessionCreatedAt = Instant.fromEpochMilliseconds(firstSession.sessionCreatedAt)
 
     val taskGroups = this
         .groupBy { it.taskGroupId }
@@ -117,7 +119,8 @@ internal fun List<DenormalizedSessionView>.toDomainSession(): DomainSession? {
         sessionId,
         sessionTitle,
         sessionSortOrder,
-        taskGroups
+        taskGroups,
+        sessionCreatedAt
     )
 }
 
@@ -132,6 +135,7 @@ internal fun DatabaseSession.toDomainSession(): DomainSession {
         id = this.id,
         title = this.title,
         sortOrder = this.sortOrder.toInt(),
-        taskGroups = emptyList()
+        taskGroups = emptyList(),
+        createdAt = Instant.fromEpochMilliseconds(this.createdAt)
     )
 }

@@ -1,4 +1,4 @@
-package net.onefivefour.sessiontimer.core.ui.components.button
+package net.onefivefour.sessiontimer.core.ui.button
 
 import android.content.res.Configuration.UI_MODE_NIGHT_YES
 import androidx.annotation.DrawableRes

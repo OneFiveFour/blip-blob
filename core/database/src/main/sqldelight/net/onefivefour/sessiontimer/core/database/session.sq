@@ -1,20 +1,29 @@
 CREATE TABLE session (
   id INTEGER PRIMARY KEY NOT NULL,
   title TEXT NOT NULL,
-  sortOrder INTEGER NOT NULL
+  sortOrder INTEGER NOT NULL,
+  createdAt INTEGER NOT NULL
 );
 
 INSERT INTO session (
     id,
     title,
-    sortOrder
+    sortOrder,
+    createdAt
 )
 VALUES
-    (1, "Session 1", 1)
+    (1, "Session 1", 1, 0)
 ;
 
 new:
-INSERT INTO session VALUES (?,?,?);
+INSERT INTO session (
+    id,
+    title,
+    sortOrder,
+    createdAt
+)
+VALUES (?,?,?,?)
+;
 
 getAll:
 SELECT * FROM session ORDER BY sortOrder;
@@ -24,6 +33,7 @@ SELECT
     S.id AS sessionId,
     S.title AS sessionTitle,
     S.sortOrder AS sessionSortOrder,
+    S.createdAt AS sessionCreatedAt,
     TG.id AS taskGroupId,
     TG.title AS taskGroupTitle,
     TG.color AS taskGroupColor,

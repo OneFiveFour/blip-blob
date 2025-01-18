@@ -29,8 +29,8 @@ import net.onefivefour.sessiontimer.core.common.domain.model.PlayMode
 import net.onefivefour.sessiontimer.core.taskgroupeditor.R
 import net.onefivefour.sessiontimer.core.theme.SessionTimerTheme
 import net.onefivefour.sessiontimer.core.theme.taskGroupColors
-import net.onefivefour.sessiontimer.core.ui.components.button.PrimaryButton
-import net.onefivefour.sessiontimer.core.ui.components.modifier.clearFocusOnKeyboardDismiss
+import net.onefivefour.sessiontimer.core.ui.button.PrimaryButton
+import net.onefivefour.sessiontimer.core.ui.modifier.clearFocusOnKeyboardDismiss
 import net.onefivefour.sessiontimer.core.ui.R as UiR
 
 @OptIn(ExperimentalLayoutApi::class)

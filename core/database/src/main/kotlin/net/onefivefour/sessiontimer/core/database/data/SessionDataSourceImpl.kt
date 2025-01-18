@@ -5,6 +5,7 @@ import app.cash.sqldelight.coroutines.mapToList
 import javax.inject.Inject
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.withContext
+import kotlinx.datetime.Clock
 import net.onefivefour.sessiontimer.core.database.SessionQueries
 import net.onefivefour.sessiontimer.core.di.IoDispatcher
 
@@ -17,10 +18,12 @@ internal class SessionDataSourceImpl @Inject constructor(
         withContext(dispatcher) {
             queries.transaction {
                 val maxSortOrder = queries.findMaxSortOrder().executeAsOne().MAX ?: 0L
+                val createdAt = Clock.System.now().toEpochMilliseconds()
                 queries.new(
                     id = null,
                     title = title,
-                    sortOrder = maxSortOrder + 1
+                    sortOrder = maxSortOrder + 1,
+                    createdAt = createdAt
                 )
             }
         }
