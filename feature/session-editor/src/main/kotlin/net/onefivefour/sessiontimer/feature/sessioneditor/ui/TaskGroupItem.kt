@@ -27,11 +27,11 @@ internal val TASK_GROUP_ITEM_HEIGHT = 64.dp
 @Composable
 internal fun TaskGroupItem(
     modifier: Modifier = Modifier,
-    taskGroup: UiTaskGroup,
+    uiTaskGroup: UiTaskGroup,
     isCollapsed: Boolean,
     isDragging: Boolean,
-    onNewTask: (Long) -> Unit,
-    onEditTaskGroup: (Long) -> Unit,
+    onNewTask: () -> Unit,
+    onEditTaskGroup: () -> Unit,
     onUpdateTaskSortOrders: (List<Long>) -> Unit,
     onCollapseChanged: (Boolean) -> Unit,
     onTaskTitleChanged: (Long, String) -> Unit
@@ -39,7 +39,9 @@ internal fun TaskGroupItem(
 
     val targetHeight = when {
         isCollapsed -> TASK_GROUP_ITEM_HEIGHT
-        else -> TASK_GROUP_ITEM_HEIGHT + (TASK_ITEM_HEIGHT * taskGroup.tasks.size)
+        else -> TASK_GROUP_ITEM_HEIGHT + // TaskGroupSummary
+                (TASK_ITEM_HEIGHT * uiTaskGroup.tasks.size) + // TaskItems
+                TASK_ITEM_HEIGHT // AddTaskButton
     }
 
     val animatedCollapse by animateDpAsState(
@@ -57,7 +59,7 @@ internal fun TaskGroupItem(
         label = "animatedDrag"
     )
 
-    val glowColor = taskGroup.color
+    val glowColor = uiTaskGroup.color
         .copy(alpha = lerp(
             start = 0.3f,
             stop = 0.9f,
@@ -83,16 +85,20 @@ internal fun TaskGroupItem(
         Column(modifier = Modifier.height(animatedCollapse)) {
 
             TaskGroupSummary(
-                taskGroup,
-                onEditTaskGroup,
-                onCollapseChanged,
-                isCollapsed
+                uiTaskGroup = uiTaskGroup,
+                onEditTaskGroup = onEditTaskGroup,
+                onCollapseChanged = onCollapseChanged,
+                isCollapsed = isCollapsed
             )
 
             TaskList(
-                taskGroup,
-                onUpdateTaskSortOrders,
+                taskGroup = uiTaskGroup,
+                onUpdateTaskSortOrders = onUpdateTaskSortOrders,
                 onTaskTitleChanged = onTaskTitleChanged
+            )
+
+            AddTaskButton(
+                onNewTask = onNewTask
             )
         }
 
@@ -106,7 +112,7 @@ private fun TaskGroupItemPreview() {
     SessionTimerTheme {
         Surface {
             TaskGroupItem(
-                taskGroup = fakeUiTaskGroup(),
+                uiTaskGroup = fakeUiTaskGroup(),
                 isCollapsed = false,
                 isDragging = false,
                 onNewTask = { },

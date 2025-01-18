@@ -48,7 +48,6 @@ import net.onefivefour.sessiontimer.feature.sessioneditor.model.UiTask
 internal val TASK_ITEM_HEIGHT = 64.dp
 
 @Composable
-@OptIn(ExperimentalLayoutApi::class)
 internal fun TaskItem(
     modifier: Modifier = Modifier,
     uiTask: UiTask,

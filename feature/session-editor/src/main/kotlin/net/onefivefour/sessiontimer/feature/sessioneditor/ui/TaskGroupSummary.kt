@@ -34,7 +34,7 @@ import net.onefivefour.sessiontimer.feature.sessioneditor.model.UiTaskGroup
 @Composable
 internal fun TaskGroupSummary(
     uiTaskGroup: UiTaskGroup,
-    onEditTaskGroup: (Long) -> Unit,
+    onEditTaskGroup: () -> Unit,
     onCollapseChanged: (Boolean) -> Unit,
     isCollapsed: Boolean,
 ) {
@@ -53,7 +53,7 @@ internal fun TaskGroupSummary(
             }
             .padding(10.dp)
             .clip(RoundedCornerShape(8.dp))
-            .clickable { onEditTaskGroup(uiTaskGroup.id) },
+            .clickable { onEditTaskGroup() },
         verticalAlignment = Alignment.CenterVertically
     ) {
         Dragger()

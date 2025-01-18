@@ -76,11 +76,15 @@ internal fun SessionEditorReady(
                             },
                             interactionSource = interactionSource
                         ),
-                    taskGroup = taskGroup,
+                    uiTaskGroup = taskGroup,
                     isCollapsed = collapsedTaskGroupsIds.contains(taskGroup.id),
                     isDragging = isDragging,
-                    onNewTask = onNewTask,
-                    onEditTaskGroup = onEditTaskGroup,
+                    onNewTask = {
+                        onNewTask(taskGroup.id)
+                    },
+                    onEditTaskGroup = {
+                        onEditTaskGroup(taskGroup.id)
+                    },
                     onUpdateTaskSortOrders = onUpdateTaskSortOrders,
                     onCollapseChanged = { isCollapsed ->
                         collapsedTaskGroupsIds = when {
