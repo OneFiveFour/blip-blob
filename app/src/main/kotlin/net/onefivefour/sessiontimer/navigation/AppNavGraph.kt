@@ -23,11 +23,11 @@ internal fun AppNavGraph() {
     ) {
         composable<SessionOverviewRoute> {
             SessionOverviewScreen(
-                onEditSession = { sessionId ->
+                openSessionEditor = { sessionId ->
                     val route = SessionEditorRoute(sessionId)
                     navController.navigate(route)
                 },
-                onPlaySession = { sessionId ->
+                openSessionPlayer = { sessionId ->
                     val route = SessionPlayerRoute(sessionId)
                     navController.navigate(route)
                 }
