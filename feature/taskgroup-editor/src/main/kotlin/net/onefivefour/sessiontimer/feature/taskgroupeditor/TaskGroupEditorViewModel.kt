@@ -16,7 +16,6 @@ import kotlinx.coroutines.launch
 import net.onefivefour.sessiontimer.core.common.domain.model.PlayMode
 import net.onefivefour.sessiontimer.core.usecases.api.taskgroup.GetTaskGroupUseCase
 import net.onefivefour.sessiontimer.core.usecases.api.taskgroup.UpdateTaskGroupUseCase
-import net.onefivefour.sessiontimer.core.usecases.api.timer.SeekTimerUseCase
 import net.onefivefour.sessiontimer.feature.taskgroupeditor.api.TaskGroupEditorRoute
 
 @HiltViewModel
@@ -41,20 +40,15 @@ internal class TaskGroupEditorViewModel @Inject constructor(
         }
     }
 
-    fun updateTaskGroup(taskGroup: UiTaskGroup) {
-        viewModelScope.launch {
-            updateTaskGroupUseCase.execute(
-                id = taskGroup.id,
-                title = taskGroup.title,
-                color = taskGroup.color.toArgb(),
-                playMode = taskGroup.playMode,
-                numberOfRandomTasks = taskGroup.numberOfRandomTasks,
-                sortOrder = taskGroup.sortOrder
-            )
+    fun onAction(action: TaskGroupEditorAction) {
+        when (action) {
+            is TaskGroupEditorAction.SetTitle -> setTitle(action.newTitle)
+            is TaskGroupEditorAction.SetColor -> setColor(action.newColor)
+            is TaskGroupEditorAction.SetPlayMode -> setPlayMode(action.newPlayMode, action.newNumberOfRandomTasks)
         }
     }
 
-    fun updateTitle(newTitle: String) {
+    private fun setTitle(newTitle: String) {
         whenReady { taskGroup ->
             updateTaskGroupUseCase.execute(
                 id = taskGroup.id,
@@ -67,7 +61,7 @@ internal class TaskGroupEditorViewModel @Inject constructor(
         }
     }
 
-    fun updateColor(newColor: Color) {
+    private fun setColor(newColor: Color) {
         whenReady { taskGroup ->
             updateTaskGroupUseCase.execute(
                 id = taskGroup.id,
@@ -80,7 +74,7 @@ internal class TaskGroupEditorViewModel @Inject constructor(
         }
     }
 
-    fun updatePlayMode(newPlayMode: PlayMode, newNumberOfRandomTasks: Int) {
+    private fun setPlayMode(newPlayMode: PlayMode, newNumberOfRandomTasks: Int) {
         whenReady { taskGroup ->
             updateTaskGroupUseCase.execute(
                 id = taskGroup.id,

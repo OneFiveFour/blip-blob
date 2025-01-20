@@ -18,14 +18,12 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.SolidColor
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextRange
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import net.onefivefour.sessiontimer.core.common.domain.model.PlayMode
 import net.onefivefour.sessiontimer.core.taskgroupeditor.R
 import net.onefivefour.sessiontimer.core.theme.SessionTimerTheme
 import net.onefivefour.sessiontimer.core.theme.taskGroupColors
@@ -37,10 +35,8 @@ import net.onefivefour.sessiontimer.core.ui.R as UiR
 @Composable
 internal fun TaskGroupEditor(
     uiState: UiState,
-    onTitleChanged: (String) -> Unit,
-    onColorChanged: (Color) -> Unit,
-    onPlayModeChanged: (PlayMode, Int) -> Unit,
-    onSave: () -> Unit,
+    onAction: (TaskGroupEditorAction) -> Unit,
+    goBack: () -> Unit,
 ) {
     when (uiState) {
         UiState.Initial -> {
@@ -82,7 +78,7 @@ internal fun TaskGroupEditor(
                 text = taskGroup.title,
                 selection = TextRange(taskGroup.title.length)
             ),
-            onValueChange = { newText -> onTitleChanged(newText.text) },
+            onValueChange = { newText -> onAction(TaskGroupEditorAction.SetTitle(newText.text)) },
             cursorBrush = SolidColor(MaterialTheme.colorScheme.onSurface),
             singleLine = true,
             textStyle = MaterialTheme.typography.titleMedium
@@ -97,7 +93,7 @@ internal fun TaskGroupEditor(
                     colors = MaterialTheme.taskGroupColors.getAll(),
                     selectedColor = taskGroup.color,
                     columnsCount = 6,
-                    onColorClick = { color -> onColorChanged(color) }
+                    onColorClick = { color -> onAction(TaskGroupEditorAction.SetColor(color)) }
                 )
 
                 LabelLine(
@@ -109,7 +105,9 @@ internal fun TaskGroupEditor(
                     playMode = taskGroup.playMode,
                     numberOfRandomTasks = taskGroup.numberOfRandomTasks,
                     numberOfTasks = taskGroup.tasks.size,
-                    onPlayModeChanged = onPlayModeChanged
+                    onPlayModeChanged = { playMode, numberOfRandomTasks ->
+                        onAction(TaskGroupEditorAction.SetPlayMode(playMode, numberOfRandomTasks))
+                    }
                 )
 
                 LabelLine(
@@ -122,7 +120,7 @@ internal fun TaskGroupEditor(
                     text = stringResource(R.string.save),
                     iconRes = UiR.drawable.ic_save,
                     contentDescription = stringResource(R.string.save),
-                    onClick = onSave
+                    onClick = goBack
                 )
             }
         }
@@ -137,10 +135,8 @@ private fun TaskGroupEditorPreview() {
         Surface(modifier = Modifier.fillMaxSize()) {
             TaskGroupEditor(
                 uiState = UiState.Ready(taskGroup = uiTaskGroup()),
-                onTitleChanged = { },
-                onColorChanged = { },
-                onPlayModeChanged = { _, _ -> },
-                onSave = { }
+                onAction = { },
+                goBack = { }
             )
         }
     }

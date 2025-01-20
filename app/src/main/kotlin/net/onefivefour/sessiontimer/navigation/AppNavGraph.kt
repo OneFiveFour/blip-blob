@@ -45,7 +45,7 @@ internal fun AppNavGraph() {
 
         composable<TaskGroupEditorRoute> {
             TaskGroupEditorScreen(
-                onSave = { navController.popBackStack() }
+                goBack = { navController.popBackStack() }
             )
         }
 
