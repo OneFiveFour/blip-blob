@@ -35,11 +35,7 @@ internal fun SessionPlayerReady(uiState: UiState.Ready) {
     SessionPlayerReadyInternal(
         uiState = uiState,
         uiTimerState = uiTimerState,
-        onStartSession = { timerViewModel.onStartSession() },
-        onPauseSession = { timerViewModel.onPauseSession() },
-        onResetSession = { timerViewModel.onResetSession() },
-        onNextTask = { timerViewModel.onNextTask() },
-        onPreviousTask = { timerViewModel.onPreviousTask() },
+        onAction = timerViewModel::onAction
     )
 }
 
@@ -47,11 +43,7 @@ internal fun SessionPlayerReady(uiState: UiState.Ready) {
 private fun SessionPlayerReadyInternal(
     uiState: UiState.Ready,
     uiTimerState: UiTimerState,
-    onStartSession: () -> Unit,
-    onPauseSession: () -> Unit,
-    onResetSession: () -> Unit,
-    onNextTask: () -> Unit,
-    onPreviousTask: () -> Unit
+    onAction: (SessionPlayerAction) -> Unit
 ) {
     Box(Modifier.fillMaxSize()) {
 
@@ -73,11 +65,7 @@ private fun SessionPlayerReadyInternal(
                 .padding(bottom = 16.dp)
             ,
             uiTimerState = { uiTimerState },
-            onStartSession = onStartSession,
-            onPauseSession = onPauseSession,
-            onResetSession = onResetSession,
-            onNextTask = onNextTask,
-            onPreviousTask = onPreviousTask
+            onAction = onAction
         )
     }
 }
@@ -96,11 +84,7 @@ private fun SessionPlayerPreview() {
             SessionPlayerReadyInternal(
                 uiState = uiState,
                 uiTimerState = uiTimerStateActive,
-                onStartSession = { },
-                onPauseSession = { },
-                onResetSession = { },
-                onNextTask = { },
-                onPreviousTask = { },
+                onAction = { }
             )
         }
     }
