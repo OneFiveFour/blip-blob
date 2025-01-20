@@ -7,18 +7,14 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import net.onefivefour.sessiontimer.feature.sessioneditor.viewmodel.SessionEditorViewModel
 
 @Composable
-fun SessionEditorScreen(onEditTaskGroup: (Long) -> Unit) {
+fun SessionEditorScreen(openTaskGroupEditor: (Long) -> Unit) {
+
     val viewModel: SessionEditorViewModel = hiltViewModel()
     val sessionEditorState by viewModel.uiState.collectAsStateWithLifecycle()
 
     SessionEditor(
         uiState = sessionEditorState,
-        onNewTask = viewModel::newTask,
-        onNewTaskGroup = viewModel::newTaskGroup,
-        onEditTaskGroup = onEditTaskGroup,
-        onUpdateTaskGroupSortOrders = viewModel::setTaskGroupSortOrders,
-        onUpdateTaskSortOrders = viewModel::setTaskSortOrders,
-        onTaskTitleChanged = viewModel::setTaskTitle,
-        onDeleteTask = viewModel::onDeleteTask
+        onAction = viewModel::onAction,
+        openTaskGroupEditor = openTaskGroupEditor
     )
 }

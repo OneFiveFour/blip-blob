@@ -36,7 +36,7 @@ internal fun AppNavGraph() {
 
         composable<SessionEditorRoute> {
             SessionEditorScreen(
-                onEditTaskGroup = { taskGroupId ->
+                openTaskGroupEditor = { taskGroupId ->
                     val route = TaskGroupEditorRoute(taskGroupId)
                     navController.navigate(route)
                 }

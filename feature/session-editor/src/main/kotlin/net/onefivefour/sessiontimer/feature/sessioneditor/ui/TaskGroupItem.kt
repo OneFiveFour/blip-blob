@@ -21,6 +21,7 @@ import net.onefivefour.sessiontimer.core.theme.SessionTimerTheme
 import net.onefivefour.sessiontimer.core.ui.glow.drawGlowingSides
 import net.onefivefour.sessiontimer.core.ui.utils.toPx
 import net.onefivefour.sessiontimer.feature.sessioneditor.model.UiTaskGroup
+import net.onefivefour.sessiontimer.feature.sessioneditor.viewmodel.SessionEditorAction
 
 internal val TASK_GROUP_ITEM_HEIGHT = 64.dp
 
@@ -30,12 +31,9 @@ internal fun TaskGroupItem(
     uiTaskGroup: UiTaskGroup,
     isCollapsed: Boolean,
     isDragging: Boolean,
-    onNewTask: () -> Unit,
-    onEditTaskGroup: () -> Unit,
-    onUpdateTaskSortOrders: (List<Long>) -> Unit,
     onCollapseChanged: (Boolean) -> Unit,
-    onTaskTitleChanged: (Long, String) -> Unit,
-    onDeleteTask: (Long) -> Unit
+    openTaskGroupEditor: (Long) -> Unit,
+    onAction: (SessionEditorAction) -> Unit
 ) {
 
     val targetHeight = when {
@@ -89,17 +87,14 @@ internal fun TaskGroupItem(
 
             TaskGroupSummary(
                 uiTaskGroup = uiTaskGroup,
-                onEditTaskGroup = onEditTaskGroup,
+                onEditTaskGroup = { openTaskGroupEditor(uiTaskGroup.id) },
                 onCollapseChanged = onCollapseChanged,
                 isCollapsed = isCollapsed
             )
 
             TaskList(
                 taskGroup = uiTaskGroup,
-                onUpdateTaskSortOrders = onUpdateTaskSortOrders,
-                onTaskTitleChanged = onTaskTitleChanged,
-                onDeleteTask = onDeleteTask,
-                onNewTask = onNewTask
+                onAction = onAction
             )
         }
 
@@ -116,12 +111,9 @@ private fun TaskGroupItemPreview() {
                 uiTaskGroup = fakeUiTaskGroup(),
                 isCollapsed = false,
                 isDragging = false,
-                onNewTask = { },
-                onEditTaskGroup = { },
-                onUpdateTaskSortOrders = { },
                 onCollapseChanged = { },
-                onTaskTitleChanged = { _, _ -> },
-                onDeleteTask = { _ -> }
+                openTaskGroupEditor = { },
+                onAction = { _ -> }
             )
         }
     }

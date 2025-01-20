@@ -16,16 +16,14 @@ import net.onefivefour.sessiontimer.core.ui.haptic.ReorderHapticFeedbackType
 import net.onefivefour.sessiontimer.core.ui.haptic.rememberReorderHapticFeedback
 import net.onefivefour.sessiontimer.core.ui.swipedismiss.SwipeToDismissContainer
 import net.onefivefour.sessiontimer.feature.sessioneditor.model.UiTaskGroup
+import net.onefivefour.sessiontimer.feature.sessioneditor.viewmodel.SessionEditorAction
 import sh.calvin.reorderable.ReorderableItem
 import sh.calvin.reorderable.rememberReorderableLazyListState
 
 @Composable
 internal fun TaskList(
     taskGroup: UiTaskGroup,
-    onUpdateTaskSortOrders: (List<Long>) -> Unit,
-    onTaskTitleChanged: (Long, String) -> Unit,
-    onNewTask: () -> Unit,
-    onDeleteTask: (Long) -> Unit
+    onAction: (SessionEditorAction) -> Unit,
 ) {
     val haptic = rememberReorderHapticFeedback()
 
@@ -58,24 +56,25 @@ internal fun TaskList(
 //                    onDelete = { onDeleteTask(task.id) }
 //                ) {
 
-                    TaskItem(
-                        modifier = Modifier
-                            .longPressDraggableHandle(
-                                onDragStarted = {
-                                    haptic.performHapticFeedback(ReorderHapticFeedbackType.START)
-                                },
-                                onDragStopped = {
-                                    haptic.performHapticFeedback(ReorderHapticFeedbackType.END)
-                                    onUpdateTaskSortOrders(taskList.map { it.id })
-                                },
-                                interactionSource = interactionSource
-                            ),
-                        uiTask = task,
-                        onTaskTitleChanged = { newTitle ->
-                            onTaskTitleChanged(task.id, newTitle)
-                        }
-                    )
-                }
+                TaskItem(
+                    modifier = Modifier
+                        .longPressDraggableHandle(
+                            onDragStarted = {
+                                haptic.performHapticFeedback(ReorderHapticFeedbackType.START)
+                            },
+                            onDragStopped = {
+                                haptic.performHapticFeedback(ReorderHapticFeedbackType.END)
+                                val taskIds = taskList.map { it.id }
+                                onAction(SessionEditorAction.UpdateTaskGroupSortOrders(taskIds))
+                            },
+                            interactionSource = interactionSource
+                        ),
+                    uiTask = task,
+                    onTaskTitleChanged = { newTitle ->
+                        onAction(SessionEditorAction.SetTaskTitle(task.id, newTitle))
+                    }
+                )
+            }
 //            }
         }
 
