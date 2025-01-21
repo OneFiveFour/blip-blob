@@ -18,7 +18,7 @@ val typography = Typography(
         fontWeight = FontWeight.Bold,
         fontSize = 42.sp
     ),
-    titleLarge = TextStyle(
+    displayMedium = TextStyle(
         fontFamily = sairaFontFamily,
         fontWeight = FontWeight.Normal,
         fontSize = 22.sp
@@ -31,17 +31,18 @@ val typography = Typography(
     labelLarge = TextStyle(
         fontFamily = sairaFontFamily,
         fontWeight = FontWeight.Normal,
-        fontSize = 21.sp
+        fontSize = 40.sp
     ),
     labelMedium = TextStyle(
         fontFamily = sairaFontFamily,
-        fontWeight = FontWeight.Bold,
-        fontSize = 16.sp,
+        fontWeight = FontWeight.Normal,
+        fontSize = 24.sp,
         letterSpacing = 0.7.sp
     ),
     labelSmall = TextStyle(
         fontFamily = sairaFontFamily,
-        fontWeight = FontWeight.Normal,
-        fontSize = 24.sp
+        fontWeight = FontWeight.Bold,
+        fontSize = 16.sp,
+        letterSpacing = 0.7.sp
     )
 )

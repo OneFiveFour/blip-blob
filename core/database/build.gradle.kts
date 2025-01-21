@@ -30,9 +30,6 @@ dependencies {
     // Coroutines
     implementation(libs.coroutines.core)
 
-    // Date Time
-    implementation(libs.kotlinx.datetime)
-
     // Testing
     testImplementation(libs.sqlDelight.test)
 }

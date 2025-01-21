@@ -30,6 +30,7 @@ import net.onefivefour.sessiontimer.core.usecases.timer.test.GetTimerStatusUseCa
 import net.onefivefour.sessiontimer.feature.sessionplayer.api.SessionPlayerRoute
 import net.onefivefour.sessiontimer.feature.sessionplayer.domain.SessionCompiler
 import net.onefivefour.sessiontimer.feature.sessionplayer.model.UiTimerState
+import net.onefivefour.sessiontimer.feature.sessionplayer.ui.SessionPlayerAction
 import org.junit.Rule
 import org.junit.Test
 
@@ -148,7 +149,7 @@ internal class SessionTimerViewModelTest {
             val sut = sut()
             advanceUntilIdle()
 
-            sut.onStartSession()
+            sut.onAction(SessionPlayerAction.StartSession)
             advanceUntilIdle()
 
             // THEN
@@ -162,7 +163,7 @@ internal class SessionTimerViewModelTest {
             val sut = sut()
 
             // WHEN
-            sut.onPauseSession()
+            sut.onAction(SessionPlayerAction.PauseSession)
             advanceUntilIdle()
 
             // THEN
@@ -176,7 +177,7 @@ internal class SessionTimerViewModelTest {
             val sut = sut()
 
             // WHEN
-            sut.onResetSession()
+            sut.onAction(SessionPlayerAction.ResetSession)
             advanceUntilIdle()
 
             // THEN
@@ -192,7 +193,7 @@ internal class SessionTimerViewModelTest {
             advanceUntilIdle()
 
             // WHEN
-            sut.onNextTask()
+            sut.onAction(SessionPlayerAction.NextTask)
             advanceUntilIdle()
 
             // THEN
@@ -208,7 +209,7 @@ internal class SessionTimerViewModelTest {
             advanceUntilIdle()
 
             // WHEN
-            sut.onNextTask()
+            sut.onAction(SessionPlayerAction.NextTask)
             advanceUntilIdle()
 
             // THEN
@@ -224,7 +225,7 @@ internal class SessionTimerViewModelTest {
             advanceUntilIdle()
 
             // WHEN
-            sut.onNextTask()
+            sut.onAction(SessionPlayerAction.NextTask)
             advanceUntilIdle()
 
             // THEN
@@ -244,7 +245,7 @@ internal class SessionTimerViewModelTest {
             advanceUntilIdle()
 
             // WHEN
-            sut.onNextTask()
+            sut.onAction(SessionPlayerAction.NextTask)
             advanceUntilIdle()
 
             // THEN
@@ -265,7 +266,7 @@ internal class SessionTimerViewModelTest {
             advanceUntilIdle()
 
             // WHEN
-            sut.onNextTask()
+            sut.onAction(SessionPlayerAction.NextTask)
             advanceUntilIdle()
 
             // THEN
@@ -288,7 +289,7 @@ internal class SessionTimerViewModelTest {
             advanceUntilIdle()
 
             // WHEN
-            sut.onNextTask()
+            sut.onAction(SessionPlayerAction.NextTask)
             advanceUntilIdle()
 
             // THEN
@@ -309,7 +310,7 @@ internal class SessionTimerViewModelTest {
             advanceUntilIdle()
 
             // WHEN
-            sut.onPreviousTask()
+            sut.onAction(SessionPlayerAction.PreviousTask)
             advanceUntilIdle()
 
             // THEN
@@ -330,7 +331,7 @@ internal class SessionTimerViewModelTest {
             advanceUntilIdle()
 
             // WHEN
-            sut.onPreviousTask()
+            sut.onAction(SessionPlayerAction.PreviousTask)
             advanceUntilIdle()
 
             // THEN
@@ -353,7 +354,7 @@ internal class SessionTimerViewModelTest {
             advanceUntilIdle()
 
             // WHEN
-            sut.onPreviousTask()
+            sut.onAction(SessionPlayerAction.PreviousTask)
             advanceUntilIdle()
 
             // THEN
@@ -373,7 +374,7 @@ internal class SessionTimerViewModelTest {
             advanceUntilIdle()
 
             // WHEN
-            sut.onPreviousTask()
+            sut.onAction(SessionPlayerAction.PreviousTask)
             advanceUntilIdle()
 
             // THEN
@@ -397,7 +398,7 @@ internal class SessionTimerViewModelTest {
             advanceUntilIdle()
 
             // WHEN
-            sut.onPreviousTask()
+            sut.onAction(SessionPlayerAction.PreviousTask)
             advanceUntilIdle()
 
             // THEN
@@ -409,7 +410,7 @@ internal class SessionTimerViewModelTest {
                 FAKE_TIMER_STATUS_RUNNING.copy(elapsedDuration = expectedSeekTo + 200.milliseconds)
             )
             advanceUntilIdle()
-            sut.onPreviousTask()
+            sut.onAction(SessionPlayerAction.PreviousTask)
             advanceUntilIdle()
 
             // THEN

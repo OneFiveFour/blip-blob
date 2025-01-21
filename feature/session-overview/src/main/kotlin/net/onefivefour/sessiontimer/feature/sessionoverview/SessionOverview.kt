@@ -130,7 +130,7 @@ internal fun SessionOverview(
             text = stringResource(id = R.string.new_session),
             iconRes = UiR.drawable.ic_add,
             contentDescription = stringResource(id = R.string.new_session),
-            onClick = { onAction(SessionOverviewAction.CreateNewSession) }
+            onClick = { onAction(SessionOverviewAction.CreateSession) }
         )
     }
 }
@@ -140,6 +140,7 @@ internal fun SessionOverview(
 @Composable
 private fun SessionOverviewPreview() {
     SessionTimerTheme {
+        val now = Clock.System.now()
         SessionOverview(
             uiState = UiState.Success(
                 listOf(
@@ -147,25 +148,25 @@ private fun SessionOverviewPreview() {
                         id = 1,
                         title = "A session",
                         sortOrder = 1,
-                        createdAt = Clock.System.now().plus(2.seconds)
+                        createdAt = now.plus(2.seconds)
                     ),
                     UiSession(
                         id = 1,
                         title = "A session",
                         sortOrder = 2,
-                        createdAt = Clock.System.now().plus(2.seconds)
+                        createdAt = now.plus(2.seconds)
                     ),
                     UiSession(
                         id = 1,
                         title = "A session",
                         sortOrder = 3,
-                        createdAt = Clock.System.now().plus(3.seconds)
+                        createdAt = now.plus(3.seconds)
                     ),
                     UiSession(
                         id = 1,
                         title = "A session",
                         sortOrder = 4,
-                        createdAt = Clock.System.now().plus(4.seconds)
+                        createdAt = now.plus(4.seconds)
                     )
                 )
             ),

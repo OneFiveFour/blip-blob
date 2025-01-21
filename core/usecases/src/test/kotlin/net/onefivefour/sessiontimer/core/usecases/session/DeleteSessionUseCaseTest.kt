@@ -4,11 +4,11 @@ import io.mockk.Ordering
 import io.mockk.coEvery
 import io.mockk.coVerify
 import io.mockk.mockk
-import kotlin.time.Duration.Companion.seconds
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.test.advanceUntilIdle
 import kotlinx.coroutines.test.runTest
+import net.onefivefour.sessiontimer.core.test.NOW
 import net.onefivefour.sessiontimer.core.common.domain.model.PlayMode
 import net.onefivefour.sessiontimer.core.common.domain.model.Task
 import net.onefivefour.sessiontimer.core.common.domain.model.TaskGroup
@@ -16,6 +16,7 @@ import net.onefivefour.sessiontimer.core.database.domain.SessionRepository
 import net.onefivefour.sessiontimer.core.database.domain.TaskGroupRepository
 import net.onefivefour.sessiontimer.core.database.domain.TaskRepository
 import org.junit.Test
+import kotlin.time.Duration.Companion.seconds
 
 @OptIn(ExperimentalCoroutinesApi::class)
 internal class DeleteSessionUseCaseTest {
@@ -39,6 +40,7 @@ internal class DeleteSessionUseCaseTest {
             val sessionId = 1L
             val taskGroupId1 = 2L
             val taskGroupId2 = 6L
+            val createdAt = NOW
             coEvery { taskGroupRepository.getTaskGroupBySessionId(any()) } returns flowOf(
                 listOf(
                     TaskGroup(
@@ -47,9 +49,30 @@ internal class DeleteSessionUseCaseTest {
                         color = 0x00FF00,
                         playMode = PlayMode.N_TASKS_SHUFFLED,
                         tasks = listOf(
-                            Task(3L, "Task Title", 1.seconds, 1, taskGroupId1),
-                            Task(4L, "Task Title 2", 2.seconds, 2, taskGroupId1),
-                            Task(5L, "Task Title 3", 3.seconds, 3, taskGroupId1)
+                            Task(
+                                id = 3L,
+                                title = "Task Title",
+                                duration = 1.seconds,
+                                sortOrder = 1,
+                                taskGroupId = taskGroupId1,
+                                createdAt = createdAt
+                            ),
+                            Task(
+                                id = 4L,
+                                title = "Task Title 2",
+                                duration = 2.seconds,
+                                sortOrder = 2,
+                                taskGroupId = taskGroupId1,
+                                createdAt = createdAt
+                            ),
+                            Task(
+                                id = 5L,
+                                title = "Task Title 3",
+                                duration = 3.seconds,
+                                sortOrder = 3,
+                                taskGroupId = taskGroupId1,
+                                createdAt = createdAt
+                            )
                         ),
                         numberOfRandomTasks = 5,
                         sortOrder = 1,
@@ -61,9 +84,30 @@ internal class DeleteSessionUseCaseTest {
                         color = 0x00FFFF,
                         playMode = PlayMode.SEQUENCE,
                         tasks = listOf(
-                            Task(7L, "Task Title 7", 7.seconds, 1, taskGroupId2),
-                            Task(8L, "Task Title 8", 8.seconds, 2, taskGroupId2),
-                            Task(9L, "Task Title 9", 9.seconds, 3, taskGroupId2)
+                            Task(
+                                id = 7L,
+                                title = "Task Title 7",
+                                duration = 7.seconds,
+                                sortOrder = 1,
+                                taskGroupId = taskGroupId2,
+                                createdAt = createdAt
+                            ),
+                            Task(
+                                id = 8L,
+                                title = "Task Title 8",
+                                duration = 8.seconds,
+                                sortOrder = 2,
+                                taskGroupId = taskGroupId2,
+                                createdAt = createdAt
+                            ),
+                            Task(
+                                id = 9L,
+                                title = "Task Title 9",
+                                duration = 9.seconds,
+                                sortOrder = 3,
+                                taskGroupId = taskGroupId2,
+                                createdAt = createdAt
+                            )
                         ),
                         numberOfRandomTasks = 3,
                         sortOrder = 2,

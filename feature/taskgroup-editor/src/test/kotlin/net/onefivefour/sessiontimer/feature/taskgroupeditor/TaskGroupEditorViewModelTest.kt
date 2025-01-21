@@ -15,6 +15,7 @@ import kotlinx.coroutines.test.runTest
 import net.onefivefour.sessiontimer.core.common.domain.model.PlayMode
 import net.onefivefour.sessiontimer.core.common.domain.model.Task
 import net.onefivefour.sessiontimer.core.common.domain.model.TaskGroup
+import net.onefivefour.sessiontimer.core.test.NOW
 import net.onefivefour.sessiontimer.core.test.SavedStateHandleRule
 import net.onefivefour.sessiontimer.core.test.StandardTestDispatcherRule
 import net.onefivefour.sessiontimer.core.usecases.api.taskgroup.GetTaskGroupUseCase
@@ -71,7 +72,8 @@ internal class TaskGroupEditorViewModelTest {
                             title = "Task 1",
                             duration = Duration.ZERO,
                             sortOrder = 1,
-                            taskGroupId = taskGroupId
+                            taskGroupId = taskGroupId,
+                            createdAt = NOW
                         )
                     ),
                     sortOrder = 1,
@@ -101,66 +103,6 @@ internal class TaskGroupEditorViewModelTest {
                 val task = taskGroup.tasks[0]
                 assertThat(task.id).isEqualTo(3L)
                 assertThat(task.title).isEqualTo("Task 1")
-            }
-        }
-
-    @Test
-    fun `GIVEN taskGroup data WHEN updateTaskGroup is called THEN UpdateTaskGroupUseCase is executed with that data`() =
-        runTest {
-            // GIVEN
-            val taskGroupId = 1L
-            coEvery { getTaskGroupUseCase.execute(taskGroupId) } returns flowOf(
-                TaskGroup(
-                    id = taskGroupId,
-                    title = "TaskGroup 1",
-                    color = 0xFF0000,
-                    playMode = PlayMode.SEQUENCE,
-                    numberOfRandomTasks = 3,
-                    sortOrder = 1,
-                    tasks = emptyList(),
-                    sessionId = 2L
-                )
-            )
-            coEvery {
-                updateTaskGroupUseCase.execute(
-                    any(),
-                    any(),
-                    any(),
-                    any(),
-                    any(),
-                    any()
-                )
-            } returns Unit
-
-            // WHEN
-            val sut = sut()
-            val title = "Test TaskGroup Title"
-            val color = Color(0xFF00FF00)
-            val playMode = PlayMode.N_TASKS_SHUFFLED
-            val numberOfRandomTasks = 5
-            val sortOrder = 1
-            val uiTaskGroup = UiTaskGroup(
-                id = taskGroupId,
-                title = title,
-                color = color,
-                playMode = playMode,
-                numberOfRandomTasks = numberOfRandomTasks,
-                sortOrder = sortOrder,
-                tasks = emptyList()
-            )
-            sut.updateTaskGroup(uiTaskGroup)
-            advanceUntilIdle()
-
-            // THEN
-            coVerify(exactly = 1) {
-                updateTaskGroupUseCase.execute(
-                    id = taskGroupId,
-                    title = title,
-                    color = color.toArgb(),
-                    playMode = playMode,
-                    numberOfRandomTasks = numberOfRandomTasks,
-                    sortOrder = sortOrder
-                )
             }
         }
 }

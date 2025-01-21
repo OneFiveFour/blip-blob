@@ -81,7 +81,7 @@ private fun ButtonContent(
         }
 
         Text(
-            style = MaterialTheme.typography.labelLarge,
+            style = MaterialTheme.typography.labelMedium,
             text = text,
             color = contentColor
         )

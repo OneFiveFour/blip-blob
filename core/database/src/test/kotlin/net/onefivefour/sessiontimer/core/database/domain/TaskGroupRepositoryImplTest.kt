@@ -7,6 +7,7 @@ import io.mockk.coVerify
 import io.mockk.mockk
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.test.runTest
+import net.onefivefour.sessiontimer.core.test.NOW_MILLIS
 import net.onefivefour.sessiontimer.core.common.domain.model.PlayMode
 import net.onefivefour.sessiontimer.core.database.DenormalizedTaskGroupView
 import net.onefivefour.sessiontimer.core.database.TaskGroup as DatabaseTaskGroup
@@ -64,7 +65,8 @@ internal class TaskGroupRepositoryImplTest {
                     taskId = 1L,
                     taskTitle = "Task 1",
                     taskDuration = 10,
-                    taskSortOrder = 1
+                    taskSortOrder = 1,
+                    taskCreatedAt = NOW_MILLIS
                 ),
                 DenormalizedTaskGroupView(
                     taskGroupId = 1L,
@@ -77,7 +79,8 @@ internal class TaskGroupRepositoryImplTest {
                     taskId = 2L,
                     taskTitle = "Task 2",
                     taskDuration = 20,
-                    taskSortOrder = 1
+                    taskSortOrder = 1,
+                    taskCreatedAt = NOW_MILLIS
                 )
             )
             coEvery { taskGroupDataSource.getDenormalizedTaskGroup(taskGroupId) } returns flowOf(

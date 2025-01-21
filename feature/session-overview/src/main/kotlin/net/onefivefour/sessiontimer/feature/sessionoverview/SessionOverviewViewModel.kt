@@ -38,7 +38,7 @@ internal class SessionOverviewViewModel @Inject constructor(
 
     fun onAction(action: SessionOverviewAction) {
         when (action) {
-            is SessionOverviewAction.CreateNewSession -> createNewSession()
+            is SessionOverviewAction.CreateSession -> createNewSession()
             is SessionOverviewAction.UpdateSessionSortOrders -> updateSessionSortOrders(action.sessionIds)
             is SessionOverviewAction.DeleteSession -> onDeleteSession(action.sessionId)
         }

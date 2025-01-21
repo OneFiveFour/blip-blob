@@ -38,7 +38,7 @@ internal class TaskDataSourceImplTest {
     fun `GIVEN data for a task WHEN insert is called THEN the call is delegated to taskQueries`() =
         runTest {
             // GIVEN
-            coEvery { taskQueries.new(any(), any(), any(), any(), any()) } returns mockk()
+            coEvery { taskQueries.new(any(), any(), any(), any(), any(), any()) } returns mockk()
             val taskGroupId = 321L
             val duration = 123L
             val taskTitle = "Test Task Title"
@@ -54,7 +54,8 @@ internal class TaskDataSourceImplTest {
                     title = taskTitle,
                     durationInSeconds = duration,
                     sortOrder = sortOrder,
-                    taskGroupId = taskGroupId
+                    taskGroupId = taskGroupId,
+                    createdAt = any()
                 )
             }
         }

@@ -7,6 +7,7 @@ import io.mockk.coVerify
 import io.mockk.mockk
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.test.runTest
+import net.onefivefour.sessiontimer.core.test.NOW_MILLIS
 import net.onefivefour.sessiontimer.core.common.domain.model.PlayMode
 import net.onefivefour.sessiontimer.core.database.DenormalizedSessionView
 import net.onefivefour.sessiontimer.core.database.Session as DatabaseSession
@@ -40,8 +41,18 @@ internal class SessionRepositoryImplTest {
         runTest {
             // GIVEN
             val databaseSessions = listOf(
-                DatabaseSession(1L, "Session 1", 1L),
-                DatabaseSession(2L, "Session 2", 2L)
+                DatabaseSession(
+                    id = 1L,
+                    title = "Session 1",
+                    sortOrder = 1L,
+                    createdAt = NOW_MILLIS
+                ),
+                DatabaseSession(
+                    id = 2L,
+                    title = "Session 2",
+                    sortOrder = 2L,
+                    createdAt = NOW_MILLIS
+                )
             )
             coEvery { sessionDataSource.getAll() } returns flowOf(databaseSessions)
 
@@ -65,6 +76,7 @@ internal class SessionRepositoryImplTest {
                 sessionId = sessionId,
                 sessionTitle = "Session 1",
                 sessionSortOrder = 1L,
+                sessionCreatedAt = NOW_MILLIS,
                 taskGroupId = 2L,
                 taskGroupTitle = "Task Group 1",
                 taskGroupColor = 0xFF00FFL,
@@ -75,7 +87,8 @@ internal class SessionRepositoryImplTest {
                 taskTaskGroupId = 1L,
                 taskTitle = "Task 1",
                 taskDuration = 300,
-                taskSortOrder = 1L
+                taskSortOrder = 1L,
+                taskCreatedAt = NOW_MILLIS
             )
             coEvery { sessionDataSource.getDenormalizedSession(sessionId) } returns flowOf(
                 listOf(denormalizedSessionView)

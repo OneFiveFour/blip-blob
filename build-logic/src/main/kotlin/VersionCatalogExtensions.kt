@@ -41,8 +41,10 @@ internal val VersionCatalog.libAndroidXArchCoreTesting: Provider<MinimalExternal
     get() = findLibraryOrThrow("androidX-arch-core-testing")
 internal val VersionCatalog.libTurbine: Provider<MinimalExternalModuleDependency>
     get() = findLibraryOrThrow("turbine")
-internal val VersionCatalog.pluginKover: Provider<PluginDependency>?
-    get() = findPluginOrThrow("kover")
+
+// Kotlin Dependencies
+internal val VersionCatalog.libDateAndTime: Provider<MinimalExternalModuleDependency>
+    get() = findLibraryOrThrow("kotlinx-datetime")
 
 // Android Test Dependencies
 internal val VersionCatalog.libRobolectric: Provider<MinimalExternalModuleDependency>

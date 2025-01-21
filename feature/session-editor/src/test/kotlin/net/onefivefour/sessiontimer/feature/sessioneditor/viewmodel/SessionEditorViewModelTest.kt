@@ -9,6 +9,7 @@ import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.test.advanceUntilIdle
 import kotlinx.coroutines.test.runTest
+import net.onefivefour.sessiontimer.core.test.NOW
 import net.onefivefour.sessiontimer.core.common.domain.model.PlayMode
 import net.onefivefour.sessiontimer.core.common.domain.model.Session
 import net.onefivefour.sessiontimer.core.common.domain.model.TaskGroup
@@ -70,7 +71,7 @@ internal class SessionEditorViewModelTest {
         runTest {
             // GIVEN
             coEvery { getSessionUseCase.execute(any()) } returns flowOf(
-                Session(1L, "Session 1", 1, emptyList())
+                Session(1L, "Session 1", 1, emptyList(), NOW)
             )
 
             // WHEN
@@ -104,7 +105,8 @@ internal class SessionEditorViewModelTest {
                             sessionId = sessionId,
                             tasks = emptyList()
                         )
-                    )
+                    ),
+                    createdAt = NOW
                 )
             )
 
@@ -148,13 +150,13 @@ internal class SessionEditorViewModelTest {
             // GIVEN
             val sessionId = 1L
             coEvery { getSessionUseCase.execute(any()) } returns flowOf(
-                Session(sessionId, "Session 1", 1, emptyList())
+                Session(sessionId, "Session 1", 1, emptyList(), NOW)
             )
             coEvery { newTaskGroupUseCase.execute(any()) } returns Unit
 
             // WHEN
             val sut = sut()
-            sut.newTaskGroup()
+            sut.onAction(SessionEditorAction.CreateTaskGroup)
             advanceUntilIdle()
 
             // THEN
@@ -170,13 +172,13 @@ internal class SessionEditorViewModelTest {
             val sessionId = 1L
             val taskGroupId = 2L
             coEvery { getSessionUseCase.execute(any()) } returns flowOf(
-                Session(sessionId, "Session 1", 1, emptyList())
+                Session(sessionId, "Session 1", 1, emptyList(), NOW)
             )
             coEvery { deleteTaskGroupUseCase.execute(any()) } returns Unit
 
             // WHEN
             val sut = sut()
-            sut.deleteTaskGroup(taskGroupId)
+            sut.onAction(SessionEditorAction.DeleteTaskGroup(taskGroupId))
             advanceUntilIdle()
 
             // THEN
@@ -191,13 +193,13 @@ internal class SessionEditorViewModelTest {
         val sessionId = 1L
         val taskGroupId = 2L
         coEvery { getSessionUseCase.execute(any()) } returns flowOf(
-            Session(sessionId, "Session 1", 1, emptyList())
+            Session(sessionId, "Session 1", 1, emptyList(), NOW)
         )
         coEvery { newTaskUseCase.execute(any()) } returns Unit
 
         // WHEN
         val sut = sut()
-        sut.newTask(taskGroupId)
+        sut.onAction(SessionEditorAction.CreateTask(taskGroupId))
         advanceUntilIdle()
 
         // THEN
@@ -212,13 +214,13 @@ internal class SessionEditorViewModelTest {
         val sessionId = 1L
         val taskId = 2L
         coEvery { getSessionUseCase.execute(any()) } returns flowOf(
-            Session(sessionId, "Session 1", 1, emptyList())
+            Session(sessionId, "Session 1", 1, emptyList(), NOW)
         )
         coEvery { deleteTaskUseCase.execute(any()) } returns Unit
 
         // WHEN
         val sut = sut()
-        sut.deleteTask(taskId)
+        sut.onAction(SessionEditorAction.DeleteTask(taskId))
         advanceUntilIdle()
 
         // THEN

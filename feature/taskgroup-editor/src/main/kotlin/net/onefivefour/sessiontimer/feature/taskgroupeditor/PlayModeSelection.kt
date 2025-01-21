@@ -86,6 +86,7 @@ internal fun PlayModeSelection(
                         numberOfTasks -> stringResource(R.string.all).uppercase()
                         else -> numberOfRandomTasks.toString()
                     },
+                    style = MaterialTheme.typography.labelMedium,
                     color = MaterialTheme.colorScheme.onSurface,
                     textAlign = TextAlign.Center
                 )

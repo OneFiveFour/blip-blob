@@ -1,5 +1,7 @@
 package net.onefivefour.sessiontimer.core.common.domain.model
 
+import kotlinx.datetime.Clock
+
 /**
  * Contains 1 TaskGroup with 2 Tasks.
  * The TaskGroup is set to PlayMode.SEQUENCE.
@@ -18,5 +20,6 @@ val FAKE_SESSION = Session(
             sessionId = 1L
         )
     ),
-    sortOrder = 2
+    sortOrder = 2,
+    createdAt = Clock.System.now()
 )
