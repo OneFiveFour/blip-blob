@@ -38,14 +38,14 @@ internal class SessionDataSourceImplTest {
     fun `GIVEN data for new session WHEN insert is called THEN the call is delegated to sessionQueries`() =
         runTest {
             // GIVEN
-            coEvery { sessionQueries.new(any(), any(), any()) } returns mockk()
+            coEvery { sessionQueries.new(any(), any(), any(), any()) } returns mockk()
             val title = "title"
 
             // WHEN
             sut().insert(title)
 
             // THEN
-            coVerify(exactly = 1) { sessionQueries.new(null, title, 1L) }
+            coVerify(exactly = 1) { sessionQueries.new(null, title, 1L, any()) }
         }
 
     @Test

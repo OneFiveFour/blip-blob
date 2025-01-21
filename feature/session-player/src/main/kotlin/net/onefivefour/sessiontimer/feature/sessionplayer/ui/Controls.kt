@@ -26,11 +26,7 @@ import net.onefivefour.sessiontimer.feature.sessionplayer.ui.modifier.clickableW
 internal fun Controls(
     modifier: Modifier = Modifier,
     uiTimerState: () -> UiTimerState,
-    onStartSession: () -> Unit,
-    onPauseSession: () -> Unit,
-    onResetSession: () -> Unit,
-    onNextTask: () -> Unit,
-    onPreviousTask: () -> Unit
+    onAction: (SessionPlayerAction) -> Unit,
 ) {
     val state = uiTimerState()
     val isRunning = when (state) {
@@ -53,10 +49,10 @@ internal fun Controls(
     }
 
     val playButtonAction = when {
-        isRunning -> onPauseSession
+        isRunning -> SessionPlayerAction.PauseSession
         else -> when {
-            state is UiTimerState.Finished -> onResetSession
-            else -> onStartSession
+            state is UiTimerState.Finished -> SessionPlayerAction.ResetSession
+            else -> SessionPlayerAction.StartSession
         }
     }
 
@@ -70,7 +66,9 @@ internal fun Controls(
         verticalAlignment = Alignment.CenterVertically
     ) {
         Icon(
-            modifier = Modifier.clickableWithUnboundRipple { onPreviousTask() },
+            modifier = Modifier.clickableWithUnboundRipple {
+                onAction(SessionPlayerAction.PreviousTask)
+            },
             painter = painterResource(R.drawable.ic_previous_task),
             contentDescription = stringResource(R.string.previous_task),
             tint = MaterialTheme.colorScheme.onSurface
@@ -79,7 +77,7 @@ internal fun Controls(
         Spacer(modifier = Modifier.width(52.dp))
 
         Icon(
-            modifier = Modifier.clickableWithUnboundRipple { playButtonAction() },
+            modifier = Modifier.clickableWithUnboundRipple { onAction(playButtonAction) },
             painter = painterResource(playButtonIconRes),
             contentDescription = stringResource(playButtonTextRes),
             tint = MaterialTheme.colorScheme.onSurface
@@ -88,7 +86,9 @@ internal fun Controls(
         Spacer(modifier = Modifier.width(52.dp))
 
         Icon(
-            modifier = Modifier.clickableWithUnboundRipple { onNextTask() },
+            modifier = Modifier.clickableWithUnboundRipple {
+                onAction(SessionPlayerAction.NextTask)
+            },
             painter = painterResource(R.drawable.ic_next_task),
             contentDescription = stringResource(R.string.next_task),
             tint = MaterialTheme.colorScheme.onSurface
@@ -104,11 +104,7 @@ private fun SessionControlsInitialPreview() {
         Surface {
             Controls(
                 uiTimerState = { UiTimerState.Initial() },
-                onStartSession = {},
-                onPauseSession = {},
-                onResetSession = {},
-                onNextTask = {},
-                onPreviousTask = {}
+                onAction = {}
             )
         }
     }
@@ -122,11 +118,7 @@ private fun SessionControlsActivePreview() {
         Surface {
             Controls(
                 uiTimerState = { uiTimerStateActive },
-                onStartSession = {},
-                onPauseSession = {},
-                onResetSession = {},
-                onNextTask = {},
-                onPreviousTask = {}
+                onAction = {}
             )
         }
     }
@@ -140,11 +132,7 @@ private fun SessionControlsFinishedPreview() {
         Surface {
             Controls(
                 uiTimerState = { UiTimerState.Finished },
-                onStartSession = {},
-                onPauseSession = {},
-                onResetSession = {},
-                onNextTask = {},
-                onPreviousTask = {}
+                onAction = {}
             )
         }
     }

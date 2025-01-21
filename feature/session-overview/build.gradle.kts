@@ -18,9 +18,6 @@ dependencies {
     implementation(project(":core:usecases-api"))
     implementation(project(":core:ui"))
 
-    // Date Time
-    implementation(libs.kotlinx.datetime)
-
     // Lifecycle
     implementation(libs.androidX.lifecycle.viewmodel)
     implementation(libs.androidX.lifecycle.viewmodel.compose)

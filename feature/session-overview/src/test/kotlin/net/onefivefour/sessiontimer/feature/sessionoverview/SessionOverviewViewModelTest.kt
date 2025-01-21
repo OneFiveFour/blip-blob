@@ -8,8 +8,10 @@ import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.test.advanceUntilIdle
 import kotlinx.coroutines.test.runTest
+import net.onefivefour.sessiontimer.core.test.NOW
 import net.onefivefour.sessiontimer.core.common.domain.model.Session
 import net.onefivefour.sessiontimer.core.test.StandardTestDispatcherRule
+import net.onefivefour.sessiontimer.core.usecases.api.session.DeleteSessionUseCase
 import net.onefivefour.sessiontimer.core.usecases.api.session.GetAllSessionsUseCase
 import net.onefivefour.sessiontimer.core.usecases.api.session.NewSessionUseCase
 import net.onefivefour.sessiontimer.core.usecases.api.session.SetSessionSortOrdersUseCase
@@ -28,10 +30,13 @@ internal class SessionOverviewViewModelTest {
 
     private val setSessionSortOrdersUseCase: SetSessionSortOrdersUseCase = mockk()
 
+    private val deleteSessionUseCase: DeleteSessionUseCase = mockk()
+
     private fun sut() = SessionOverviewViewModel(
         getAllSessionsUseCase,
         newSessionUseCase,
-        setSessionSortOrdersUseCase
+        setSessionSortOrdersUseCase,
+        deleteSessionUseCase
     )
 
     @Test
@@ -61,8 +66,8 @@ internal class SessionOverviewViewModelTest {
         runTest {
             // GIVEN
             val sessions = listOf(
-                Session(id = 1, title = "Session 1", 1, emptyList()),
-                Session(id = 2, title = "Session 2", 2, emptyList())
+                Session(id = 1, title = "Session 1", 1, emptyList(), NOW),
+                Session(id = 2, title = "Session 2", 2, emptyList(), NOW)
             )
             coEvery { getAllSessionsUseCase.execute() } returns flowOf(sessions)
 
@@ -84,7 +89,7 @@ internal class SessionOverviewViewModelTest {
             val sut = sut()
 
             // WHEN
-            sut.newSession()
+            sut.onAction(SessionOverviewAction.CreateSession)
             advanceUntilIdle()
 
             // THEN
@@ -103,7 +108,7 @@ internal class SessionOverviewViewModelTest {
 
             // WHEN
             val sut = sut()
-            sut.updateSessionSortOrders(sessionIds)
+            sut.onAction(SessionOverviewAction.UpdateSessionSortOrders(sessionIds))
             advanceUntilIdle()
 
             // THEN

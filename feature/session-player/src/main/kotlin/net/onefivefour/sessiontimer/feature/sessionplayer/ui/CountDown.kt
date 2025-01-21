@@ -26,7 +26,7 @@ internal fun CountDown(
     Text(
         modifier = modifier,
         text = formattedRemainer,
-        style = MaterialTheme.typography.displayMedium,
+        style = MaterialTheme.typography.labelLarge,
         textAlign = TextAlign.Center,
         maxLines = 1
     )

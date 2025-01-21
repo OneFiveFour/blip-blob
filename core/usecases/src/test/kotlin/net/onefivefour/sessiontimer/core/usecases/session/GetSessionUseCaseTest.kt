@@ -7,6 +7,7 @@ import io.mockk.mockk
 import kotlin.time.Duration.Companion.seconds
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.test.runTest
+import net.onefivefour.sessiontimer.core.test.NOW
 import net.onefivefour.sessiontimer.core.common.domain.model.PlayMode
 import net.onefivefour.sessiontimer.core.common.domain.model.Session
 import net.onefivefour.sessiontimer.core.common.domain.model.Task
@@ -45,14 +46,16 @@ internal class GetSessionUseCaseTest {
                                     title = "Task 1",
                                     duration = 3.seconds,
                                     sortOrder = 1,
-                                    taskGroupId = taskGroupId
+                                    taskGroupId = taskGroupId,
+                                    createdAt = NOW
                                 )
                             ),
                             numberOfRandomTasks = 5,
                             sessionId = sessionId
                         )
                     ),
-                    sortOrder = 1
+                    sortOrder = 1,
+                    createdAt = NOW
                 )
             )
 
@@ -96,7 +99,8 @@ internal class GetSessionUseCaseTest {
                     id = sessionId,
                     title = "Session 1",
                     sortOrder = 1,
-                    taskGroups = emptyList()
+                    taskGroups = emptyList(),
+                    createdAt = NOW
                 )
             )
 

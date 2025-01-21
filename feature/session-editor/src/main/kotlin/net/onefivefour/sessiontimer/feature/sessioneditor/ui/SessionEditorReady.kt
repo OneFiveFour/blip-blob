@@ -20,18 +20,14 @@ import net.onefivefour.sessiontimer.core.ui.button.PrimaryButton
 import net.onefivefour.sessiontimer.core.ui.haptic.ReorderHapticFeedbackType
 import net.onefivefour.sessiontimer.core.ui.haptic.rememberReorderHapticFeedback
 import net.onefivefour.sessiontimer.feature.sessioneditor.model.UiSession
+import net.onefivefour.sessiontimer.feature.sessioneditor.viewmodel.SessionEditorAction
 import sh.calvin.reorderable.ReorderableColumn
 
 @Composable
 internal fun SessionEditorReady(
     uiSession: UiSession,
-    onNewTask: (Long) -> Unit,
-    onNewTaskGroup: () -> Unit,
-    onEditTaskGroup: (Long) -> Unit,
-    onUpdateTaskSortOrders: (List<Long>) -> Unit,
-    onUpdateTaskGroupSortOrders: (List<Long>) -> Unit,
-    onTaskTitleChanged: (Long, String) -> Unit,
-    onDeleteTask: (Long) -> Unit
+    onAction: (SessionEditorAction) -> Unit,
+    openTaskGroupEditor: (Long) -> Unit
 ) {
     val haptic = rememberReorderHapticFeedback()
 
@@ -52,7 +48,8 @@ internal fun SessionEditorReady(
                 taskGroupList = taskGroupList.toMutableList().apply {
                     add(toIndex, removeAt(fromIndex))
                 }
-                onUpdateTaskGroupSortOrders(taskGroupList.map { it.id })
+                val taskGroupIds = taskGroupList.map { it.id }
+                onAction(SessionEditorAction.UpdateTaskGroupSortOrders(taskGroupIds))
             },
             onMove = {
                 haptic.performHapticFeedback(ReorderHapticFeedbackType.MOVE)
@@ -80,28 +77,21 @@ internal fun SessionEditorReady(
                     uiTaskGroup = taskGroup,
                     isCollapsed = collapsedTaskGroupsIds.contains(taskGroup.id),
                     isDragging = isDragging,
-                    onNewTask = {
-                        onNewTask(taskGroup.id)
-                    },
-                    onEditTaskGroup = {
-                        onEditTaskGroup(taskGroup.id)
-                    },
-                    onUpdateTaskSortOrders = onUpdateTaskSortOrders,
                     onCollapseChanged = { isCollapsed ->
                         collapsedTaskGroupsIds = when {
                             isCollapsed -> collapsedTaskGroupsIds + taskGroup.id
                             else -> collapsedTaskGroupsIds - taskGroup.id
                         }
                     },
-                    onTaskTitleChanged = onTaskTitleChanged,
-                    onDeleteTask = onDeleteTask
+                    openTaskGroupEditor = { openTaskGroupEditor(taskGroup.id) },
+                    onAction = onAction,
                 )
             }
         }
 
         PrimaryButton(
             text = "New Task Group",
-            onClick = onNewTaskGroup,
+            onClick = { onAction(SessionEditorAction.CreateTaskGroup) },
             iconRes = R.drawable.ic_add
         )
     }

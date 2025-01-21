@@ -23,11 +23,11 @@ internal fun AppNavGraph() {
     ) {
         composable<SessionOverviewRoute> {
             SessionOverviewScreen(
-                onEditSession = { sessionId ->
+                openSessionEditor = { sessionId ->
                     val route = SessionEditorRoute(sessionId)
                     navController.navigate(route)
                 },
-                onPlaySession = { sessionId ->
+                openSessionPlayer = { sessionId ->
                     val route = SessionPlayerRoute(sessionId)
                     navController.navigate(route)
                 }
@@ -36,7 +36,7 @@ internal fun AppNavGraph() {
 
         composable<SessionEditorRoute> {
             SessionEditorScreen(
-                onEditTaskGroup = { taskGroupId ->
+                openTaskGroupEditor = { taskGroupId ->
                     val route = TaskGroupEditorRoute(taskGroupId)
                     navController.navigate(route)
                 }
@@ -45,7 +45,7 @@ internal fun AppNavGraph() {
 
         composable<TaskGroupEditorRoute> {
             TaskGroupEditorScreen(
-                onSave = { navController.popBackStack() }
+                goBack = { navController.popBackStack() }
             )
         }
 

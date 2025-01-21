@@ -53,54 +53,60 @@ internal class SessionEditorViewModel @Inject constructor(
         }
     }
 
-    fun newTaskGroup() {
+    fun onAction(action: SessionEditorAction) {
+        when (action) {
+            is SessionEditorAction.CreateTaskGroup -> createTaskGroup()
+            is SessionEditorAction.DeleteTaskGroup -> deleteTaskGroup(action.taskGroupId)
+            is SessionEditorAction.CreateTask -> createTask(action.taskGroupId)
+            is SessionEditorAction.DeleteTask -> deleteTask(action.taskId)
+            is SessionEditorAction.UpdateTaskGroupSortOrders -> setTaskGroupSortOrders(action.taskGroupIds)
+            is SessionEditorAction.UpdateTaskSortOrders -> setTaskSortOrders(action.taskIds)
+            is SessionEditorAction.SetTaskTitle -> setTaskTitle(action.taskId, action.newTitle)
+        }
+    }
+
+    private fun createTaskGroup() {
         viewModelScope.launch {
             newTaskGroupUseCase.execute(sessionId)
         }
     }
 
-    fun deleteTaskGroup(taskGroupId: Long) {
+    private fun deleteTaskGroup(taskGroupId: Long) {
         viewModelScope.launch {
             deleteTaskGroupUseCase.execute(taskGroupId)
         }
     }
 
-    fun newTask(taskGroupId: Long) {
+    private fun createTask(taskGroupId: Long) {
         viewModelScope.launch {
             newTaskUseCase.execute(taskGroupId)
         }
     }
 
-    fun deleteTask(taskId: Long) {
+    private fun deleteTask(taskId: Long) {
         viewModelScope.launch {
             deleteTaskUseCase.execute(taskId)
         }
     }
 
-    fun setTaskGroupSortOrders(taskGroupIds: List<Long>) {
+    private fun setTaskGroupSortOrders(taskGroupIds: List<Long>) {
         viewModelScope.launch {
             setTaskGroupSortOrdersUseCase.execute(taskGroupIds)
         }
     }
 
-    fun setTaskSortOrders(taskIds: List<Long>) {
+    private fun setTaskSortOrders(taskIds: List<Long>) {
         viewModelScope.launch {
             setTaskSortOrdersUseCase.execute(taskIds)
         }
     }
 
-    fun setTaskTitle(taskId: Long, newTitle: String) {
+    private fun setTaskTitle(taskId: Long, newTitle: String) {
         viewModelScope.launch {
             setTaskTitleUseCase.execute(
                 taskId = taskId,
                 title = newTitle
             )
-        }
-    }
-
-    fun onDeleteTask(taskId: Long) {
-        viewModelScope.launch {
-            deleteTaskUseCase.execute(taskId)
         }
     }
 }

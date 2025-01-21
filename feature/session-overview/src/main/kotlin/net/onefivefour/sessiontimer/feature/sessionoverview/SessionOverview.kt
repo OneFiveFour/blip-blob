@@ -38,10 +38,8 @@ import kotlin.time.Duration.Companion.seconds
 internal fun SessionOverview(
     uiState: UiState,
     onEditSession: (Long) -> Unit,
-    onNewSession: () -> Unit,
-    onUpdateSessionSortOrders: (List<Long>) -> Unit,
     onStartSession: (Long) -> Unit,
-    onDeleteSession: (Long) -> Unit
+    onAction: (SessionOverviewAction) -> Unit
 ) {
     if (uiState == UiState.Initial) {
         SessionOverviewInitial()
@@ -101,7 +99,7 @@ internal fun SessionOverview(
 
                     SwipeToDismissContainer(
                         item = session,
-                        onDelete = { onDeleteSession(session.id) }
+                        onDelete = { onAction(SessionOverviewAction.DeleteSession(session.id)) }
                     ) {
 
                         SessionItem(
@@ -112,7 +110,8 @@ internal fun SessionOverview(
                                     },
                                     onDragStopped = {
                                         haptic.performHapticFeedback(ReorderHapticFeedbackType.END)
-                                        onUpdateSessionSortOrders(sessionList.map { it.id })
+                                        val sessionIds = sessionList.map { it.id }
+                                        onAction(SessionOverviewAction.UpdateSessionSortOrders(sessionIds))
                                     },
                                     interactionSource = interactionSource
                                 ),
@@ -131,11 +130,8 @@ internal fun SessionOverview(
             text = stringResource(id = R.string.new_session),
             iconRes = UiR.drawable.ic_add,
             contentDescription = stringResource(id = R.string.new_session),
-            onClick = { onNewSession() }
+            onClick = { onAction(SessionOverviewAction.CreateSession) }
         )
-
-        // avoid unused var error
-        println("+++ remove me: $onUpdateSessionSortOrders")
     }
 }
 
@@ -144,6 +140,7 @@ internal fun SessionOverview(
 @Composable
 private fun SessionOverviewPreview() {
     SessionTimerTheme {
+        val now = Clock.System.now()
         SessionOverview(
             uiState = UiState.Success(
                 listOf(
@@ -151,33 +148,31 @@ private fun SessionOverviewPreview() {
                         id = 1,
                         title = "A session",
                         sortOrder = 1,
-                        createdAt = Clock.System.now().plus(1.seconds)
+                        createdAt = now.plus(2.seconds)
                     ),
                     UiSession(
                         id = 1,
                         title = "A session",
                         sortOrder = 2,
-                        createdAt = Clock.System.now().plus(2.seconds)
+                        createdAt = now.plus(2.seconds)
                     ),
                     UiSession(
                         id = 1,
                         title = "A session",
                         sortOrder = 3,
-                        createdAt = Clock.System.now().plus(3.seconds)
+                        createdAt = now.plus(3.seconds)
                     ),
                     UiSession(
                         id = 1,
                         title = "A session",
                         sortOrder = 4,
-                        createdAt = Clock.System.now().plus(4.seconds)
+                        createdAt = now.plus(4.seconds)
                     )
                 )
             ),
             onEditSession = {},
-            onNewSession = {},
-            onUpdateSessionSortOrders = { _ -> },
-            onStartSession = { _ -> },
-            onDeleteSession = { _ -> }
+            onStartSession = {},
+            onAction = {}
         )
     }
 }

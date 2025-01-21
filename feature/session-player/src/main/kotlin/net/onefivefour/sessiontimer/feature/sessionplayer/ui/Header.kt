@@ -30,7 +30,7 @@ internal fun Header(
         Text(
             text = uiState.sessionTitle,
             color = MaterialTheme.colorScheme.onBackground,
-            style = MaterialTheme.typography.titleLarge
+            style = MaterialTheme.typography.displayMedium
         )
 
         val title = when (uiTimerState) {

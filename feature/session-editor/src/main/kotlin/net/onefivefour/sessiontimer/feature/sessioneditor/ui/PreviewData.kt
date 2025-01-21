@@ -9,12 +9,14 @@ import kotlin.time.Duration.Companion.seconds
 import net.onefivefour.sessiontimer.feature.sessioneditor.model.UiTask
 import net.onefivefour.sessiontimer.feature.sessioneditor.model.UiTaskGroup
 
+private val now = Clock.System.now()
+
 internal val uiTask1 = UiTask(
     id = 1L,
     title = "Test Task 1L",
     duration = 10.seconds,
     sortOrder = 1,
-    createdAt = Clock.System.now().plus(1.seconds)
+    createdAt = now.plus(1.seconds)
 )
 
 internal val uiTask2 = UiTask(
@@ -22,7 +24,7 @@ internal val uiTask2 = UiTask(
     title = "Test Task 2L",
     duration = 20.seconds,
     sortOrder = 2,
-    createdAt = Clock.System.now().plus(2.seconds)
+    createdAt = now.plus(2.seconds)
 )
 
 internal val uiTask3 = UiTask(
@@ -30,7 +32,7 @@ internal val uiTask3 = UiTask(
     title = "Test Task 3L",
     duration = 30.seconds,
     sortOrder = 3,
-    createdAt = Clock.System.now().plus(3.seconds)
+    createdAt = now.plus(3.seconds)
 )
 
 internal val fakeUiTasks = listOf(

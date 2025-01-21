@@ -33,6 +33,7 @@ import net.onefivefour.sessiontimer.feature.sessionplayer.domain.SessionCompiler
 import net.onefivefour.sessiontimer.feature.sessionplayer.model.UiSession
 import net.onefivefour.sessiontimer.feature.sessionplayer.model.UiTask
 import net.onefivefour.sessiontimer.feature.sessionplayer.model.UiTimerState
+import net.onefivefour.sessiontimer.feature.sessionplayer.ui.SessionPlayerAction
 
 @HiltViewModel
 internal class SessionTimerViewModel @Inject constructor(
@@ -127,22 +128,32 @@ internal class SessionTimerViewModel @Inject constructor(
         }
     }
 
-    fun onStartSession() {
+    fun onAction(action: SessionPlayerAction) {
+        when (action) {
+            is SessionPlayerAction.StartSession -> startSession()
+            is SessionPlayerAction.PauseSession -> pauseSession()
+            is SessionPlayerAction.ResetSession -> resetSession()
+            is SessionPlayerAction.NextTask -> nextTask()
+            is SessionPlayerAction.PreviousTask -> previousTask()
+        }
+    }
+
+    private fun startSession() {
         val timerState = _uiTimerState.value
         if (timerState is UiTimerState.Active && !timerState.isRunning) {
             startTimer.execute()
         }
     }
 
-    fun onPauseSession() {
+    private fun pauseSession() {
         pauseTimer.execute()
     }
 
-    fun onResetSession() {
+    private fun resetSession() {
         resetTimer.execute()
     }
 
-    fun onNextTask() {
+    fun nextTask() {
         val activeState = _uiTimerState.value as? UiTimerState.Active ?: return
 
         val seekTo = when (activeState.currentTask) {
@@ -157,7 +168,7 @@ internal class SessionTimerViewModel @Inject constructor(
         seekTimer.execute(seekTo)
     }
 
-    fun onPreviousTask() {
+    private fun previousTask() {
         val state = _uiTimerState.value
         if (state is UiTimerState.Finished) {
             val session = _uiSessionFlow.value ?: return
@@ -196,7 +207,7 @@ internal class SessionTimerViewModel @Inject constructor(
     }
 
     fun onDispose() {
-        onResetSession()
+        resetSession()
         sessionCompiler.reset()
     }
 }

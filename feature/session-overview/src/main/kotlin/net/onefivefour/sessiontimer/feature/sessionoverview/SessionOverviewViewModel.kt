@@ -13,7 +13,6 @@ import net.onefivefour.sessiontimer.core.usecases.api.session.DeleteSessionUseCa
 import net.onefivefour.sessiontimer.core.usecases.api.session.GetAllSessionsUseCase
 import net.onefivefour.sessiontimer.core.usecases.api.session.NewSessionUseCase
 import net.onefivefour.sessiontimer.core.usecases.api.session.SetSessionSortOrdersUseCase
-import net.onefivefour.sessiontimer.core.usecases.api.session.SetSessionTitleUseCase
 
 @HiltViewModel
 internal class SessionOverviewViewModel @Inject constructor(
@@ -37,19 +36,27 @@ internal class SessionOverviewViewModel @Inject constructor(
         }
     }
 
-    fun newSession() {
+    fun onAction(action: SessionOverviewAction) {
+        when (action) {
+            is SessionOverviewAction.CreateSession -> createNewSession()
+            is SessionOverviewAction.UpdateSessionSortOrders -> updateSessionSortOrders(action.sessionIds)
+            is SessionOverviewAction.DeleteSession -> onDeleteSession(action.sessionId)
+        }
+    }
+
+    private fun createNewSession() {
         viewModelScope.launch {
             newSessionUseCase.execute()
         }
     }
 
-    fun updateSessionSortOrders(sessionIds: List<Long>) {
+    private fun updateSessionSortOrders(sessionIds: List<Long>) {
         viewModelScope.launch {
             setSessionSortOrdersUseCase.execute(sessionIds)
         }
     }
 
-    fun onDeleteSession(sessionId: Long) {
+    private fun onDeleteSession(sessionId: Long) {
         viewModelScope.launch {
             deleteSessionUseCase.execute(sessionId)
         }
