@@ -31,7 +31,7 @@ val typography = Typography(
     labelLarge = TextStyle(
         fontFamily = sairaFontFamily,
         fontWeight = FontWeight.Normal,
-        fontSize = 21.sp
+        fontSize = 24.sp
     ),
     labelMedium = TextStyle(
         fontFamily = sairaFontFamily,

@@ -62,7 +62,7 @@ internal fun SessionItem(
 
         Text(
             modifier = Modifier.weight(1f),
-            color = MaterialTheme.colorScheme.onBackground,
+            color = MaterialTheme.colorScheme.onSurface,
             text = uiSession.title,
             style = MaterialTheme.typography.titleMedium,
             maxLines = 1,
