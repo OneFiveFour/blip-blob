@@ -28,8 +28,9 @@ import androidx.compose.ui.unit.dp
 import net.onefivefour.sessiontimer.core.taskgroupeditor.R
 import net.onefivefour.sessiontimer.core.theme.SessionTimerTheme
 import net.onefivefour.sessiontimer.core.theme.taskGroupColors
-import net.onefivefour.sessiontimer.core.ui.buttons.SquareButton
+import net.onefivefour.sessiontimer.core.ui.sqarebutton.SquareButton
 import net.onefivefour.sessiontimer.core.ui.modifier.clearFocusOnKeyboardDismiss
+import net.onefivefour.sessiontimer.core.ui.screentitle.ScreenTitle
 import net.onefivefour.sessiontimer.core.ui.R as UiR
 
 @OptIn(ExperimentalLayoutApi::class)
@@ -62,12 +63,7 @@ internal fun TaskGroupEditor(
             )
     ) {
 
-        Text(
-            modifier = Modifier.align(Alignment.CenterHorizontally),
-            text = stringResource(R.string.edit_task_group),
-            style = MaterialTheme.typography.displayLarge,
-            color = MaterialTheme.colorScheme.onBackground
-        )
+        ScreenTitle(titleRes = R.string.edit_task_group)
 
         Spacer(modifier = Modifier.weight(1f))
 

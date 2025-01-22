@@ -22,7 +22,7 @@ import androidx.compose.ui.unit.dp
 import net.onefivefour.sessiontimer.core.common.domain.model.PlayMode
 import net.onefivefour.sessiontimer.core.theme.SessionTimerTheme
 import net.onefivefour.sessiontimer.core.ui.R
-import net.onefivefour.sessiontimer.core.ui.buttons.SquareButton
+import net.onefivefour.sessiontimer.core.ui.sqarebutton.SquareButton
 import net.onefivefour.sessiontimer.feature.sessioneditor.model.UiTaskGroup
 
 @Composable

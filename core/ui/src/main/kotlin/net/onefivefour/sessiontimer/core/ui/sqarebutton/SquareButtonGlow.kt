@@ -1,4 +1,4 @@
-package net.onefivefour.sessiontimer.core.ui.buttons
+package net.onefivefour.sessiontimer.core.ui.sqarebutton
 
 import android.graphics.BlurMaskFilter
 import androidx.compose.animation.core.Animatable
