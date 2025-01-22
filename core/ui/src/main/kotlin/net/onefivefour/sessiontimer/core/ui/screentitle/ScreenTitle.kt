@@ -22,7 +22,9 @@ fun ScreenTitle(
     @StringRes titleRes: Int
 ) {
     Text(
-        modifier = modifier.fillMaxWidth().padding(top = 24.dp),
+        modifier = modifier
+            .fillMaxWidth()
+            .padding(top = 24.dp, bottom = 42.dp),
         text = stringResource(titleRes),
         style = MaterialTheme.typography.displayLarge,
         color = MaterialTheme.colorScheme.onBackground,

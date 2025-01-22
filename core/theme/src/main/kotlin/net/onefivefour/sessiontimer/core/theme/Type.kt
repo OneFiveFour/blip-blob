@@ -26,7 +26,7 @@ val typography = Typography(
     titleMedium = TextStyle(
         fontFamily = sairaFontFamily,
         fontWeight = FontWeight.Normal,
-        fontSize = 20.sp
+        fontSize = 40.sp
     ),
     titleSmall = TextStyle(
         fontFamily = sairaFontFamily,

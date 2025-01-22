@@ -76,7 +76,7 @@ internal class SessionOverviewViewModelTest {
             advanceUntilIdle()
 
             // THEN
-            val expectedUiState = UiState.Success(sessions = sessions.toUiSessions())
+            val expectedUiState = UiState.Ready(sessions = sessions.toUiSessions())
             assertThat(sut.uiState.value).isEqualTo(expectedUiState)
         }
 

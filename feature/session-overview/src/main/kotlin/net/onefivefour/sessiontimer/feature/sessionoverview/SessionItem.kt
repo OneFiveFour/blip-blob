@@ -27,6 +27,7 @@ import net.onefivefour.sessiontimer.core.theme.SessionTimerTheme
 import net.onefivefour.sessiontimer.core.theme.customColors
 import net.onefivefour.sessiontimer.core.ui.sqarebutton.SquareButtonIndicationNodeFactory
 import net.onefivefour.sessiontimer.core.ui.draghandler.DragHandler
+import net.onefivefour.sessiontimer.core.ui.sqarebutton.SquareButton
 import net.onefivefour.sessiontimer.core.ui.R as UiR
 
 @Composable
@@ -37,46 +38,29 @@ internal fun SessionItem(
     onEditSession: (Long) -> Unit
 ) {
 
-    val interactionSource = remember {
-        MutableInteractionSource()
-    }
-
     Row(
-        modifier = modifier
-            .clickable(
-                interactionSource = interactionSource,
-                indication = SquareButtonIndicationNodeFactory(
-                    backgroundColor = MaterialTheme.colorScheme.surface,
-                    glowColor = MaterialTheme.customColors.surfaceGlow
-                )
-            ) { onStartSession(uiSession.id) }
-            .padding(
-                horizontal = 16.dp,
-                vertical = 20.dp
-            ),
+        modifier = modifier,
         verticalAlignment = Alignment.CenterVertically
     ) {
         DragHandler()
 
-        Spacer(modifier = Modifier.width(6.dp))
+        Spacer(modifier = Modifier.width(16.dp))
 
         Text(
-            modifier = Modifier.weight(1f),
-            color = MaterialTheme.colorScheme.onSurface,
+            modifier = Modifier
+                .weight(1f)
+                .clickable { onStartSession(uiSession.id) },
+            color = MaterialTheme.colorScheme.onBackground,
             text = uiSession.title,
             style = MaterialTheme.typography.titleMedium,
             maxLines = 1,
             overflow = TextOverflow.Ellipsis
         )
 
-        Icon(
-            modifier = Modifier
-                .clip(RoundedCornerShape(8.dp))
-                .clickable { onEditSession(uiSession.id) }
-                .padding(4.dp),
-            painter = painterResource(id = UiR.drawable.ic_edit),
-            tint = MaterialTheme.colorScheme.onBackground,
-            contentDescription = stringResource(id = R.string.edit_session)
+        SquareButton(
+            iconRes = UiR.drawable.ic_edit,
+            contentDescriptionRes = R.string.edit_session,
+            onClick = { onEditSession(uiSession.id) }
         )
     }
 }

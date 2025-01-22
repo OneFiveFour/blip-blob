@@ -26,22 +26,22 @@ fun DragHandler() {
     ) {
         repeat(numberOfRows) {
             if (it != 0) {
-                Spacer(modifier = Modifier.size(1.dp))
+                Spacer(modifier = Modifier.size(2.dp))
             }
 
             Row {
                 Box(
                     modifier = Modifier
                         .size(2.dp)
-                        .background(MaterialTheme.colorScheme.onSurface)
+                        .background(MaterialTheme.colorScheme.onBackground)
                 )
 
-                Spacer(modifier = Modifier.size(1.dp))
+                Spacer(modifier = Modifier.size(2.dp))
 
                 Box(
                     modifier = Modifier
                         .size(2.dp)
-                        .background(MaterialTheme.colorScheme.onSurface)
+                        .background(MaterialTheme.colorScheme.onBackground)
                 )
             }
         }

@@ -30,7 +30,7 @@ internal class SessionOverviewViewModel @Inject constructor(
             getAllSessionsUseCase.execute().collectLatest { sessions ->
                 _uiState.update {
                     val uiSessions = sessions.toUiSessions()
-                    UiState.Success(uiSessions)
+                    UiState.Ready(uiSessions)
                 }
             }
         }
