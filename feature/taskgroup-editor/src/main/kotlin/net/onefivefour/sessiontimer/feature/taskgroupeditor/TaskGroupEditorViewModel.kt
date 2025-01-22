@@ -17,6 +17,7 @@ import net.onefivefour.sessiontimer.core.common.domain.model.PlayMode
 import net.onefivefour.sessiontimer.core.usecases.api.taskgroup.GetTaskGroupUseCase
 import net.onefivefour.sessiontimer.core.usecases.api.taskgroup.UpdateTaskGroupUseCase
 import net.onefivefour.sessiontimer.feature.taskgroupeditor.api.TaskGroupEditorRoute
+import kotlin.time.Duration
 
 @HiltViewModel
 internal class TaskGroupEditorViewModel @Inject constructor(
@@ -42,9 +43,18 @@ internal class TaskGroupEditorViewModel @Inject constructor(
 
     fun onAction(action: TaskGroupEditorAction) {
         when (action) {
-            is TaskGroupEditorAction.SetTitle -> setTitle(action.newTitle)
-            is TaskGroupEditorAction.SetColor -> setColor(action.newColor)
-            is TaskGroupEditorAction.SetPlayMode -> setPlayMode(action.newPlayMode, action.newNumberOfRandomTasks)
+            is TaskGroupEditorAction.SetTitle -> {
+                setTitle(action.newTitle)
+            }
+            is TaskGroupEditorAction.SetColor -> {
+                setColor(action.newColor)
+            }
+            is TaskGroupEditorAction.SetPlayMode -> {
+                setPlayMode(action.newPlayMode, action.newNumberOfRandomTasks)
+            }
+            is TaskGroupEditorAction.SetDefaultTaskDuration -> {
+                setDefaultTaskDuration(action.defaultTaskDuration)
+            }
         }
     }
 
@@ -56,6 +66,7 @@ internal class TaskGroupEditorViewModel @Inject constructor(
                 color = taskGroup.color.toArgb(),
                 playMode = taskGroup.playMode,
                 numberOfRandomTasks = taskGroup.numberOfRandomTasks,
+                defaultTaskDuration = taskGroup.defaultTaskDuration,
                 sortOrder = taskGroup.sortOrder
             )
         }
@@ -69,6 +80,7 @@ internal class TaskGroupEditorViewModel @Inject constructor(
                 color = newColor.toArgb(),
                 playMode = taskGroup.playMode,
                 numberOfRandomTasks = taskGroup.numberOfRandomTasks,
+                defaultTaskDuration = taskGroup.defaultTaskDuration,
                 sortOrder = taskGroup.sortOrder
             )
         }
@@ -82,6 +94,21 @@ internal class TaskGroupEditorViewModel @Inject constructor(
                 color = taskGroup.color.toArgb(),
                 playMode = newPlayMode,
                 numberOfRandomTasks = newNumberOfRandomTasks,
+                defaultTaskDuration = taskGroup.defaultTaskDuration,
+                sortOrder = taskGroup.sortOrder
+            )
+        }
+    }
+
+    private fun setDefaultTaskDuration(newDefaultTaskDuration: Duration) {
+        whenReady { taskGroup ->
+            updateTaskGroupUseCase.execute(
+                id = taskGroup.id,
+                title = taskGroup.title,
+                color = taskGroup.color.toArgb(),
+                playMode = taskGroup.playMode,
+                numberOfRandomTasks = taskGroup.numberOfRandomTasks,
+                defaultTaskDuration = newDefaultTaskDuration,
                 sortOrder = taskGroup.sortOrder
             )
         }

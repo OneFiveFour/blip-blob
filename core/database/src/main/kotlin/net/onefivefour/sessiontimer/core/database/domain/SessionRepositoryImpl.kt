@@ -76,6 +76,7 @@ internal fun List<DenormalizedSessionView>.toDomainSession(): DomainSession? {
             checkNotNull(fullSession.taskGroupColor)
             checkNotNull(fullSession.taskGroupPlayMode)
             checkNotNull(fullSession.taskGroupNumberOfRandomTasks)
+            checkNotNull(fullSession.taskGroupDefaultTaskDuration)
             checkNotNull(fullSession.taskGroupSortOrder)
 
             val taskGroupTitle = fullSession.taskGroupTitle
@@ -83,6 +84,7 @@ internal fun List<DenormalizedSessionView>.toDomainSession(): DomainSession? {
             val taskGroupPlayMode = PlayMode.valueOf(fullSession.taskGroupPlayMode)
             val taskGroupNumberOfRandomTasks = fullSession.taskGroupNumberOfRandomTasks.toInt()
             val taskGroupSortOrder = fullSession.taskGroupSortOrder.toInt()
+            val taskGroupDefaultDuration = fullSession.taskGroupDefaultTaskDuration.seconds
 
             // extract tasks
             val tasks = fullSessions.mapNotNull tasks@{ taskRow ->
@@ -112,6 +114,7 @@ internal fun List<DenormalizedSessionView>.toDomainSession(): DomainSession? {
                 playMode = taskGroupPlayMode,
                 tasks = tasks,
                 numberOfRandomTasks = taskGroupNumberOfRandomTasks,
+                defaultTaskDuration = taskGroupDefaultDuration,
                 sortOrder = taskGroupSortOrder,
                 sessionId = sessionId
             )

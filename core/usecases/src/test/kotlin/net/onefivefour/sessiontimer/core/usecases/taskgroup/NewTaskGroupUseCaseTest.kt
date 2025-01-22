@@ -32,6 +32,7 @@ internal class NewTaskGroupUseCaseTest {
                     color = any(),
                     playMode = any(),
                     numberOfRandomTasks = any(),
+                    defaultTaskDuration = any(),
                     sessionId = any()
                 )
             } returns Unit
@@ -43,7 +44,7 @@ internal class NewTaskGroupUseCaseTest {
             coEvery {
                 taskRepository.newTask(
                     title = any(),
-                    durationInSeconds = any(),
+                    duration = any(),
                     taskGroupId = any()
                 )
             } returns Unit
@@ -54,16 +55,17 @@ internal class NewTaskGroupUseCaseTest {
             // THEN
             coVerify(exactly = 1) {
                 taskGroupRepository.newTaskGroup(
-                    FAKE_DB_DEFAULT_VALUES.getTaskGroupTitle(),
-                    FAKE_DB_DEFAULT_VALUES.getTaskGroupColor(),
-                    FAKE_DB_DEFAULT_VALUES.getTaskGroupPlayMode(),
-                    FAKE_DB_DEFAULT_VALUES.getTaskGroupNumberOfRandomTasks(),
-                    sessionId
+                    title = FAKE_DB_DEFAULT_VALUES.getTaskGroupTitle(),
+                    color = FAKE_DB_DEFAULT_VALUES.getTaskGroupColor(),
+                    playMode = FAKE_DB_DEFAULT_VALUES.getTaskGroupPlayMode(),
+                    numberOfRandomTasks = FAKE_DB_DEFAULT_VALUES.getTaskGroupNumberOfRandomTasks(),
+                    defaultTaskDuration = FAKE_DB_DEFAULT_VALUES.getTaskGroupDefaultTaskDuration(),
+                    sessionId = sessionId
                 )
                 taskRepository.newTask(
-                    FAKE_DB_DEFAULT_VALUES.getTaskTitle(),
-                    FAKE_DB_DEFAULT_VALUES.getTaskDuration(),
-                    taskGroupId
+                    title = FAKE_DB_DEFAULT_VALUES.getTaskTitle(),
+                    duration = FAKE_DB_DEFAULT_VALUES.getTaskDuration(),
+                    taskGroupId = taskGroupId
                 )
             }
         }

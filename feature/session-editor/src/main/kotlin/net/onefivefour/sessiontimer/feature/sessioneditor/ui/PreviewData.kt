@@ -8,6 +8,7 @@ import net.onefivefour.sessiontimer.core.theme.taskGroupColors
 import kotlin.time.Duration.Companion.seconds
 import net.onefivefour.sessiontimer.feature.sessioneditor.model.UiTask
 import net.onefivefour.sessiontimer.feature.sessioneditor.model.UiTaskGroup
+import kotlin.time.Duration.Companion.minutes
 
 private val now = Clock.System.now()
 
@@ -30,7 +31,7 @@ internal val uiTask2 = UiTask(
 internal val uiTask3 = UiTask(
     id = 3L,
     title = "Test Task 3L",
-    duration = 30.seconds,
+    duration = 90.seconds,
     sortOrder = 3,
     createdAt = now.plus(3.seconds)
 )
@@ -48,5 +49,6 @@ internal fun fakeUiTaskGroup() = UiTaskGroup(
     color = MaterialTheme.taskGroupColors.color06,
     playMode = PlayMode.SEQUENCE,
     numberOfRandomTasks = 0,
+    defaultTaskDuration = 1.minutes,
     tasks = fakeUiTasks
 )

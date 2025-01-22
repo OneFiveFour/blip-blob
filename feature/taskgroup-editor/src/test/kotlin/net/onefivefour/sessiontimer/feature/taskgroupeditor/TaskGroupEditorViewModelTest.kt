@@ -23,6 +23,7 @@ import net.onefivefour.sessiontimer.core.usecases.api.taskgroup.UpdateTaskGroupU
 import net.onefivefour.sessiontimer.feature.taskgroupeditor.api.TaskGroupEditorRoute
 import org.junit.Rule
 import org.junit.Test
+import kotlin.time.Duration.Companion.minutes
 
 @OptIn(ExperimentalCoroutinesApi::class)
 internal class TaskGroupEditorViewModelTest {
@@ -66,6 +67,7 @@ internal class TaskGroupEditorViewModelTest {
                     color = 0xFFFF0000,
                     playMode = PlayMode.SEQUENCE,
                     numberOfRandomTasks = 3,
+                    defaultTaskDuration = 1.minutes,
                     tasks = listOf(
                         Task(
                             id = 3L,

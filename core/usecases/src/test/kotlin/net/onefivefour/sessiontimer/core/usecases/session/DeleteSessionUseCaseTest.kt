@@ -16,6 +16,7 @@ import net.onefivefour.sessiontimer.core.database.domain.SessionRepository
 import net.onefivefour.sessiontimer.core.database.domain.TaskGroupRepository
 import net.onefivefour.sessiontimer.core.database.domain.TaskRepository
 import org.junit.Test
+import kotlin.time.Duration.Companion.minutes
 import kotlin.time.Duration.Companion.seconds
 
 @OptIn(ExperimentalCoroutinesApi::class)
@@ -75,6 +76,7 @@ internal class DeleteSessionUseCaseTest {
                             )
                         ),
                         numberOfRandomTasks = 5,
+                        defaultTaskDuration = 1.minutes,
                         sortOrder = 1,
                         sessionId = sessionId
                     ),
@@ -110,6 +112,7 @@ internal class DeleteSessionUseCaseTest {
                             )
                         ),
                         numberOfRandomTasks = 3,
+                        defaultTaskDuration = 1.minutes,
                         sortOrder = 2,
                         sessionId = sessionId
                     )

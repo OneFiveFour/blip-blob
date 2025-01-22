@@ -6,6 +6,7 @@ import kotlinx.coroutines.test.runTest
 import net.onefivefour.sessiontimer.core.common.domain.model.PlayMode
 import net.onefivefour.sessiontimer.core.database.domain.TaskGroupRepository
 import org.junit.Test
+import kotlin.time.Duration.Companion.minutes
 
 internal class UpdateTaskGroupUseCaseTest {
 
@@ -24,6 +25,7 @@ internal class UpdateTaskGroupUseCaseTest {
             val color = 0xF0F0F0
             val playMode = PlayMode.N_TASKS_SHUFFLED
             val numberOfRandomTasks = 19
+            val defaultTaskDuration = 1.minutes
             val sortOrder = 1
 
             // WHEN
@@ -33,6 +35,7 @@ internal class UpdateTaskGroupUseCaseTest {
                 color = color,
                 playMode = playMode,
                 numberOfRandomTasks = numberOfRandomTasks,
+                defaultTaskDuration = defaultTaskDuration,
                 sortOrder = sortOrder
             )
 
@@ -44,6 +47,7 @@ internal class UpdateTaskGroupUseCaseTest {
                     color = color,
                     playMode = playMode,
                     numberOfRandomTasks = numberOfRandomTasks,
+                    defaultTaskDuration = defaultTaskDuration,
                     sortOrder = sortOrder
                 )
             }

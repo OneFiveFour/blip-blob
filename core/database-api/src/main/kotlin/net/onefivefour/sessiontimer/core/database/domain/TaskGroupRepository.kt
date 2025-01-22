@@ -3,6 +3,7 @@ package net.onefivefour.sessiontimer.core.database.domain
 import kotlinx.coroutines.flow.Flow
 import net.onefivefour.sessiontimer.core.common.domain.model.PlayMode
 import net.onefivefour.sessiontimer.core.common.domain.model.TaskGroup
+import kotlin.time.Duration
 
 interface TaskGroupRepository {
     suspend fun newTaskGroup(
@@ -10,6 +11,7 @@ interface TaskGroupRepository {
         color: Long,
         playMode: PlayMode,
         numberOfRandomTasks: Int,
+        defaultTaskDuration: Duration,
         sessionId: Long
     )
 
@@ -23,6 +25,7 @@ interface TaskGroupRepository {
         color: Int,
         playMode: PlayMode,
         numberOfRandomTasks: Int,
+        defaultTaskDuration: Duration,
         sortOrder: Int
     )
 

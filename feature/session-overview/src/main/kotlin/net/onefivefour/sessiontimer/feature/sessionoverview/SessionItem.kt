@@ -25,7 +25,7 @@ import androidx.compose.ui.unit.dp
 import kotlinx.datetime.Clock
 import net.onefivefour.sessiontimer.core.theme.SessionTimerTheme
 import net.onefivefour.sessiontimer.core.theme.customColors
-import net.onefivefour.sessiontimer.core.ui.button.GlowingButtonIndicationNodeFactory
+import net.onefivefour.sessiontimer.core.ui.buttons.GlowingButtonIndicationNodeFactory
 import net.onefivefour.sessiontimer.core.ui.dragger.Dragger
 import net.onefivefour.sessiontimer.core.ui.R as UiR
 

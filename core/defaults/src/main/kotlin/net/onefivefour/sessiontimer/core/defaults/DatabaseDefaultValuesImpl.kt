@@ -8,6 +8,9 @@ import javax.inject.Singleton
 import net.onefivefour.sessiontimer.core.common.domain.model.PlayMode.SEQUENCE
 import net.onefivefour.sessiontimer.core.database.domain.DatabaseDefaultValues
 import net.onefivefour.sessiontimer.core.theme.TaskGroupColors
+import kotlin.time.Duration
+import kotlin.time.Duration.Companion.minutes
+import kotlin.time.Duration.Companion.seconds
 
 @Singleton
 internal class DatabaseDefaultValuesImpl @Inject constructor(
@@ -24,7 +27,9 @@ internal class DatabaseDefaultValuesImpl @Inject constructor(
 
     override fun getTaskGroupNumberOfRandomTasks() = 1
 
+    override fun getTaskGroupDefaultTaskDuration() = 5.minutes
+
     override fun getTaskTitle() = context.getString(R.string.default_task_title)
 
-    override fun getTaskDuration() = 3
+    override fun getTaskDuration() = 3.seconds
 }

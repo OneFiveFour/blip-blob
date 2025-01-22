@@ -12,6 +12,7 @@ import net.onefivefour.sessiontimer.core.test.StandardTestDispatcherRule
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
+import kotlin.time.Duration.Companion.minutes
 
 internal class TaskGroupDataSourceImplTest {
 
@@ -46,6 +47,7 @@ internal class TaskGroupDataSourceImplTest {
                     color = any(),
                     playMode = any(),
                     numberOfRandomTasks = any(),
+                    defaultTaskDuration = any(),
                     sortOrder = any(),
                     sessionId = any()
                 )
@@ -55,6 +57,7 @@ internal class TaskGroupDataSourceImplTest {
             val color = 123L
             val playMode = PlayMode.N_TASKS_SHUFFLED.toString()
             val numberOfRandomTasks = 53L
+            val defaultTaskDuration = 1.minutes.inWholeSeconds
             val sortOrder = 1L
 
             // WHEN
@@ -63,6 +66,7 @@ internal class TaskGroupDataSourceImplTest {
                 color = color,
                 playMode = playMode,
                 numberOfRandomTasks = numberOfRandomTasks,
+                defaultTaskDuration = defaultTaskDuration,
                 sessionId = sessionId
             )
 
@@ -74,6 +78,7 @@ internal class TaskGroupDataSourceImplTest {
                     color = color,
                     playMode = playMode,
                     numberOfRandomTasks = numberOfRandomTasks,
+                    defaultTaskDuration = defaultTaskDuration,
                     sortOrder = sortOrder,
                     sessionId = sessionId
                 )
@@ -112,12 +117,13 @@ internal class TaskGroupDataSourceImplTest {
     fun `GIVEN taskGroup data WHEN update is called THEN the call is delegated to taskGroupQueries`() =
         runTest {
             // GIVEN
-            coEvery { taskGroupQueries.update(any(), any(), any(), any(), any(), any()) } returns mockk()
+            coEvery { taskGroupQueries.update(any(), any(), any(), any(), any(), any(), any()) } returns mockk()
             val taskGroupId = 5L
             val title = "Test TaskGroup Title"
             val color = 123L
             val playMode = PlayMode.N_TASKS_SHUFFLED.toString()
             val numberOfRandomTasks = 53L
+            val defaultTaskDuration = 1.minutes.inWholeSeconds
             val sortOrder = 1L
 
             // WHEN
@@ -127,6 +133,7 @@ internal class TaskGroupDataSourceImplTest {
                 color = color,
                 playMode = playMode,
                 numberOfRandomTasks = numberOfRandomTasks,
+                defaultTaskDuration = defaultTaskDuration,
                 sortOrder = sortOrder
             )
 
@@ -137,6 +144,7 @@ internal class TaskGroupDataSourceImplTest {
                     color = color,
                     playMode = playMode,
                     numberOfRandomTasks = numberOfRandomTasks,
+                    defaultTaskDuration = defaultTaskDuration,
                     sortOrder = taskGroupId,
                     id = sortOrder
                 )

@@ -1,20 +1,23 @@
 package net.onefivefour.sessiontimer.feature.sessioneditor.ui
 
+import android.content.res.Configuration.*
+import androidx.compose.foundation.background
 import androidx.compose.foundation.interaction.MutableInteractionSource
-import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.rememberLazyListState
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.unit.dp
+import androidx.compose.ui.tooling.preview.Preview
+import net.onefivefour.sessiontimer.core.theme.SessionTimerTheme
 import net.onefivefour.sessiontimer.core.ui.haptic.ReorderHapticFeedbackType
 import net.onefivefour.sessiontimer.core.ui.haptic.rememberReorderHapticFeedback
-import net.onefivefour.sessiontimer.core.ui.swipedismiss.SwipeToDismissContainer
 import net.onefivefour.sessiontimer.feature.sessioneditor.model.UiTaskGroup
 import net.onefivefour.sessiontimer.feature.sessioneditor.viewmodel.SessionEditorAction
 import sh.calvin.reorderable.ReorderableItem
@@ -22,12 +25,13 @@ import sh.calvin.reorderable.rememberReorderableLazyListState
 
 @Composable
 internal fun TaskList(
-    taskGroup: UiTaskGroup,
+    modifier: Modifier,
+    uiTaskGroup: UiTaskGroup,
     onAction: (SessionEditorAction) -> Unit,
 ) {
     val haptic = rememberReorderHapticFeedback()
 
-    var taskList by remember(taskGroup.tasks) { mutableStateOf(taskGroup.tasks) }
+    var taskList by remember(uiTaskGroup.tasks) { mutableStateOf(uiTaskGroup.tasks) }
 
     val lazyListState = rememberLazyListState()
 
@@ -40,7 +44,8 @@ internal fun TaskList(
         }
 
     LazyColumn(
-        modifier = Modifier.padding(start = 16.dp),
+        modifier = modifier
+            .background(MaterialTheme.colorScheme.surfaceVariant),
         state = lazyListState
     ) {
         items(
@@ -78,10 +83,27 @@ internal fun TaskList(
 //            }
         }
 
-//        item {
-//            AddTaskButton(
-//                onNewTask = onNewTask
-//            )
-//        }
+        item {
+            CreateTaskButton(
+                defaultTaskDuration = uiTaskGroup.defaultTaskDuration,
+                onCreateTask = { onAction(SessionEditorAction.CreateTask(uiTaskGroup.id)) }
+            )
+        }
+    }
+}
+
+
+@Preview
+@Preview(uiMode = UI_MODE_NIGHT_YES)
+@Composable
+private fun TaskListPreview() {
+    SessionTimerTheme {
+        Surface {
+            TaskList(
+                modifier = Modifier,
+                uiTaskGroup = fakeUiTaskGroup(),
+                onAction = { _ -> }
+            )
+        }
     }
 }

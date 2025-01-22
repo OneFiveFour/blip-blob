@@ -12,6 +12,7 @@ import net.onefivefour.sessiontimer.core.common.domain.model.TaskGroup as Domain
 import net.onefivefour.sessiontimer.core.database.DenormalizedTaskGroupView
 import net.onefivefour.sessiontimer.core.database.TaskGroup as DatabaseTaskGroup
 import net.onefivefour.sessiontimer.core.database.data.TaskGroupDataSource
+import kotlin.time.Duration
 
 internal class TaskGroupRepositoryImpl @Inject constructor(
     private val taskGroupDataSource: TaskGroupDataSource
@@ -22,6 +23,7 @@ internal class TaskGroupRepositoryImpl @Inject constructor(
         color: Long,
         playMode: PlayMode,
         numberOfRandomTasks: Int,
+        defaultTaskDuration: Duration,
         sessionId: Long
     ) {
         taskGroupDataSource.insert(
@@ -29,6 +31,7 @@ internal class TaskGroupRepositoryImpl @Inject constructor(
             color = color,
             playMode = playMode.toString(),
             numberOfRandomTasks = numberOfRandomTasks.toLong(),
+            defaultTaskDuration = defaultTaskDuration.inWholeSeconds,
             sessionId = sessionId
         )
     }
@@ -49,6 +52,7 @@ internal class TaskGroupRepositoryImpl @Inject constructor(
         color: Int,
         playMode: PlayMode,
         numberOfRandomTasks: Int,
+        defaultTaskDuration: Duration,
         sortOrder: Int
     ) = taskGroupDataSource
         .update(
@@ -57,6 +61,7 @@ internal class TaskGroupRepositoryImpl @Inject constructor(
             color = color.toLong(),
             playMode = playMode.toString(),
             numberOfRandomTasks = numberOfRandomTasks.toLong(),
+            defaultTaskDuration = defaultTaskDuration.inWholeSeconds,
             sortOrder = sortOrder.toLong()
         )
 
@@ -81,6 +86,7 @@ internal fun DatabaseTaskGroup.toDomainTaskGroup(): DomainTaskGroup {
     val color = this.color
     val playMode = PlayMode.valueOf(this.playMode)
     val numberOfRandomTasks = this.numberOfRandomTasks.toInt()
+    val defaultTaskDuration = this.defaultTaskDuration.seconds
     val sortOrder = this.sortOrder.toInt()
 
     return DomainTaskGroup(
@@ -90,6 +96,7 @@ internal fun DatabaseTaskGroup.toDomainTaskGroup(): DomainTaskGroup {
         playMode = playMode,
         tasks = emptyList(),
         numberOfRandomTasks = numberOfRandomTasks,
+        defaultTaskDuration = defaultTaskDuration,
         sortOrder = sortOrder,
         sessionId = this.sessionId
     )
@@ -103,6 +110,7 @@ internal fun List<DenormalizedTaskGroupView>.toDomainTaskGroup(): DomainTaskGrou
     val color = firstTaskGroup.taskGroupColor
     val playMode = PlayMode.valueOf(firstTaskGroup.taskGroupPlayMode)
     val numberOfRandomTasks = firstTaskGroup.taskGroupNumberOfRandomTasks.toInt()
+    val defaultTaskDuration = firstTaskGroup.taskGroupDefaultTaskDuration.seconds
     val sortOrder = firstTaskGroup.taskGroupSortOrder.toInt()
     val sessionId = firstTaskGroup.sessionId
 
@@ -130,6 +138,7 @@ internal fun List<DenormalizedTaskGroupView>.toDomainTaskGroup(): DomainTaskGrou
         playMode = playMode,
         tasks = tasks,
         numberOfRandomTasks = numberOfRandomTasks,
+        defaultTaskDuration = defaultTaskDuration,
         sortOrder = sortOrder,
         sessionId = sessionId
     )

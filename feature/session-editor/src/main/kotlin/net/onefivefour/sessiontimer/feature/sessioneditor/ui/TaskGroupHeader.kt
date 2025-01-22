@@ -16,56 +16,34 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.draw.drawWithContent
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.max
-import net.onefivefour.sessiontimer.core.common.domain.model.PlayMode
 import net.onefivefour.sessiontimer.core.theme.SessionTimerTheme
-import net.onefivefour.sessiontimer.core.theme.customColors
-import net.onefivefour.sessiontimer.core.ui.glow.drawGlowingSides
 import net.onefivefour.sessiontimer.core.ui.dragger.Dragger
 import net.onefivefour.sessiontimer.feature.sessioneditor.R
-import net.onefivefour.sessiontimer.feature.sessioneditor.model.UiTaskGroup
 
 @Composable
-internal fun TaskGroupSummary(
-    uiTaskGroup: UiTaskGroup,
-    onEditTaskGroup: () -> Unit,
+internal fun TaskGroupHeader(
+    taskGroupTitle: String,
     onCollapseChanged: (Boolean) -> Unit,
     isCollapsed: Boolean,
 ) {
 
-    val glowColor = MaterialTheme.customColors.surfaceGlow
-    val backgroundColor = MaterialTheme.colorScheme.surface
-
     Row(
-        modifier = Modifier
-            .height(TASK_GROUP_ITEM_HEIGHT)
-            .drawWithContent {
-                drawGlowingSides(
-                    glowColor = glowColor,
-                    backgroundColor = backgroundColor
-                )
-            }
-            .padding(10.dp)
-            .clip(RoundedCornerShape(8.dp))
-            .clickable { onEditTaskGroup() },
+        modifier = Modifier.height(TASK_GROUP_HEADER_HEIGHT),
         verticalAlignment = Alignment.CenterVertically
     ) {
         Dragger()
-
-        PlayModeIcon(uiTaskGroup)
 
         Spacer(modifier = Modifier.width(6.dp))
 
         Text(
             modifier = Modifier.weight(1f),
             color = MaterialTheme.colorScheme.onSurface,
-            text = uiTaskGroup.title,
+            text = taskGroupTitle,
             style = MaterialTheme.typography.titleMedium,
             maxLines = 1,
             overflow = TextOverflow.Ellipsis
@@ -97,9 +75,8 @@ internal fun TaskGroupSummary(
 private fun TaskGroupSummaryPreview() {
     SessionTimerTheme {
         Surface {
-            TaskGroupSummary(
-                uiTaskGroup = fakeUiTaskGroup(),
-                onEditTaskGroup = { },
+            TaskGroupHeader(
+                taskGroupTitle = "Task Group Title",
                 onCollapseChanged = { },
                 isCollapsed = false
             )
@@ -113,13 +90,8 @@ private fun TaskGroupSummaryPreview() {
 private fun TaskGroupSummaryCollapsedPreview() {
     SessionTimerTheme {
         Surface {
-            TaskGroupSummary(
-                uiTaskGroup = fakeUiTaskGroup().copy(
-                    title = "Very Very Long Title that would need several lines of text",
-                    playMode = PlayMode.N_TASKS_SHUFFLED,
-                    numberOfRandomTasks = 2
-                ),
-                onEditTaskGroup = { },
+            TaskGroupHeader(
+                taskGroupTitle = "Very Very Long Title that would need several lines of text",
                 onCollapseChanged = { },
                 isCollapsed = true
             )

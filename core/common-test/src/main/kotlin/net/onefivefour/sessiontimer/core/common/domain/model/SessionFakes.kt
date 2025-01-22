@@ -1,6 +1,7 @@
 package net.onefivefour.sessiontimer.core.common.domain.model
 
 import kotlinx.datetime.Clock
+import kotlin.time.Duration.Companion.minutes
 
 /**
  * Contains 1 TaskGroup with 2 Tasks.
@@ -15,6 +16,8 @@ val FAKE_SESSION = Session(
             title = "Test Task Group",
             color = 0xFF0000,
             playMode = PlayMode.SEQUENCE,
+            numberOfRandomTasks = 1,
+            defaultTaskDuration = 1.minutes,
             tasks = FAKE_TASKS,
             sortOrder = 1,
             sessionId = 1L

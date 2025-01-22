@@ -25,13 +25,15 @@ class NewSessionUseCaseImpl @Inject constructor(
         val taskGroupColor = defaultValues.getTaskGroupColor()
         val taskGroupPlayMode = defaultValues.getTaskGroupPlayMode()
         val taskGroupNumberOfRandomTasks = defaultValues.getTaskGroupNumberOfRandomTasks()
+        val taskGroupDefaultTaskDuration = defaultValues.getTaskGroupDefaultTaskDuration()
 
         taskGroupRepository.newTaskGroup(
-            taskGroupTitle,
-            taskGroupColor,
-            taskGroupPlayMode,
-            taskGroupNumberOfRandomTasks,
-            sessionId
+            title = taskGroupTitle,
+            color = taskGroupColor,
+            playMode = taskGroupPlayMode,
+            numberOfRandomTasks = taskGroupNumberOfRandomTasks,
+            defaultTaskDuration = taskGroupDefaultTaskDuration,
+            sessionId = sessionId
         )
 
         val taskGroupId = taskGroupRepository.getLastInsertId()

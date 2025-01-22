@@ -1,7 +1,9 @@
 package net.onefivefour.sessiontimer.core.database.domain
 
+import kotlin.time.Duration
+
 interface TaskRepository {
-    suspend fun newTask(title: String, durationInSeconds: Int, taskGroupId: Long)
+    suspend fun newTask(title: String, duration: Duration, taskGroupId: Long)
 
     suspend fun setTaskTitle(taskId: Long, title: String)
 

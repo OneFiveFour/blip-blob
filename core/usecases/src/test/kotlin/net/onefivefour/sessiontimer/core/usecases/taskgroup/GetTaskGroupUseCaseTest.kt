@@ -11,6 +11,7 @@ import net.onefivefour.sessiontimer.core.common.domain.model.PlayMode
 import net.onefivefour.sessiontimer.core.common.domain.model.TaskGroup
 import net.onefivefour.sessiontimer.core.database.domain.TaskGroupRepository
 import org.junit.Test
+import kotlin.time.Duration.Companion.minutes
 
 internal class GetTaskGroupUseCaseTest {
 
@@ -33,6 +34,7 @@ internal class GetTaskGroupUseCaseTest {
                     playMode = PlayMode.N_TASKS_SHUFFLED,
                     tasks = emptyList(),
                     numberOfRandomTasks = 5,
+                    defaultTaskDuration = 1.minutes,
                     sortOrder = 1,
                     sessionId = 2L
                 )

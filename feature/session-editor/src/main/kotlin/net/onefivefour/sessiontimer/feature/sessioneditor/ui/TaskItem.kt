@@ -52,7 +52,7 @@ import net.onefivefour.sessiontimer.core.ui.modifier.clearFocusOnKeyboardDismiss
 import net.onefivefour.sessiontimer.feature.sessioneditor.R
 import net.onefivefour.sessiontimer.feature.sessioneditor.model.UiTask
 
-internal val TASK_ITEM_HEIGHT = 64.dp
+internal val TASK_ITEM_HEIGHT = 38.dp
 
 @Composable
 internal fun TaskItem(
@@ -61,26 +61,12 @@ internal fun TaskItem(
     onTaskTitleChanged: (String) -> Unit
 ) {
 
-    val glowColor = MaterialTheme.customColors.surfaceGlow
-
-    val backgroundColor = MaterialTheme.colorScheme.surface
-
     Row(
         modifier = modifier
             .height(TASK_ITEM_HEIGHT)
-            .drawWithContent {
-                drawGlowingSides(
-                    glowColor = glowColor,
-                    backgroundColor = backgroundColor
-                )
-            }
-            .padding(10.dp)
-            .clip(RoundedCornerShape(8.dp)),
+            .padding(horizontal = 8.dp),
         verticalAlignment = Alignment.CenterVertically
     ) {
-        Dragger()
-
-        Spacer(modifier = Modifier.width(6.dp))
 
         BasicTextField(
             modifier = Modifier
@@ -93,16 +79,26 @@ internal fun TaskItem(
             onValueChange = { newText -> onTaskTitleChanged(newText.text) },
             cursorBrush = SolidColor(MaterialTheme.colorScheme.onSurface),
             singleLine = true,
-            textStyle = MaterialTheme.typography.bodyMedium
+            textStyle = MaterialTheme.typography.titleSmall
                 .copy(color = MaterialTheme.colorScheme.onSurface)
         )
 
-        Icon(
-            modifier = Modifier.clip(RoundedCornerShape(8.dp)),
-            painter = painterResource(id = R.drawable.ic_stopwatch),
-            tint = MaterialTheme.colorScheme.onSurface,
-            contentDescription = stringResource(id = R.string.set_duration)
+        Text(
+            text = uiTask.duration.toString(),
+            style = MaterialTheme.typography.labelSmall
+                .copy(color = MaterialTheme.colorScheme.onSurface),
         )
+
+        Spacer(modifier = Modifier.width(8.dp))
+
+//        Icon(
+//            modifier = Modifier.clip(RoundedCornerShape(8.dp)),
+//            painter = painterResource(id = R.drawable.ic_stopwatch),
+//            tint = MaterialTheme.colorScheme.onSurface,
+//            contentDescription = stringResource(id = R.string.set_duration)
+//        )
+
+        Dragger()
     }
 }
 
@@ -113,7 +109,7 @@ private fun TaskItemPreview() {
     SessionTimerTheme {
         Surface {
             TaskItem(
-                uiTask = uiTask1,
+                uiTask = uiTask3,
                 onTaskTitleChanged = { }
             )
         }

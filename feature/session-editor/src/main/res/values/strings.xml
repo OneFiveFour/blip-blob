@@ -4,4 +4,5 @@
     <string name="max_badge_value">99+</string>
     <string name="set_duration">Set Duration</string>
     <string name="add_task">Add task</string>
+    <string name="playMode">Play Mode</string>
 </resources>

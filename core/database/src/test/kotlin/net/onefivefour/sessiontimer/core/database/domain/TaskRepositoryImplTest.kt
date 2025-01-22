@@ -8,6 +8,7 @@ import kotlin.time.DurationUnit
 import kotlinx.coroutines.test.runTest
 import net.onefivefour.sessiontimer.core.database.data.TaskDataSource
 import org.junit.Test
+import kotlin.time.Duration.Companion.seconds
 
 internal class TaskRepositoryImplTest {
 
@@ -23,17 +24,17 @@ internal class TaskRepositoryImplTest {
             // GIVEN
             coEvery { taskDataSource.insert(any(), any(), any()) } returns Unit
             val title = "Sample Task"
-            val durationInSeconds = 300
+            val duration = 300.seconds
             val taskGroupId = 1L
 
             // WHEN
-            sut().newTask(title, durationInSeconds, taskGroupId)
+            sut().newTask(title, duration, taskGroupId)
 
             // THEN
             coVerify(exactly = 1) {
                 taskDataSource.insert(
                     title = title,
-                    durationInSeconds = durationInSeconds.toLong(),
+                    durationInSeconds = duration.inWholeSeconds,
                     taskGroupId = taskGroupId
                 )
             }

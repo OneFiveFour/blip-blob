@@ -28,6 +28,11 @@ val typography = Typography(
         fontWeight = FontWeight.Normal,
         fontSize = 20.sp
     ),
+    titleSmall = TextStyle(
+        fontFamily = sairaFontFamily,
+        fontWeight = FontWeight.Normal,
+        fontSize = 16.sp
+    ),
     labelLarge = TextStyle(
         fontFamily = sairaFontFamily,
         fontWeight = FontWeight.Normal,

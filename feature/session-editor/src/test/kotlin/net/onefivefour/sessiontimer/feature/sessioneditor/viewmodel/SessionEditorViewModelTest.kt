@@ -26,6 +26,7 @@ import net.onefivefour.sessiontimer.core.usecases.api.taskgroup.SetTaskGroupSort
 import net.onefivefour.sessiontimer.feature.sessioneditor.api.SessionEditorRoute
 import org.junit.Rule
 import org.junit.Test
+import kotlin.time.Duration.Companion.minutes
 
 @OptIn(ExperimentalCoroutinesApi::class)
 internal class SessionEditorViewModelTest {
@@ -101,6 +102,7 @@ internal class SessionEditorViewModelTest {
                             color = 0xFFFF0000,
                             playMode = PlayMode.SEQUENCE,
                             numberOfRandomTasks = 1,
+                            defaultTaskDuration = 1.minutes,
                             sortOrder = 1,
                             sessionId = sessionId,
                             tasks = emptyList()

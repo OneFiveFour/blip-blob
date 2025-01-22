@@ -3,5 +3,7 @@
 
     <string name="play_mode_sequence">PlayMode Sequence</string>
     <string name="play_mode_shuffle">PlayMode Shuffle</string>
+    <string name="new_task">New Task</string>
+    <string name="edit">Edit</string>
 
 </resources>

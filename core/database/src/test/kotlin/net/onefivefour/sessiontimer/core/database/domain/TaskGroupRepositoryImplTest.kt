@@ -13,6 +13,7 @@ import net.onefivefour.sessiontimer.core.database.DenormalizedTaskGroupView
 import net.onefivefour.sessiontimer.core.database.TaskGroup as DatabaseTaskGroup
 import net.onefivefour.sessiontimer.core.database.data.TaskGroupDataSource
 import org.junit.Test
+import kotlin.time.Duration.Companion.minutes
 
 internal class TaskGroupRepositoryImplTest {
 
@@ -26,15 +27,23 @@ internal class TaskGroupRepositoryImplTest {
     fun `GIVEN task group data WHEN newTaskGroup is called THEN the call is delegated to taskGroupDataSource`() =
         runTest {
             // GIVEN
-            coEvery { taskGroupDataSource.insert(any(), any(), any(), any(), any()) } returns Unit
+            coEvery { taskGroupDataSource.insert(any(), any(), any(), any(), any(), any()) } returns Unit
             val title = "Sample Task Group"
             val color = 0xFF0000L
             val playMode = PlayMode.SEQUENCE
             val numberOfRandomTasks = 3
+            val defaultTaskDuration = 1.minutes
             val sessionId = 1L
 
             // WHEN
-            sut().newTaskGroup(title, color, playMode, numberOfRandomTasks, sessionId)
+            sut().newTaskGroup(
+                title = title,
+                color = color,
+                playMode = playMode,
+                numberOfRandomTasks = numberOfRandomTasks,
+                defaultTaskDuration = defaultTaskDuration,
+                sessionId = sessionId
+            )
 
             // THEN
             coVerify(exactly = 1) {
@@ -43,6 +52,7 @@ internal class TaskGroupRepositoryImplTest {
                     color = color,
                     playMode = playMode.toString(),
                     numberOfRandomTasks = numberOfRandomTasks.toLong(),
+                    defaultTaskDuration = defaultTaskDuration.inWholeSeconds,
                     sessionId = sessionId
                 )
             }
@@ -60,6 +70,7 @@ internal class TaskGroupRepositoryImplTest {
                     taskGroupColor = 0xFF00FFL,
                     taskGroupPlayMode = PlayMode.N_TASKS_SHUFFLED.toString(),
                     taskGroupNumberOfRandomTasks = 2L,
+                    taskGroupDefaultTaskDuration = 1.minutes.inWholeSeconds,
                     taskGroupSortOrder = 1,
                     sessionId = 3,
                     taskId = 1L,
@@ -74,6 +85,7 @@ internal class TaskGroupRepositoryImplTest {
                     taskGroupColor = 0xFF00FFL,
                     taskGroupPlayMode = PlayMode.N_TASKS_SHUFFLED.toString(),
                     taskGroupNumberOfRandomTasks = 2L,
+                    taskGroupDefaultTaskDuration = 1.minutes.inWholeSeconds,
                     taskGroupSortOrder = 2,
                     sessionId = 3,
                     taskId = 2L,
@@ -110,6 +122,7 @@ internal class TaskGroupRepositoryImplTest {
                     color = 0xFF00FFL,
                     playMode = PlayMode.N_TASKS_SHUFFLED.toString(),
                     numberOfRandomTasks = 2L,
+                    defaultTaskDuration = 1.minutes.inWholeSeconds,
                     sortOrder = 1L,
                     sessionId = sessionId
                 ),
@@ -119,6 +132,7 @@ internal class TaskGroupRepositoryImplTest {
                     color = 0x00FFFFL,
                     playMode = PlayMode.SEQUENCE.toString(),
                     numberOfRandomTasks = 1L,
+                    defaultTaskDuration = 1.minutes.inWholeSeconds,
                     sortOrder = 2L,
                     sessionId = sessionId
                 )
@@ -142,12 +156,23 @@ internal class TaskGroupRepositoryImplTest {
     fun `GIVEN taskGroup data WHEN updateTaskGroup is called THEN the call is delegated to taskGroupDataSource`() =
         runTest {
             // GIVEN
-            coEvery { taskGroupDataSource.update(any(), any(), any(), any(), any(), any()) } returns Unit
+            coEvery {
+                taskGroupDataSource.update(
+                    any(),
+                    any(),
+                    any(),
+                    any(),
+                    any(),
+                    any(),
+                    any()
+                )
+            } returns Unit
             val taskGroupId = 1L
             val title = "Updated Task Group"
             val color = 0x00FF00
             val playMode = PlayMode.SEQUENCE
             val numberOfRandomTasks = 4
+            val defaultTaskDuration = 1.minutes
             val sortOrder = 1
 
             // WHEN
@@ -157,6 +182,7 @@ internal class TaskGroupRepositoryImplTest {
                 color = color,
                 playMode = playMode,
                 numberOfRandomTasks = numberOfRandomTasks,
+                defaultTaskDuration = defaultTaskDuration,
                 sortOrder = sortOrder
             )
 
@@ -168,6 +194,7 @@ internal class TaskGroupRepositoryImplTest {
                     color = color.toLong(),
                     playMode = playMode.toString(),
                     numberOfRandomTasks = numberOfRandomTasks.toLong(),
+                    defaultTaskDuration = defaultTaskDuration.inWholeSeconds,
                     sortOrder = sortOrder.toLong()
                 )
             }

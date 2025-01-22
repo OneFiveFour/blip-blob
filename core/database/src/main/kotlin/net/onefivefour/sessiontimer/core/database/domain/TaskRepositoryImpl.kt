@@ -1,17 +1,19 @@
 package net.onefivefour.sessiontimer.core.database.domain
 
+import android.icu.util.UniversalTimeScale.toLong
 import javax.inject.Inject
 import net.onefivefour.sessiontimer.core.database.data.TaskDataSource
+import kotlin.time.Duration
 
 internal class TaskRepositoryImpl @Inject constructor(
     private val taskDataSource: TaskDataSource
 ) : TaskRepository {
 
-    override suspend fun newTask(title: String, durationInSeconds: Int, taskGroupId: Long) {
+    override suspend fun newTask(title: String, duration: Duration, taskGroupId: Long) {
         taskDataSource
             .insert(
                 title = title,
-                durationInSeconds = durationInSeconds.toLong(),
+                durationInSeconds = duration.inWholeSeconds,
                 taskGroupId = taskGroupId
             )
     }

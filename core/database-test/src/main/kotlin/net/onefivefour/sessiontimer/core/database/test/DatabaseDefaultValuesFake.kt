@@ -2,6 +2,9 @@ package net.onefivefour.sessiontimer.core.database.test
 
 import net.onefivefour.sessiontimer.core.common.domain.model.PlayMode
 import net.onefivefour.sessiontimer.core.database.domain.DatabaseDefaultValues
+import kotlin.time.Duration
+import kotlin.time.Duration.Companion.minutes
+import kotlin.time.Duration.Companion.seconds
 
 val FAKE_DB_DEFAULT_VALUES = object : DatabaseDefaultValues {
 
@@ -25,11 +28,15 @@ val FAKE_DB_DEFAULT_VALUES = object : DatabaseDefaultValues {
         return 15
     }
 
+    override fun getTaskGroupDefaultTaskDuration(): Duration {
+        return 5.minutes
+    }
+
     override fun getTaskTitle(): String {
         return "DEFAULT_TASK_TITLE"
     }
 
-    override fun getTaskDuration(): Int {
-        return 9
+    override fun getTaskDuration(): Duration {
+        return 3.seconds
     }
 }

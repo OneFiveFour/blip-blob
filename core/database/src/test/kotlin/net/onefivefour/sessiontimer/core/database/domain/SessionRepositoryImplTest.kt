@@ -13,6 +13,7 @@ import net.onefivefour.sessiontimer.core.database.DenormalizedSessionView
 import net.onefivefour.sessiontimer.core.database.Session as DatabaseSession
 import net.onefivefour.sessiontimer.core.database.data.SessionDataSource
 import org.junit.Test
+import kotlin.time.Duration.Companion.minutes
 
 internal class SessionRepositoryImplTest {
 
@@ -82,6 +83,7 @@ internal class SessionRepositoryImplTest {
                 taskGroupColor = 0xFF00FFL,
                 taskGroupPlayMode = PlayMode.N_TASKS_SHUFFLED.toString(),
                 taskGroupNumberOfRandomTasks = 3,
+                taskGroupDefaultTaskDuration = 1.minutes.inWholeSeconds,
                 taskGroupSortOrder = 1L,
                 taskId = 1L,
                 taskTaskGroupId = 1L,

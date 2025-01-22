@@ -4,6 +4,7 @@ CREATE TABLE taskGroup (
   color INTEGER NOT NULL,
   playMode TEXT NOT NULL,
   numberOfRandomTasks INTEGER NOT NULL,
+  defaultTaskDuration INTEGER NOT NULL,
   sortOrder INTEGER NOT NULL,
   sessionId INTEGER NOT NULL
 );
@@ -14,16 +15,17 @@ INSERT INTO taskGroup (
     color,
     playMode,
     numberOfRandomTasks,
+    defaultTaskDuration,
     sortOrder,
     sessionId
 )
 VALUES
-    (1,"TaskGroup 1", 16711680, "SEQUENCE", 1, 1, 1),
-    (2,"TaskGroup 2", 16711680, "SEQUENCE", 1, 2, 1)
+    (1,"TaskGroup 1", 16711680, "SEQUENCE", 1, 60, 1, 1),
+    (2,"TaskGroup 2", 16711680, "SEQUENCE", 1, 60, 2, 1)
 ;
 
 new:
-INSERT INTO taskGroup VALUES (?,?,?,?,?,?,?);
+INSERT INTO taskGroup VALUES (?,?,?,?,?,?,?,?);
 
 denormalizedTaskGroupView:
 SELECT
@@ -32,6 +34,7 @@ SELECT
     TG.color AS taskGroupColor,
     TG.playMode AS taskGroupPlayMode,
     TG.numberOfRandomTasks AS taskGroupNumberOfRandomTasks,
+    TG.defaultTaskDuration AS taskGroupDefaultTaskDuration,
     TG.sortOrder AS taskGroupSortOrder,
     TG.sessionId AS sessionId,
     T.id AS taskId,
@@ -62,6 +65,7 @@ UPDATE taskGroup SET
     color = :color,
     playMode = :playMode,
     numberOfRandomTasks = :numberOfRandomTasks,
+    defaultTaskDuration = :defaultTaskDuration,
     sortOrder = :sortOrder
 WHERE id = :id;
 

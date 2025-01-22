@@ -21,6 +21,7 @@ internal class TaskGroupDataSourceImpl @Inject constructor(
         color: Long,
         playMode: String,
         numberOfRandomTasks: Long,
+        defaultTaskDuration: Long,
         sessionId: Long
     ) {
         withContext(dispatcher) {
@@ -32,6 +33,7 @@ internal class TaskGroupDataSourceImpl @Inject constructor(
                     color = color,
                     playMode = playMode,
                     numberOfRandomTasks = numberOfRandomTasks,
+                    defaultTaskDuration = defaultTaskDuration,
                     sortOrder = maxSortOrder + 1,
                     sessionId = sessionId
                 )
@@ -59,6 +61,7 @@ internal class TaskGroupDataSourceImpl @Inject constructor(
         color: Long,
         playMode: String,
         numberOfRandomTasks: Long,
+        defaultTaskDuration: Long,
         sortOrder: Long
     ) {
         withContext(dispatcher) {
@@ -68,6 +71,7 @@ internal class TaskGroupDataSourceImpl @Inject constructor(
                 color = color,
                 playMode = playMode,
                 numberOfRandomTasks = numberOfRandomTasks,
+                defaultTaskDuration = defaultTaskDuration,
                 sortOrder = sortOrder
             )
         }

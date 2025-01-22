@@ -1,4 +1,4 @@
-package net.onefivefour.sessiontimer.core.ui.button
+package net.onefivefour.sessiontimer.core.ui.buttons
 
 import android.content.res.Configuration.UI_MODE_NIGHT_YES
 import androidx.annotation.DrawableRes
@@ -16,9 +16,10 @@ import androidx.compose.ui.unit.dp
 import net.onefivefour.sessiontimer.core.theme.SessionTimerTheme
 import net.onefivefour.sessiontimer.core.theme.customColors
 import net.onefivefour.sessiontimer.core.ui.R
+import net.onefivefour.sessiontimer.core.ui.button.ButtonContent
 
 @Composable
-fun PrimaryButton(
+fun GlowingButton(
     modifier: Modifier = Modifier,
     text: String,
     @DrawableRes iconRes: Int? = null,
@@ -56,7 +57,7 @@ fun PrimaryButton(
 private fun PrimaryButtonPreview() {
     SessionTimerTheme {
         Surface {
-            PrimaryButton(
+            GlowingButton(
                 text = "New Session",
                 iconRes = R.drawable.ic_add
             ) {}

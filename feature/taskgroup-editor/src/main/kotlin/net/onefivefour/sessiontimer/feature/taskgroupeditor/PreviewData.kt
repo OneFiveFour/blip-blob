@@ -4,6 +4,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import net.onefivefour.sessiontimer.core.common.domain.model.PlayMode
 import net.onefivefour.sessiontimer.core.theme.taskGroupColors
+import kotlin.time.Duration.Companion.minutes
 
 
 internal val task1 = UiTask(
@@ -31,6 +32,8 @@ internal fun uiTaskGroup() = UiTaskGroup(
     title = "TaskGroup Title",
     color = MaterialTheme.taskGroupColors.color01,
     playMode = PlayMode.SEQUENCE,
+    numberOfRandomTasks = 1,
+    defaultTaskDuration = 1.minutes,
     sortOrder = 1,
     tasks = fakeTasks
 )

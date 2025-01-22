@@ -39,6 +39,7 @@ internal class NewSessionUseCaseTest {
                     color = any(),
                     playMode = any(),
                     numberOfRandomTasks = any(),
+                    defaultTaskDuration = any(),
                     sessionId = any()
                 )
             } returns Unit
@@ -53,11 +54,12 @@ internal class NewSessionUseCaseTest {
                 sessionRepository.newSession(FAKE_DB_DEFAULT_VALUES.getSessionTitle())
 
                 taskGroupRepository.newTaskGroup(
-                    FAKE_DB_DEFAULT_VALUES.getTaskGroupTitle(),
-                    FAKE_DB_DEFAULT_VALUES.getTaskGroupColor(),
-                    FAKE_DB_DEFAULT_VALUES.getTaskGroupPlayMode(),
-                    FAKE_DB_DEFAULT_VALUES.getTaskGroupNumberOfRandomTasks(),
-                    sessionId
+                    title = FAKE_DB_DEFAULT_VALUES.getTaskGroupTitle(),
+                    color = FAKE_DB_DEFAULT_VALUES.getTaskGroupColor(),
+                    playMode = FAKE_DB_DEFAULT_VALUES.getTaskGroupPlayMode(),
+                    numberOfRandomTasks = FAKE_DB_DEFAULT_VALUES.getTaskGroupNumberOfRandomTasks(),
+                    defaultTaskDuration = FAKE_DB_DEFAULT_VALUES.getTaskGroupDefaultTaskDuration(),
+                    sessionId = sessionId
                 )
                 taskRepository.newTask(
                     FAKE_DB_DEFAULT_VALUES.getTaskTitle(),

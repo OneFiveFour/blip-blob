@@ -5,6 +5,7 @@ import javax.inject.Inject
 import net.onefivefour.sessiontimer.core.common.domain.model.PlayMode
 import net.onefivefour.sessiontimer.core.database.domain.TaskGroupRepository
 import net.onefivefour.sessiontimer.core.usecases.api.taskgroup.UpdateTaskGroupUseCase
+import kotlin.time.Duration
 
 @ViewModelScoped
 class UpdateTaskGroupUseCaseImpl @Inject constructor(
@@ -17,6 +18,7 @@ class UpdateTaskGroupUseCaseImpl @Inject constructor(
         color: Int,
         playMode: PlayMode,
         numberOfRandomTasks: Int,
+        defaultTaskDuration: Duration,
         sortOrder: Int
     ) {
         taskGroupRepository.updateTaskGroup(
@@ -25,6 +27,7 @@ class UpdateTaskGroupUseCaseImpl @Inject constructor(
             color,
             playMode,
             numberOfRandomTasks,
+            defaultTaskDuration,
             sortOrder
         )
     }

@@ -1,4 +1,4 @@
-package net.onefivefour.sessiontimer.core.ui.button
+package net.onefivefour.sessiontimer.core.ui.buttons
 
 import androidx.compose.animation.core.Animatable
 import androidx.compose.animation.core.AnimationVector1D

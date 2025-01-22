@@ -19,12 +19,7 @@ fun Dragger() {
     val numberOfRows = 6
 
     Column(
-        modifier = Modifier
-            .padding(
-                horizontal = 6.dp,
-                vertical = 4.dp
-            )
-            .alpha(0.5f)
+        modifier = Modifier.alpha(0.5f)
     ) {
         repeat(numberOfRows) {
             if (it != 0) {
@@ -34,7 +29,7 @@ fun Dragger() {
             Row {
                 Box(
                     modifier = Modifier
-                        .size(2.dp)
+                        .size(1.dp)
                         .background(MaterialTheme.colorScheme.onSurface)
                 )
 
@@ -42,7 +37,7 @@ fun Dragger() {
 
                 Box(
                     modifier = Modifier
-                        .size(2.dp)
+                        .size(1.dp)
                         .background(MaterialTheme.colorScheme.onSurface)
                 )
             }
