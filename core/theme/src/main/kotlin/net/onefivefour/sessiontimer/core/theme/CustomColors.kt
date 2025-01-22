@@ -26,5 +26,5 @@ internal val CustomColorsLight = CustomColors(
 )
 
 internal val CustomColorsDark = CustomColors(
-    surfaceGlow = Color(0xFFFFFFFF).copy(alpha = 0.05f)
+    surfaceGlow = Color(0xFFFFFFFF).copy(alpha = 0.1f)
 )

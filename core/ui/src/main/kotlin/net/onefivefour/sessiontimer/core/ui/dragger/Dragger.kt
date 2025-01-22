@@ -29,7 +29,7 @@ fun Dragger() {
             Row {
                 Box(
                     modifier = Modifier
-                        .size(1.dp)
+                        .size(2.dp)
                         .background(MaterialTheme.colorScheme.onSurface)
                 )
 
@@ -37,7 +37,7 @@ fun Dragger() {
 
                 Box(
                     modifier = Modifier
-                        .size(1.dp)
+                        .size(2.dp)
                         .background(MaterialTheme.colorScheme.onSurface)
                 )
             }

@@ -27,13 +27,14 @@ import net.onefivefour.sessiontimer.feature.sessioneditor.R
 
 @Composable
 internal fun TaskGroupHeader(
+    modifier: Modifier = Modifier,
     taskGroupTitle: String,
     onCollapseChanged: (Boolean) -> Unit,
     isCollapsed: Boolean,
 ) {
 
     Row(
-        modifier = Modifier.height(TASK_GROUP_HEADER_HEIGHT),
+        modifier = modifier.padding(horizontal = 8.dp),
         verticalAlignment = Alignment.CenterVertically
     ) {
         Dragger()

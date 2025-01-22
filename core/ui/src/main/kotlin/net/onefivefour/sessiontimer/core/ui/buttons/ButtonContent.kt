@@ -1,4 +1,4 @@
-package net.onefivefour.sessiontimer.core.ui.button
+package net.onefivefour.sessiontimer.core.ui.buttons
 
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -36,7 +36,7 @@ internal fun ButtonContent(
         }
 
         Text(
-            style = MaterialTheme.typography.labelLarge,
+            style = MaterialTheme.typography.labelMedium,
             text = text,
             color = contentColor
         )

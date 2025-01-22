@@ -18,6 +18,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import net.onefivefour.sessiontimer.core.theme.SessionTimerTheme
 import net.onefivefour.sessiontimer.core.ui.haptic.ReorderHapticFeedbackType
 import net.onefivefour.sessiontimer.core.ui.haptic.rememberReorderHapticFeedback
+import net.onefivefour.sessiontimer.core.ui.swipedismiss.SwipeToDismissContainer
 import net.onefivefour.sessiontimer.feature.sessioneditor.model.UiTaskGroup
 import net.onefivefour.sessiontimer.feature.sessioneditor.viewmodel.SessionEditorAction
 import sh.calvin.reorderable.ReorderableItem
@@ -44,8 +45,7 @@ internal fun TaskList(
         }
 
     LazyColumn(
-        modifier = modifier
-            .background(MaterialTheme.colorScheme.surfaceVariant),
+        modifier = modifier,
         state = lazyListState
     ) {
         items(
@@ -56,38 +56,31 @@ internal fun TaskList(
             ReorderableItem(reorderableLazyColumnState, task.createdAt.toEpochMilliseconds()) {
                 val interactionSource = remember { MutableInteractionSource() }
 
-//                SwipeToDismissContainer(
-//                    item = task,
-//                    onDelete = { onDeleteTask(task.id) }
-//                ) {
+                SwipeToDismissContainer(
+                    item = task,
+                    onDelete = { onAction(SessionEditorAction.DeleteTask(task.id)) }
+                ) {
 
-                TaskItem(
-                    modifier = Modifier
-                        .longPressDraggableHandle(
-                            onDragStarted = {
-                                haptic.performHapticFeedback(ReorderHapticFeedbackType.START)
-                            },
-                            onDragStopped = {
-                                haptic.performHapticFeedback(ReorderHapticFeedbackType.END)
-                                val taskIds = taskList.map { it.id }
-                                onAction(SessionEditorAction.UpdateTaskGroupSortOrders(taskIds))
-                            },
-                            interactionSource = interactionSource
-                        ),
-                    uiTask = task,
-                    onTaskTitleChanged = { newTitle ->
-                        onAction(SessionEditorAction.SetTaskTitle(task.id, newTitle))
-                    }
-                )
+                    TaskItem(
+                        modifier = Modifier
+                            .longPressDraggableHandle(
+                                onDragStarted = {
+                                    haptic.performHapticFeedback(ReorderHapticFeedbackType.START)
+                                },
+                                onDragStopped = {
+                                    haptic.performHapticFeedback(ReorderHapticFeedbackType.END)
+                                    val taskIds = taskList.map { it.id }
+                                    onAction(SessionEditorAction.UpdateTaskGroupSortOrders(taskIds))
+                                },
+                                interactionSource = interactionSource
+                            ),
+                        uiTask = task,
+                        onTaskTitleChanged = { newTitle ->
+                            onAction(SessionEditorAction.SetTaskTitle(task.id, newTitle))
+                        }
+                    )
+                }
             }
-//            }
-        }
-
-        item {
-            CreateTaskButton(
-                defaultTaskDuration = uiTaskGroup.defaultTaskDuration,
-                onCreateTask = { onAction(SessionEditorAction.CreateTask(uiTaskGroup.id)) }
-            )
         }
     }
 }

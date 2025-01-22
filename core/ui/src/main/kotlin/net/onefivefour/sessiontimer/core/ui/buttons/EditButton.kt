@@ -1,7 +1,7 @@
 package net.onefivefour.sessiontimer.core.ui.buttons
 
-import android.content.res.Configuration
-import android.content.res.Configuration.*
+import android.content.res.Configuration.UI_MODE_NIGHT_YES
+import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
@@ -12,6 +12,7 @@ import androidx.compose.ui.draw.drawWithContent
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
 import net.onefivefour.sessiontimer.core.theme.SessionTimerTheme
 import net.onefivefour.sessiontimer.core.theme.customColors
 import net.onefivefour.sessiontimer.core.ui.R
@@ -24,15 +25,17 @@ fun EditButton(
 ) {
 
     val backgroundColor = MaterialTheme.colorScheme.surface
-    val glowColor = MaterialTheme.customColors.surfaceGlow.copy(alpha = 0.3f)
+    val glowColor = MaterialTheme.customColors.surfaceGlow
 
     IconButton(
-        modifier = modifier.drawWithContent {
-            drawGlowingSides(
-                glowColor = glowColor,
-                backgroundColor = backgroundColor
-            )
-        },
+        modifier = modifier
+            .drawWithContent {
+                drawGlowingSides(
+                    glowColor = glowColor,
+                    backgroundColor = backgroundColor
+                )
+            }
+            .padding(10.dp),
         onClick = onClick
     ) {
 
@@ -50,7 +53,7 @@ fun EditButton(
 private fun EditButtonPreview() {
     SessionTimerTheme {
         Surface {
-            EditButton {  }
+            EditButton { }
         }
     }
 }

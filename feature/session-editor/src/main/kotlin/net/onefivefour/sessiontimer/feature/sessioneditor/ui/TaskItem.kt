@@ -2,6 +2,7 @@
 package net.onefivefour.sessiontimer.feature.sessioneditor.ui
 
 import android.content.res.Configuration.*
+import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.gestures.awaitEachGesture
 import androidx.compose.foundation.gestures.awaitFirstDown
@@ -52,8 +53,6 @@ import net.onefivefour.sessiontimer.core.ui.modifier.clearFocusOnKeyboardDismiss
 import net.onefivefour.sessiontimer.feature.sessioneditor.R
 import net.onefivefour.sessiontimer.feature.sessioneditor.model.UiTask
 
-internal val TASK_ITEM_HEIGHT = 38.dp
-
 @Composable
 internal fun TaskItem(
     modifier: Modifier = Modifier,
@@ -64,6 +63,7 @@ internal fun TaskItem(
     Row(
         modifier = modifier
             .height(TASK_ITEM_HEIGHT)
+            .background(MaterialTheme.colorScheme.surfaceVariant)
             .padding(horizontal = 8.dp),
         verticalAlignment = Alignment.CenterVertically
     ) {
@@ -79,7 +79,7 @@ internal fun TaskItem(
             onValueChange = { newText -> onTaskTitleChanged(newText.text) },
             cursorBrush = SolidColor(MaterialTheme.colorScheme.onSurface),
             singleLine = true,
-            textStyle = MaterialTheme.typography.titleSmall
+            textStyle = MaterialTheme.typography.titleMedium
                 .copy(color = MaterialTheme.colorScheme.onSurface)
         )
 

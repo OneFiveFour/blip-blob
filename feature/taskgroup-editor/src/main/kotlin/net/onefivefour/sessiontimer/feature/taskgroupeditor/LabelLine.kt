@@ -35,7 +35,7 @@ internal fun LabelLine(
         Text(
             modifier = Modifier.offset(y = (-4).dp),
             text = stringResource(labelRes).uppercase(),
-            style = MaterialTheme.typography.labelMedium,
+            style = MaterialTheme.typography.labelSmall,
             color = MaterialTheme.colorScheme.onSurfaceVariant
         )
     }

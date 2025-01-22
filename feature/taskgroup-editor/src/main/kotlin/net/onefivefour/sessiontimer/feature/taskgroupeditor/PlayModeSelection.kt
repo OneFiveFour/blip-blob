@@ -42,6 +42,7 @@ internal fun PlayModeSelection(
             contentAlignment = Alignment.Center
         ) {
             Icon(
+                modifier = Modifier.size(52.dp),
                 painter = painterResource(id = UiR.drawable.ic_play_mode_sequence),
                 contentDescription = stringResource(id = UiR.string.play_mode_sequence),
                 tint = MaterialTheme.colorScheme.onSurface
@@ -55,18 +56,20 @@ internal fun PlayModeSelection(
         ) {
             Row(verticalAlignment = Alignment.CenterVertically) {
                 Icon(
-                    modifier = Modifier.background(MaterialTheme.colorScheme.onSurfaceVariant),
+                    modifier = Modifier
+                        .size(52.dp)
+                        .background(MaterialTheme.colorScheme.surfaceVariant),
                     painter = painterResource(id = UiR.drawable.ic_play_mode_shuffle),
                     contentDescription = stringResource(UiR.string.play_mode_shuffle),
                     tint = MaterialTheme.colorScheme.onSurface
                 )
 
-                Spacer(modifier = Modifier.width(8.dp))
+                Spacer(modifier = Modifier.width(16.dp))
 
                 Icon(
                     modifier = Modifier
                         .clip(RoundedCornerShape(50))
-                        .background(MaterialTheme.colorScheme.onSurfaceVariant)
+                        .background(MaterialTheme.colorScheme.surfaceVariant)
                         .clickable {
                             if (numberOfRandomTasks > 1) {
                                 onPlayModeChanged(PlayMode.N_TASKS_SHUFFLED, numberOfRandomTasks - 1)
@@ -81,7 +84,7 @@ internal fun PlayModeSelection(
 
                 Text(
                     modifier = Modifier
-                        .padding(horizontal = 8.dp),
+                        .padding(horizontal = 16.dp),
                     text = when (numberOfRandomTasks) {
                         numberOfTasks -> stringResource(R.string.all).uppercase()
                         else -> numberOfRandomTasks.toString()
@@ -95,7 +98,7 @@ internal fun PlayModeSelection(
                 Icon(
                     modifier = Modifier
                         .clip(RoundedCornerShape(50))
-                        .background(MaterialTheme.colorScheme.onSurfaceVariant)
+                        .background(MaterialTheme.colorScheme.surfaceVariant)
                         .clickable {
                             if (numberOfRandomTasks < numberOfTasks) {
                                 onPlayModeChanged(PlayMode.N_TASKS_SHUFFLED, numberOfRandomTasks + 1)
@@ -107,7 +110,7 @@ internal fun PlayModeSelection(
                     tint = MaterialTheme.colorScheme.onSurface
                 )
 
-                Spacer(modifier = Modifier.width(8.dp))
+                Spacer(modifier = Modifier.width(16.dp))
             }
 
         }
@@ -121,7 +124,6 @@ private fun buttonModifier(isSelected: Boolean): Modifier {
     val cornerShape = RoundedCornerShape(6.dp)
 
     return Modifier
-        .height(42.dp)
         .clip(cornerShape)
         .background(MaterialTheme.colorScheme.onSurfaceVariant.copy(alpha = 0.5f))
         .border(

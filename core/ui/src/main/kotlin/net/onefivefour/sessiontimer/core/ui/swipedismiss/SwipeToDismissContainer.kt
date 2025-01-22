@@ -70,7 +70,7 @@ private fun DeleteBackground(
     swipeDismissState: SwipeToDismissBoxState
 ) {
     val background = if (swipeDismissState.dismissDirection == SwipeToDismissBoxValue.StartToEnd) {
-        MaterialTheme.colorScheme.background
+        MaterialTheme.colorScheme.error
     } else Color.Transparent
 
     Box(

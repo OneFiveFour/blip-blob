@@ -19,6 +19,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.SolidColor
+import androidx.compose.ui.platform.LocalInspectionMode
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextRange
 import androidx.compose.ui.text.input.TextFieldValue
@@ -87,7 +88,10 @@ internal fun TaskGroupEditor(
 
         LabelLine(labelRes = R.string.title)
 
-        AnimatedVisibility(!WindowInsets.isImeVisible) {
+        val isPreview = LocalInspectionMode.current
+        val animatedVisibility = !WindowInsets.isImeVisible || isPreview
+
+        AnimatedVisibility(animatedVisibility) {
             Column {
                 ColorGrid(
                     colors = MaterialTheme.taskGroupColors.getAll(),
