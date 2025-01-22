@@ -18,7 +18,6 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.util.lerp
 import net.onefivefour.sessiontimer.core.theme.SessionTimerTheme
-import net.onefivefour.sessiontimer.core.ui.glow.drawGlowingSides
 import net.onefivefour.sessiontimer.core.ui.utils.toPx
 import net.onefivefour.sessiontimer.feature.sessioneditor.model.UiTaskGroup
 import net.onefivefour.sessiontimer.feature.sessioneditor.viewmodel.SessionEditorAction
@@ -55,40 +54,9 @@ internal fun TaskGroupItem(
         label = "animatedCollapse"
     )
 
-    val animatedDrag by animateFloatAsState(
-        targetValue = when {
-            isDragging -> 1f
-            else -> 0f
-        },
-        animationSpec = tween(500),
-        label = "animatedDrag"
-    )
-
-    val glowColor = uiTaskGroup.color
-        .copy(
-            alpha = lerp(
-                start = 0.3f,
-                stop = 0.9f,
-                fraction = animatedDrag
-            )
-        )
-
-    val blurRadius = lerp(
-        start = 12.dp.toPx(),
-        stop = 24.dp.toPx(),
-        fraction = animatedDrag
-    )
-
-    val backgroundColor = MaterialTheme.colorScheme.surface
+    println(isDragging)
 
     Column(modifier = modifier
-        .drawWithContent {
-            drawGlowingSides(
-                glowColor = glowColor,
-                backgroundColor = backgroundColor,
-                blurRadius = blurRadius
-            )
-        }
         .padding(10.dp)
         .height(animatedCollapse)
     ) {

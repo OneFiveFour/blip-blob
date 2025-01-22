@@ -12,9 +12,8 @@ import androidx.compose.ui.graphics.drawscope.ContentDrawScope
 import androidx.compose.ui.node.DrawModifierNode
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
-import net.onefivefour.sessiontimer.core.ui.glow.drawGlowingSides
 
-internal class GlowingButtonIndicationNode(
+internal class SquareButtonIndicationNode(
     private val interactionSource: InteractionSource,
     private val backgroundColor: Color,
     private val glowColor: Color
@@ -49,7 +48,7 @@ internal class GlowingButtonIndicationNode(
     }
 
     override fun ContentDrawScope.draw() {
-        drawGlowingSides(
+        squareButtonGlow(
             glowColor = glowColor,
             backgroundColor = backgroundColor,
             animatedPercent = animatedPercent

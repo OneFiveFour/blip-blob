@@ -28,7 +28,7 @@ import androidx.compose.ui.unit.dp
 import net.onefivefour.sessiontimer.core.taskgroupeditor.R
 import net.onefivefour.sessiontimer.core.theme.SessionTimerTheme
 import net.onefivefour.sessiontimer.core.theme.taskGroupColors
-import net.onefivefour.sessiontimer.core.ui.buttons.GlowingButton
+import net.onefivefour.sessiontimer.core.ui.buttons.SquareButton
 import net.onefivefour.sessiontimer.core.ui.modifier.clearFocusOnKeyboardDismiss
 import net.onefivefour.sessiontimer.core.ui.R as UiR
 
@@ -119,11 +119,10 @@ internal fun TaskGroupEditor(
                     labelRes = R.string.play_mode
                 )
 
-                GlowingButton(
+                SquareButton(
                     modifier = Modifier.align(Alignment.CenterHorizontally),
-                    text = stringResource(R.string.save),
                     iconRes = UiR.drawable.ic_save,
-                    contentDescription = stringResource(R.string.save),
+                    contentDescriptionRes = R.string.save,
                     onClick = goBack
                 )
             }

@@ -16,7 +16,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import net.onefivefour.sessiontimer.core.ui.R
-import net.onefivefour.sessiontimer.core.ui.buttons.GlowingButton
+import net.onefivefour.sessiontimer.core.ui.buttons.SquareButton
 import net.onefivefour.sessiontimer.core.ui.haptic.ReorderHapticFeedbackType
 import net.onefivefour.sessiontimer.core.ui.haptic.rememberReorderHapticFeedback
 import net.onefivefour.sessiontimer.feature.sessioneditor.model.UiSession
@@ -89,10 +89,10 @@ internal fun SessionEditorReady(
             }
         }
 
-        GlowingButton(
-            text = "New Task Group",
-            onClick = { onAction(SessionEditorAction.CreateTaskGroup) },
-            iconRes = R.drawable.ic_add
+        SquareButton(
+            iconRes = R.drawable.ic_add,
+            contentDescriptionRes = R.string.new_task_group,
+            onClick = { onAction(SessionEditorAction.CreateTaskGroup) }
         )
     }
 }

@@ -4,7 +4,6 @@ import android.content.res.Configuration
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -22,7 +21,7 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import net.onefivefour.sessiontimer.core.theme.SessionTimerTheme
-import net.onefivefour.sessiontimer.core.ui.dragger.Dragger
+import net.onefivefour.sessiontimer.core.ui.draghandler.DragHandler
 import net.onefivefour.sessiontimer.feature.sessioneditor.R
 
 @Composable
@@ -37,7 +36,7 @@ internal fun TaskGroupHeader(
         modifier = modifier.padding(horizontal = 8.dp),
         verticalAlignment = Alignment.CenterVertically
     ) {
-        Dragger()
+        DragHandler()
 
         Spacer(modifier = Modifier.width(6.dp))
 

@@ -1,4 +1,4 @@
-package net.onefivefour.sessiontimer.core.ui.glow
+package net.onefivefour.sessiontimer.core.ui.buttons
 
 import android.graphics.BlurMaskFilter
 import androidx.compose.animation.core.Animatable
@@ -10,47 +10,36 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Paint
 import androidx.compose.ui.graphics.drawscope.ContentDrawScope
 import androidx.compose.ui.graphics.drawscope.drawIntoCanvas
-import androidx.compose.ui.graphics.drawscope.translate
 import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.lerp
 
-fun ContentDrawScope.drawGlowingSides(
+
+internal fun ContentDrawScope.squareButtonGlow(
     glowColor: Color,
     backgroundColor: Color,
-    blurRadius: Float = 12.dp.toPx(),
-    animatedPercent: Animatable<Float, AnimationVector1D>? = null
+    animatedPercent: Animatable<Float, AnimationVector1D>
 ) {
     val cornerRadiusPx = 8.dp.toPx()
+
+    val blurRadius = lerp(12.dp, 6.dp, animatedPercent.value).toPx()
+
+    val rectPadding = 12.dp.toPx()
+
     val paint = Paint().also {
         with(it.asFrameworkPaint()) {
             maskFilter = BlurMaskFilter(blurRadius, BlurMaskFilter.Blur.NORMAL)
             color = glowColor.toArgb()
         }
     }
-    val rectPadding = 10.dp.toPx()
-
-    val animatedTranslate = when (animatedPercent) {
-        null -> 0f
-        else -> animatedPercent.value * 2.dp.toPx()
-    }
 
     drawIntoCanvas { canvas ->
 
         canvas.drawRoundRect(
-            left = rectPadding - 2.dp.toPx() + animatedTranslate,
-            top = rectPadding + 2.dp.toPx(),
-            right = size.width * 0.25f + animatedTranslate,
-            bottom = size.height - rectPadding - 2.dp.toPx(),
-            radiusX = cornerRadiusPx,
-            radiusY = cornerRadiusPx,
-            paint = paint
-        )
-
-        canvas.drawRoundRect(
-            left = size.width * 0.75f - animatedTranslate,
-            top = rectPadding + 2.dp.toPx(),
-            right = size.width - rectPadding + 2.dp.toPx() - animatedTranslate,
-            bottom = size.height - rectPadding - 2.dp.toPx(),
+            left = rectPadding,
+            top = rectPadding,
+            right = size.width - rectPadding,
+            bottom = size.height - rectPadding,
             radiusX = cornerRadiusPx,
             radiusY = cornerRadiusPx,
             paint = paint
@@ -58,23 +47,23 @@ fun ContentDrawScope.drawGlowingSides(
     }
 
     val rectOffset = Offset(
-        x = rectPadding + animatedTranslate,
+        x = rectPadding,
         y = rectPadding
     )
     val rectHeight = this.size.height - (2 * rectPadding)
     val rectWidth = this.size.width - (2 * rectPadding)
 
     drawRoundRect(
-        size = Size(rectWidth - (animatedTranslate * 2f), rectHeight),
+        size = Size(rectWidth, rectHeight),
         topLeft = rectOffset,
         cornerRadius = CornerRadius(cornerRadiusPx),
         color = backgroundColor,
         alpha = 1f
     )
 
-    translate(
-        top = animatedTranslate
-    ) {
-        this@drawGlowingSides.drawContent()
-    }
+//    translate(
+//        top = animatedTranslate
+//    ) {
+        this@squareButtonGlow.drawContent()
+//    }
 }

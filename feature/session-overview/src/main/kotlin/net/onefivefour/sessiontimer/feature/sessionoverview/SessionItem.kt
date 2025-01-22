@@ -25,8 +25,8 @@ import androidx.compose.ui.unit.dp
 import kotlinx.datetime.Clock
 import net.onefivefour.sessiontimer.core.theme.SessionTimerTheme
 import net.onefivefour.sessiontimer.core.theme.customColors
-import net.onefivefour.sessiontimer.core.ui.buttons.GlowingButtonIndicationNodeFactory
-import net.onefivefour.sessiontimer.core.ui.dragger.Dragger
+import net.onefivefour.sessiontimer.core.ui.buttons.SquareButtonIndicationNodeFactory
+import net.onefivefour.sessiontimer.core.ui.draghandler.DragHandler
 import net.onefivefour.sessiontimer.core.ui.R as UiR
 
 @Composable
@@ -45,7 +45,7 @@ internal fun SessionItem(
         modifier = modifier
             .clickable(
                 interactionSource = interactionSource,
-                indication = GlowingButtonIndicationNodeFactory(
+                indication = SquareButtonIndicationNodeFactory(
                     backgroundColor = MaterialTheme.colorScheme.surface,
                     glowColor = MaterialTheme.customColors.surfaceGlow
                 )
@@ -56,7 +56,7 @@ internal fun SessionItem(
             ),
         verticalAlignment = Alignment.CenterVertically
     ) {
-        Dragger()
+        DragHandler()
 
         Spacer(modifier = Modifier.width(6.dp))
 

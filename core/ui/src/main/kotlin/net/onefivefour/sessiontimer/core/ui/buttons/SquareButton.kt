@@ -2,15 +2,22 @@ package net.onefivefour.sessiontimer.core.ui.buttons
 
 import android.content.res.Configuration.UI_MODE_NIGHT_YES
 import androidx.annotation.DrawableRes
+import androidx.annotation.StringRes
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import net.onefivefour.sessiontimer.core.theme.SessionTimerTheme
@@ -18,48 +25,48 @@ import net.onefivefour.sessiontimer.core.theme.customColors
 import net.onefivefour.sessiontimer.core.ui.R
 
 @Composable
-fun GlowingButton(
+fun SquareButton(
     modifier: Modifier = Modifier,
-    text: String,
-    @DrawableRes iconRes: Int? = null,
-    contentDescription: String? = null,
-    onClick: () -> Unit
+    @DrawableRes iconRes: Int,
+    @StringRes contentDescriptionRes: Int,
+    onClick: () -> Unit,
 ) {
+
     val interactionSource = remember { MutableInteractionSource() }
 
     Box(
         modifier = modifier
+            .size(88.dp)
             .clickable(
                 onClick = onClick,
                 interactionSource = interactionSource,
-                indication = GlowingButtonIndicationNodeFactory(
+                indication = SquareButtonIndicationNodeFactory(
                     backgroundColor = MaterialTheme.colorScheme.surface,
                     glowColor = MaterialTheme.customColors.surfaceGlow
                 )
-            )
-            .padding(
-                vertical = 18.dp,
-                horizontal = 32.dp
-            )
+            ),
+        contentAlignment = Alignment.Center
     ) {
-        ButtonContent(
-            iconRes = iconRes,
-            text = text,
-            contentDescription = contentDescription
+
+        Icon(
+            painter = painterResource(iconRes),
+            contentDescription = stringResource(contentDescriptionRes)
         )
+
     }
 }
 
 @Preview
 @Preview(uiMode = UI_MODE_NIGHT_YES)
 @Composable
-private fun PrimaryButtonPreview() {
+private fun EditButtonPreview() {
     SessionTimerTheme {
         Surface {
-            GlowingButton(
-                text = "New Session",
-                iconRes = R.drawable.ic_add
-            ) {}
+            SquareButton(
+                iconRes = R.drawable.ic_edit,
+                contentDescriptionRes = R.string.edit,
+                onClick = { }
+            )
         }
     }
 }

@@ -25,8 +25,8 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import kotlinx.datetime.Clock
 import net.onefivefour.sessiontimer.core.theme.SessionTimerTheme
+import net.onefivefour.sessiontimer.core.ui.buttons.SquareButton
 import net.onefivefour.sessiontimer.core.ui.R as UiR
-import net.onefivefour.sessiontimer.core.ui.buttons.GlowingButton
 import net.onefivefour.sessiontimer.core.ui.haptic.ReorderHapticFeedbackType
 import net.onefivefour.sessiontimer.core.ui.haptic.rememberReorderHapticFeedback
 import net.onefivefour.sessiontimer.core.ui.swipedismiss.SwipeToDismissContainer
@@ -126,10 +126,9 @@ internal fun SessionOverview(
 
         Spacer(modifier = Modifier.padding(16.dp))
 
-        GlowingButton(
-            text = stringResource(id = R.string.new_session),
+        SquareButton(
             iconRes = UiR.drawable.ic_add,
-            contentDescription = stringResource(id = R.string.new_session),
+            contentDescriptionRes = R.string.new_session,
             onClick = { onAction(SessionOverviewAction.CreateSession) }
         )
     }
