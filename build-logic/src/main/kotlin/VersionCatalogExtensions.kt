@@ -77,6 +77,8 @@ internal val VersionCatalog.libComposeBom: Provider<MinimalExternalModuleDepende
     get() = findLibraryOrThrow("androidX-compose-bom")
 internal val VersionCatalog.libComposeUi: Provider<MinimalExternalModuleDependency>
     get() = findLibraryOrThrow("androidX-compose-ui")
+internal val VersionCatalog.libComposeUiUtil: Provider<MinimalExternalModuleDependency>
+    get() = findLibraryOrThrow("androidX-compose-ui-util")
 internal val VersionCatalog.libComposeUiTooling: Provider<MinimalExternalModuleDependency>
     get() = findLibraryOrThrow("androidX-compose-ui-tooling")
 internal val VersionCatalog.libComposeUiToolingPreview: Provider<MinimalExternalModuleDependency>

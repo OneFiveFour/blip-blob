@@ -5,7 +5,7 @@ import androidx.compose.ui.graphics.Color
 val primaryLight = Color(0xFFFFFFFF)
 val onPrimaryLight = Color(0xFF8290a7)
 val errorLight = Color(0xFFF44336)
-val onErrorLight = Color(0xFFE7A8A8)
+val onErrorLight = Color(0xFFFFFFFF)
 val backgroundLight = Color(0xFFFFFFFF)
 val onBackgroundLight = Color(0xFF8290a7)
 val surfaceLight = Color(0xFFFFFFFF)

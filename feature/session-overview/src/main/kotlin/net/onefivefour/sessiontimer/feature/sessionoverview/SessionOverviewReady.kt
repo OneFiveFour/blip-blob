@@ -27,9 +27,7 @@ internal fun SessionOverviewReady(
     Column(
         modifier = Modifier
             .fillMaxSize()
-            .padding(
-                bottom = 24.dp
-            )
+            .padding(bottom = 24.dp)
     ) {
         ScreenTitle(titleRes = R.string.sessions)
 
@@ -42,7 +40,7 @@ internal fun SessionOverviewReady(
         )
 
         SquareButton(
-            modifier = Modifier.align(Alignment.End),
+            modifier = Modifier.align(Alignment.End).padding(end = 24.dp),
             iconRes = UiR.drawable.ic_add,
             contentDescriptionRes = R.string.new_session,
             onClick = { onAction(SessionOverviewAction.CreateSession) }

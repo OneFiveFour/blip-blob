@@ -41,6 +41,7 @@ internal fun SessionItem(
 
     Row(
         modifier = modifier
+            .clip(RoundedCornerShape(8.dp))
             .background(MaterialTheme.colorScheme.background)
             .padding(horizontal = 24.dp),
         verticalAlignment = Alignment.CenterVertically

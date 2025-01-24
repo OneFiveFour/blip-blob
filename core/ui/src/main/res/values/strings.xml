@@ -8,5 +8,6 @@
     <string name="new_task_group">New Task Group</string>
     <string name="edit_session">Edit Session</string>
     <string name="title">Title</string>
+    <string name="delete">Delete</string>
 
 </resources>
