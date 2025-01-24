@@ -60,16 +60,11 @@ fun SquareButton(
 private fun EditButtonPreview() {
     SessionTimerTheme {
         Surface {
-            Box(
-                modifier = Modifier.size(200.dp),
-                contentAlignment = Alignment.Center
-            ) {
-                SquareButton(
-                    iconRes = R.drawable.ic_edit,
-                    contentDescriptionRes = R.string.edit,
-                    onClick = { }
-                )
-            }
+            SquareButton(
+                iconRes = R.drawable.ic_edit,
+                contentDescriptionRes = R.string.edit,
+                onClick = { }
+            )
         }
     }
 }

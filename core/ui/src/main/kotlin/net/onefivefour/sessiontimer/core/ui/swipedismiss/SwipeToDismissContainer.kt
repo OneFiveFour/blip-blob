@@ -8,14 +8,14 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.rememberSwipeToDismissBoxState
-import androidx.compose.material3.SwipeToDismissBoxValue
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.SwipeToDismissBox
 import androidx.compose.material3.SwipeToDismissBoxState
+import androidx.compose.material3.SwipeToDismissBoxValue
+import androidx.compose.material3.rememberSwipeToDismissBoxState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
@@ -26,7 +26,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
-import kotlinx.coroutines.delay
+import net.onefivefour.sessiontimer.core.ui.sqarebutton.SquareButton
 
 @Composable
 fun <T> SwipeToDismissContainer(
@@ -41,12 +41,16 @@ fun <T> SwipeToDismissContainer(
 
     val state = rememberSwipeToDismissBoxState(
         confirmValueChange = { value ->
-            if (value == SwipeToDismissBoxValue.StartToEnd) {
-                isRemoved = true
-                true
-            } else {
-                false
+            when (value) {
+                SwipeToDismissBoxValue.StartToEnd -> {
+                    isRemoved = true
+                    true
+                }
+                else -> false
             }
+        },
+        positionalThreshold = { totalDistance ->
+            totalDistance * 0.6f
         }
     )
 
@@ -56,19 +60,30 @@ fun <T> SwipeToDismissContainer(
         }
     }
 
-    SwipeToDismissBox(
-        state = state,
-        backgroundContent = {
-            DeleteBackground(swipeDismissState = state)
-        },
-        enableDismissFromStartToEnd = true,
-    ) { content() }
+    AnimatedVisibility(
+        visible = !isRemoved,
+        exit = shrinkVertically(
+            animationSpec = tween(),
+            shrinkTowards = Alignment.Top
+        ) + fadeOut()
+    ) {
+        SwipeToDismissBox(
+            state = state,
+            backgroundContent = {
+                DeleteBackground(swipeDismissState = state)
+            },
+            enableDismissFromStartToEnd = true,
+        ) {
+            content()
+        }
+    }
 }
 
 @Composable
 private fun DeleteBackground(
     swipeDismissState: SwipeToDismissBoxState
 ) {
+
     val background = if (swipeDismissState.dismissDirection == SwipeToDismissBoxValue.StartToEnd) {
         MaterialTheme.colorScheme.error
     } else Color.Transparent
@@ -83,7 +98,7 @@ private fun DeleteBackground(
         Icon(
             imageVector = Icons.Default.Delete,
             contentDescription = null,
-            tint = MaterialTheme.colorScheme.onBackground
+            tint = MaterialTheme.colorScheme.onError
         )
     }
 }
