@@ -7,6 +7,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.key
@@ -15,11 +16,14 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import net.onefivefour.sessiontimer.core.theme.SessionTimerTheme
 import net.onefivefour.sessiontimer.core.ui.R
 import net.onefivefour.sessiontimer.core.ui.sqarebutton.SquareButton
 import net.onefivefour.sessiontimer.core.ui.haptic.ReorderHapticFeedbackType
 import net.onefivefour.sessiontimer.core.ui.haptic.rememberReorderHapticFeedback
+import net.onefivefour.sessiontimer.core.ui.labelline.LabelLineTextField
 import net.onefivefour.sessiontimer.core.ui.screentitle.ScreenTitle
 import net.onefivefour.sessiontimer.feature.sessioneditor.model.UiSession
 import net.onefivefour.sessiontimer.feature.sessioneditor.viewmodel.SessionEditorAction
@@ -29,7 +33,7 @@ import sh.calvin.reorderable.ReorderableColumn
 internal fun SessionEditorReady(
     uiSession: UiSession,
     onAction: (SessionEditorAction) -> Unit,
-    openTaskGroupEditor: (Long) -> Unit
+    openTaskGroupEditor: (Long) -> Unit,
 ) {
     val haptic = rememberReorderHapticFeedback()
 
@@ -40,6 +44,14 @@ internal fun SessionEditorReady(
     Column(modifier = Modifier.fillMaxWidth()) {
 
         ScreenTitle(titleRes = R.string.edit_session)
+
+        LabelLineTextField(
+            labelRes = R.string.title,
+            text = uiSession.title,
+            onValueChange = { newText ->
+                onAction(SessionEditorAction.SetSessionTitle(newText.text))
+            }
+        )
 
         ReorderableColumn(
             modifier = Modifier
@@ -97,5 +109,24 @@ internal fun SessionEditorReady(
             contentDescriptionRes = R.string.new_task_group,
             onClick = { onAction(SessionEditorAction.CreateTaskGroup) }
         )
+    }
+}
+
+@Preview
+@Composable
+private fun SessionEditorReadyPreview() {
+    SessionTimerTheme {
+        Surface {
+            SessionEditorReady(
+                uiSession = UiSession(
+                    title = "Session Title",
+                    taskGroups = listOf(
+                        fakeUiTaskGroup()
+                    )
+                ),
+                onAction = { },
+                openTaskGroupEditor = { }
+            )
+        }
     }
 }

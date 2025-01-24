@@ -3,7 +3,6 @@ package net.onefivefour.sessiontimer.core.ui.labelline
 import android.content.res.Configuration.UI_MODE_NIGHT_YES
 import androidx.annotation.StringRes
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -24,6 +23,7 @@ import net.onefivefour.sessiontimer.core.ui.utils.topToAscentDp
 
 @Composable
 fun LabelLine(
+    modifier: Modifier = Modifier,
     @StringRes labelRes: Int,
 ) {
     val labelTextStyle = MaterialTheme.typography.labelSmall
@@ -43,6 +43,7 @@ fun LabelLine(
     val lineThickness = 2.dp
 
     Layout(
+        modifier = modifier,
         content = {
             Spacer(
                 modifier = Modifier
@@ -87,11 +88,7 @@ fun LabelLine(
 private fun LabelLinePreview() {
     SessionTimerTheme {
         Surface {
-            Column {
-                LabelLine(
-                    labelRes = R.string.new_task
-                )
-            }
+            LabelLine(labelRes = R.string.new_task)
         }
     }
 }

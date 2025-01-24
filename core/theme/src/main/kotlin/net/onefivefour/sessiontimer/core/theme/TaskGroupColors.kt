@@ -21,10 +21,7 @@ data class TaskGroupColors(
     val color12: Color = Color(0xFF97c1a8),
     val color13: Color = Color(0xFF54cbcc),
     val color14: Color = Color(0xFFa2e1db),
-    val color15: Color = Color(0xFF2e89b8),
-    val color16: Color = Color(0xFF9db4ca),
-    val color17: Color = Color(0xFFbed4eb),
-    val color18: Color = Color(0xFFcce2cb)
+    val color15: Color = Color(0xFF2e89b8)
 ) {
     fun getAll() = listOf(
         color01,
@@ -41,10 +38,7 @@ data class TaskGroupColors(
         color12,
         color13,
         color14,
-        color15,
-        color16,
-        color17,
-        color18
+        color15
     )
 }
 

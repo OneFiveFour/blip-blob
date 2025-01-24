@@ -24,21 +24,3 @@ fun TextStyle.topToAscentDp(): Dp {
         result.toDp()
     }
 }
-
-@Composable
-fun TextStyle.bottomToBaselineDp(): Dp {
-
-    val textMeasurer = rememberTextMeasurer()
-
-    val measurements = remember(textMeasurer, this) {
-        textMeasurer.measure(
-            text = "H",
-            style = this
-        )
-    }
-
-    val result = measurements.getLineBottom(0) - measurements.firstBaseline
-    return with(LocalDensity.current) {
-        result.toDp()
-    }
-}

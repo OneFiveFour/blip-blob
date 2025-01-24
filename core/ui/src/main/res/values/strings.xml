@@ -7,5 +7,6 @@
     <string name="edit">Edit</string>
     <string name="new_task_group">New Task Group</string>
     <string name="edit_session">Edit Session</string>
+    <string name="title">Title</string>
 
 </resources>

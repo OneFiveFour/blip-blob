@@ -1,104 +1,142 @@
 package net.onefivefour.sessiontimer.feature.taskgroupeditor
 
 import android.content.res.Configuration.UI_MODE_NIGHT_YES
-import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.BoxWithConstraints
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.ExperimentalLayoutApi
-import androidx.compose.foundation.layout.WindowInsets
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.isImeVisible
-import androidx.compose.foundation.text.BasicTextField
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.SolidColor
-import androidx.compose.ui.platform.LocalInspectionMode
-import androidx.compose.ui.text.TextRange
-import androidx.compose.ui.text.input.TextFieldValue
+import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
 import net.onefivefour.sessiontimer.core.taskgroupeditor.R
 import net.onefivefour.sessiontimer.core.theme.SessionTimerTheme
 import net.onefivefour.sessiontimer.core.theme.taskGroupColors
 import net.onefivefour.sessiontimer.core.ui.labelline.LabelLine
-import net.onefivefour.sessiontimer.core.ui.modifier.clearFocusOnKeyboardDismiss
+import net.onefivefour.sessiontimer.core.ui.labelline.LabelLineTextField
 import net.onefivefour.sessiontimer.core.ui.screentitle.ScreenTitle
 import net.onefivefour.sessiontimer.core.ui.sqarebutton.SquareButton
+import net.onefivefour.sessiontimer.core.ui.utils.toPx
+import net.onefivefour.sessiontimer.core.ui.R as UiR
 
-@OptIn(ExperimentalLayoutApi::class)
+internal val TILE_SIZE = 60.dp
+
 @Composable
 internal fun TaskGroupEditorReady(
     taskGroup: UiTaskGroup,
     onAction: (TaskGroupEditorAction) -> Unit,
-    goBack: () -> Unit
+    goBack: () -> Unit,
 ) {
-    Column {
 
-        ScreenTitle(titleRes = R.string.edit_task_group)
+    BoxWithConstraints(
+        modifier = Modifier
+            .fillMaxSize()
+            .padding(
+                start = 24.dp,
+                end = 24.dp,
+                bottom = 24.dp
+            )
+    ) {
 
-        BasicTextField(
-            modifier = Modifier
-                .fillMaxWidth()
-                .clearFocusOnKeyboardDismiss(),
-            value = TextFieldValue(
-                text = taskGroup.title,
-                selection = TextRange(taskGroup.title.length)
-            ),
-            onValueChange = { newText -> onAction(TaskGroupEditorAction.SetTitle(newText.text)) },
-            cursorBrush = SolidColor(MaterialTheme.colorScheme.onSurface),
-            singleLine = true,
-            textStyle = MaterialTheme.typography.titleMedium
-                .copy(color = MaterialTheme.colorScheme.onSurface),
+        // available width minus 24.dp horizontal padding
+        val totalWidthPx = constraints.maxWidth
+        val tileSizePx = TILE_SIZE.toPx()
+
+        // calculaate the maximum column count based on available width
+        val columnCount = (totalWidthPx / tileSizePx).toInt()
+
+        // Calculate horizontal gap based on available width
+        val horizontalGapPx = (totalWidthPx - (columnCount * tileSizePx)) / (columnCount - 1)
+        val gapSize = with(LocalDensity.current) { horizontalGapPx.toDp() }
+
+        ScreenTitle(
+            modifier = Modifier.align(Alignment.TopCenter),
+            titleRes = R.string.edit_task_group
         )
 
-        LabelLine(labelRes = R.string.title)
+        Column(
+            modifier = Modifier
+                .padding(top = 100.dp)
+                .fillMaxSize(),
+            verticalArrangement = Arrangement.spacedBy(21.dp)
+        ) {
 
-        val isPreview = LocalInspectionMode.current
-        val animatedVisibility = !WindowInsets.isImeVisible || isPreview
+            LabelLineTextField(
+                labelRes = R.string.title,
+                text = taskGroup.title,
+                onValueChange = { newText -> onAction(TaskGroupEditorAction.SetTitle(newText.text)) }
+            )
 
-        AnimatedVisibility(animatedVisibility) {
             Column {
                 ColorGrid(
                     colors = MaterialTheme.taskGroupColors.getAll(),
                     selectedColor = taskGroup.color,
-                    columnsCount = 6,
+                    columnsCount = 5,
+                    gapSize = gapSize,
                     onColorClick = { color -> onAction(TaskGroupEditorAction.SetColor(color)) }
                 )
 
-                LabelLine(labelRes = R.string.color)
+                LabelLine(
+                    modifier = Modifier.padding(top = 4.dp),
+                    labelRes = R.string.color
+                )
+            }
 
+            Column {
                 PlayModeSelection(
                     playMode = taskGroup.playMode,
                     numberOfRandomTasks = taskGroup.numberOfRandomTasks,
                     numberOfTasks = taskGroup.tasks.size,
+                    gapSize = gapSize,
                     onPlayModeChanged = { playMode, numberOfRandomTasks ->
-                        onAction(TaskGroupEditorAction.SetPlayMode(playMode, numberOfRandomTasks))
+                        onAction(
+                            TaskGroupEditorAction.SetPlayMode(
+                                playMode,
+                                numberOfRandomTasks
+                            )
+                        )
                     }
                 )
 
-                LabelLine(labelRes = R.string.play_mode)
+                LabelLine(
+                    modifier = Modifier.padding(top = 4.dp),
+                    labelRes = R.string.play_mode
+                )
+            }
 
-                SquareButton(
-                    modifier = Modifier.align(Alignment.CenterHorizontally),
-                    iconRes = net.onefivefour.sessiontimer.core.ui.R.drawable.ic_save,
-                    contentDescriptionRes = R.string.save,
-                    onClick = goBack
+            Column {
+
+                LabelLine(
+                    modifier = Modifier.padding(top = 4.dp),
+                    labelRes = R.string.default_task_duration
                 )
             }
         }
+
+        SquareButton(
+            modifier = Modifier.align(Alignment.BottomEnd),
+            iconRes = UiR.drawable.ic_save,
+            contentDescriptionRes = R.string.save,
+            onClick = goBack
+        )
     }
 }
 
 
-
-@Preview(showSystemUi = true)
-@Preview(showSystemUi = true, uiMode = UI_MODE_NIGHT_YES)
+@Preview
+@Preview(uiMode = UI_MODE_NIGHT_YES)
 @Composable
 private fun TaskGroupEditorReadyPreview() {
     SessionTimerTheme {
-        Surface(modifier = Modifier.fillMaxSize()) {
+        Surface {
             TaskGroupEditor(
                 uiState = UiState.Ready(taskGroup = uiTaskGroup()),
                 onAction = { },

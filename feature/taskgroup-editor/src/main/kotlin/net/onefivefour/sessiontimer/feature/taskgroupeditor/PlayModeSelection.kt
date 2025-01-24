@@ -19,6 +19,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import net.onefivefour.sessiontimer.core.common.domain.model.PlayMode
 import net.onefivefour.sessiontimer.core.taskgroupeditor.R
@@ -30,10 +31,11 @@ internal fun PlayModeSelection(
     playMode: PlayMode,
     numberOfRandomTasks: Int,
     numberOfTasks: Int,
+    gapSize: Dp,
     onPlayModeChanged: (PlayMode, Int) -> Unit
 ) {
 
-    Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+    Row(horizontalArrangement = Arrangement.spacedBy(gapSize)) {
 
         // Sequence Button
         Box(
@@ -42,7 +44,7 @@ internal fun PlayModeSelection(
             contentAlignment = Alignment.Center
         ) {
             Icon(
-                modifier = Modifier.size(52.dp),
+                modifier = Modifier.size(TILE_SIZE),
                 painter = painterResource(id = UiR.drawable.ic_play_mode_sequence),
                 contentDescription = stringResource(id = UiR.string.play_mode_sequence),
                 tint = MaterialTheme.colorScheme.onSurface
@@ -57,7 +59,7 @@ internal fun PlayModeSelection(
             Row(verticalAlignment = Alignment.CenterVertically) {
                 Icon(
                     modifier = Modifier
-                        .size(52.dp)
+                        .size(TILE_SIZE)
                         .background(MaterialTheme.colorScheme.surfaceVariant),
                     painter = painterResource(id = UiR.drawable.ic_play_mode_shuffle),
                     contentDescription = stringResource(UiR.string.play_mode_shuffle),
@@ -146,6 +148,7 @@ private fun PlayModeSelectionSequencePreview() {
                 playMode = PlayMode.SEQUENCE,
                 numberOfRandomTasks = 5,
                 numberOfTasks = 5,
+                gapSize = 16.dp,
                 onPlayModeChanged = { _, _ -> }
             )
         }
@@ -162,6 +165,7 @@ private fun PlayModeSelectionShuffledPreview() {
                 playMode = PlayMode.N_TASKS_SHUFFLED,
                 numberOfRandomTasks = 3,
                 numberOfTasks = 5,
+                gapSize = 16.dp,
                 onPlayModeChanged = { _, _ -> }
             )
         }

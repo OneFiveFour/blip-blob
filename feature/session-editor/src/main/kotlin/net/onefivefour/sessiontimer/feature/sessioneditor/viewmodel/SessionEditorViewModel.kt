@@ -12,6 +12,8 @@ import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import net.onefivefour.sessiontimer.core.usecases.api.session.GetSessionUseCase
+import net.onefivefour.sessiontimer.core.usecases.api.session.SetSessionSortOrdersUseCase
+import net.onefivefour.sessiontimer.core.usecases.api.session.SetSessionTitleUseCase
 import net.onefivefour.sessiontimer.core.usecases.api.task.DeleteTaskUseCase
 import net.onefivefour.sessiontimer.core.usecases.api.task.NewTaskUseCase
 import net.onefivefour.sessiontimer.core.usecases.api.task.SetTaskSortOrdersUseCase
@@ -32,7 +34,8 @@ internal class SessionEditorViewModel @Inject constructor(
     private val deleteTaskGroupUseCase: DeleteTaskGroupUseCase,
     private val setTaskTitleUseCase: SetTaskTitleUseCase,
     private val setTaskGroupSortOrdersUseCase: SetTaskGroupSortOrdersUseCase,
-    private val setTaskSortOrdersUseCase: SetTaskSortOrdersUseCase
+    private val setTaskSortOrdersUseCase: SetTaskSortOrdersUseCase,
+    private val setSessionTitleUseCase: SetSessionTitleUseCase
 ) : ViewModel() {
 
     private val sessionId = savedStateHandle.toRoute<SessionEditorRoute>().sessionId
@@ -62,6 +65,7 @@ internal class SessionEditorViewModel @Inject constructor(
             is SessionEditorAction.UpdateTaskGroupSortOrders -> setTaskGroupSortOrders(action.taskGroupIds)
             is SessionEditorAction.UpdateTaskSortOrders -> setTaskSortOrders(action.taskIds)
             is SessionEditorAction.SetTaskTitle -> setTaskTitle(action.taskId, action.newTitle)
+            is SessionEditorAction.SetSessionTitle -> setSessionTitle(action.newTitle)
         }
     }
 
@@ -105,6 +109,15 @@ internal class SessionEditorViewModel @Inject constructor(
         viewModelScope.launch {
             setTaskTitleUseCase.execute(
                 taskId = taskId,
+                title = newTitle
+            )
+        }
+    }
+
+    private fun setSessionTitle(newTitle: String) {
+        viewModelScope.launch {
+            setSessionTitleUseCase.execute(
+                sessionId = sessionId,
                 title = newTitle
             )
         }

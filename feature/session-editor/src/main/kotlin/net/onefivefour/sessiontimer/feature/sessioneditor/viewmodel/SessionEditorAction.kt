@@ -9,4 +9,5 @@ internal sealed class SessionEditorAction {
     data class DeleteTask(val taskId: Long) : SessionEditorAction()
     data class UpdateTaskSortOrders(val taskIds: List<Long>) : SessionEditorAction()
     data class SetTaskTitle(val taskId: Long, val newTitle: String) : SessionEditorAction()
+    data class SetSessionTitle(val newTitle: String) : SessionEditorAction()
 }

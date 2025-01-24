@@ -14,17 +14,14 @@ import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.lerp
 
-
 internal fun ContentDrawScope.squareButtonGlow(
     glowColor: Color,
     backgroundColor: Color,
-    animatedPercent: Animatable<Float, AnimationVector1D>
+    animatedPercent: Animatable<Float, AnimationVector1D>,
 ) {
     val cornerRadiusPx = 8.dp.toPx()
 
     val blurRadius = lerp(12.dp, 6.dp, animatedPercent.value).toPx()
-
-    val rectPadding = 12.dp.toPx()
 
     val paint = Paint().also {
         with(it.asFrameworkPaint()) {
@@ -34,24 +31,20 @@ internal fun ContentDrawScope.squareButtonGlow(
     }
 
     drawIntoCanvas { canvas ->
-
         canvas.drawRoundRect(
-            left = rectPadding,
-            top = rectPadding,
-            right = size.width - rectPadding,
-            bottom = size.height - rectPadding,
+            left = 0f,
+            top = 0f,
+            right = size.width,
+            bottom = size.height,
             radiusX = cornerRadiusPx,
             radiusY = cornerRadiusPx,
             paint = paint
         )
     }
 
-    val rectOffset = Offset(
-        x = rectPadding,
-        y = rectPadding
-    )
-    val rectHeight = this.size.height - (2 * rectPadding)
-    val rectWidth = this.size.width - (2 * rectPadding)
+    val rectOffset = Offset(x = 0f, y = 0f)
+    val rectHeight = this.size.height
+    val rectWidth = this.size.width
 
     drawRoundRect(
         size = Size(rectWidth, rectHeight),
@@ -61,9 +54,5 @@ internal fun ContentDrawScope.squareButtonGlow(
         alpha = 1f
     )
 
-//    translate(
-//        top = animatedTranslate
-//    ) {
-        this@squareButtonGlow.drawContent()
-//    }
+    this@squareButtonGlow.drawContent()
 }
