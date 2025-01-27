@@ -27,12 +27,15 @@ class AndroidComposePlugin : Plugin<Project> {
 
             // add compose compiler dependencies
             dependencies {
-                "debugImplementation"(libs.libComposeUiTooling)
                 "implementation"(platform(libs.libComposeBom))
+
+                "implementation"(libs.libComposeUiUtil)
                 "implementation"(libs.libComposeUi)
                 "implementation"(libs.libComposeUiToolingPreview)
                 "implementation"(libs.libComposeMaterial3)
                 "implementation"(libs.libComposeLifecycle)
+
+                "debugImplementation"(libs.libComposeUiTooling)
             }
         }
     }

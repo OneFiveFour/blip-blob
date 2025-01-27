@@ -1,6 +1,7 @@
 package net.onefivefour.sessiontimer.feature.sessionoverview
 
 import android.content.res.Configuration.*
+import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Row
@@ -39,7 +40,10 @@ internal fun SessionItem(
 ) {
 
     Row(
-        modifier = modifier,
+        modifier = modifier
+            .clip(RoundedCornerShape(8.dp))
+            .background(MaterialTheme.colorScheme.background)
+            .padding(horizontal = 24.dp),
         verticalAlignment = Alignment.CenterVertically
     ) {
         DragHandler()

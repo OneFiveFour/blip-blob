@@ -1,15 +1,24 @@
 package net.onefivefour.sessiontimer.feature.sessionoverview
 
+import android.content.res.Configuration
+import android.content.res.Configuration.*
+import androidx.compose.foundation.background
 import androidx.compose.foundation.interaction.MutableInteractionSource
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.rememberLazyListState
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
+import net.onefivefour.sessiontimer.core.theme.SessionTimerTheme
 import net.onefivefour.sessiontimer.core.ui.haptic.ReorderHapticFeedbackType
 import net.onefivefour.sessiontimer.core.ui.haptic.rememberReorderHapticFeedback
 import net.onefivefour.sessiontimer.core.ui.swipedismiss.SwipeToDismissContainer
@@ -18,7 +27,7 @@ import sh.calvin.reorderable.rememberReorderableLazyListState
 
 @Composable
 internal fun SessionList(
-    modifier: Modifier,
+    modifier: Modifier = Modifier,
     uiState: UiState.Ready,
     onAction: (SessionOverviewAction) -> Unit,
     onStartSession: (Long) -> Unit,
@@ -40,7 +49,8 @@ internal fun SessionList(
 
     LazyColumn(
         modifier = modifier,
-        state = lazyListState
+        state = lazyListState,
+        verticalArrangement = Arrangement.spacedBy(38.dp)
     ) {
 
         items(
@@ -48,13 +58,14 @@ internal fun SessionList(
             key = { session -> session.createdAt.toEpochMilliseconds() }
         ) { session ->
 
-            ReorderableItem(reorderableLazyColumnState, session.id) {
+            ReorderableItem(reorderableLazyColumnState, session.createdAt.toEpochMilliseconds()) {
+
                 val interactionSource = remember { MutableInteractionSource() }
 
-//                SwipeToDismissContainer(
-//                    item = session,
-//                    onDelete = { onAction(SessionOverviewAction.DeleteSession(session.id)) }
-//                ) {
+                SwipeToDismissContainer(
+                    item = session,
+                    onDelete = { onAction(SessionOverviewAction.DeleteSession(session.id)) }
+                ) {
 
                     SessionItem(
                         modifier = Modifier
@@ -76,7 +87,23 @@ internal fun SessionList(
                         onEditSession = onEditSession
                     )
                 }
-//            }
+            }
+        }
+    }
+}
+
+@Preview
+@Preview(uiMode = UI_MODE_NIGHT_YES)
+@Composable
+private fun SessionListPreview() {
+    SessionTimerTheme {
+        Surface {
+            SessionList(
+                uiState = UiState.Ready(uiSessionList),
+                onAction = {  },
+                onStartSession = {  },
+                onEditSession = { _ -> }
+            )
         }
     }
 }
