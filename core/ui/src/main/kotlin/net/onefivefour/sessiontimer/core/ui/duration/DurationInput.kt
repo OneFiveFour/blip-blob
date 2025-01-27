@@ -27,9 +27,16 @@ import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.focus.FocusRequester
+import androidx.compose.ui.focus.focusRequester
+import androidx.compose.ui.focus.onFocusChanged
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.SolidColor
 import androidx.compose.ui.input.key.onKeyEvent
@@ -61,13 +68,25 @@ fun DurationInputContainer(modifier: Modifier = Modifier) {
 internal val TILE_SIZE = 60.dp
 
 @Composable
-fun CenteredTextBox(content: @Composable () -> Unit) {
+fun CenteredTextBox(
+    isFocused: Boolean,
+    content: @Composable () -> Unit,
+) {
+    val borderWidth = when {
+        isFocused -> 1.dp
+        else -> 0.dp
+    }
     Box(
         contentAlignment = Alignment.Center,
         modifier = Modifier
             .size(TILE_SIZE)
             .clip(RoundedCornerShape(8.dp))
             .background(MaterialTheme.colorScheme.onSurfaceVariant)
+            .border(
+                width = borderWidth,
+                color = MaterialTheme.colorScheme.primary,
+                shape = RoundedCornerShape(8.dp)
+            )
     ) {
         content()
     }
@@ -86,18 +105,26 @@ fun DurationInput(
         backgroundColor = Color.Transparent,
     )
 
+    var isFocused = remember { false }
+
+    val focusRequester = remember { FocusRequester() }
+
     CompositionLocalProvider(
         LocalTextToolbar provides EmptyTextToolbar,
         LocalTextSelectionColors provides hiddenTextSelectionColors
     ) {
 
         Row(
-            modifier = modifier,
+            modifier = modifier
+                .clickable {
+                    isFocused = true
+                    focusRequester.requestFocus()
+                },
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.spacedBy(8.dp)
         ) {
 
-            CenteredTextBox {
+            CenteredTextBox(isFocused) {
                 Text(
                     modifier = Modifier.fillMaxWidth(),
                     text = state.hours,
@@ -113,10 +140,10 @@ fun DurationInput(
                 style = MaterialTheme.typography.labelSmall
             )
 
-            CenteredTextBox {
+            CenteredTextBox(isFocused) {
                 Text(
                     modifier = Modifier.fillMaxWidth(),
-                    text = state.hours,
+                    text = state.minutes,
                     color = MaterialTheme.colorScheme.onSurface,
                     style = MaterialTheme.typography.labelSmall,
                     textAlign = TextAlign.Center
@@ -147,6 +174,10 @@ fun DurationInput(
                             onNumberEntered('\b')
                         }
                         false
+                    }
+                    .focusRequester(focusRequester)
+                    .onFocusChanged { focusState ->
+                        isFocused = focusState.isFocused
                     },
                 textStyle = MaterialTheme.typography.labelSmall
                     .copy(
@@ -155,7 +186,7 @@ fun DurationInput(
                     ),
 
                 ) { innerTextField ->
-                CenteredTextBox {
+                CenteredTextBox(isFocused) {
                     innerTextField()
                 }
             }
@@ -171,7 +202,7 @@ private fun DurationInputPreview() {
     SessionTimerTheme {
         Surface {
             val state = DurationState(
-                hours = "01",
+                hours = "001",
                 minutes = "02",
                 seconds = "03"
             )

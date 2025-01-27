@@ -73,7 +73,8 @@ fun LabelLine(
         )
 
         // height of linePlacement can be ignores, because the line is covered by the text
-        val height = textPlaceable.height - offset.roundToPx()
+        val height = (textPlaceable.height - offset.roundToPx())
+            .coerceAtLeast(0)
 
         layout(constraints.maxWidth, height) {
             linePlaceable.placeRelative(0, 0)
