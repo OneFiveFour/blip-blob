@@ -8,5 +8,5 @@ internal sealed class TaskGroupEditorAction {
     data class SetTitle(val newTitle: String) : TaskGroupEditorAction()
     data class SetColor(val newColor: Color) : TaskGroupEditorAction()
     data class SetPlayMode(val newPlayMode: PlayMode, val newNumberOfRandomTasks: Int) : TaskGroupEditorAction()
-    data class SetDefaultTaskDuration(val defaultTaskDuration: Duration) : TaskGroupEditorAction()
+    data class OnDurationNumberEntered(val currentString: String, val numberEntered: Char) : TaskGroupEditorAction()
 }

@@ -2,38 +2,22 @@ package net.onefivefour.sessiontimer.core.ui.duration
 
 import android.content.res.Configuration.UI_MODE_NIGHT_YES
 import android.view.KeyEvent
-import androidx.compose.foundation.background
-import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.gestures.snapping.SnapPosition
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.width
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.BasicTextField
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.text.selection.LocalTextSelectionColors
 import androidx.compose.foundation.text.selection.TextSelectionColors
-import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
 import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.focus.onFocusChanged
@@ -41,64 +25,25 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.SolidColor
 import androidx.compose.ui.input.key.onKeyEvent
 import androidx.compose.ui.platform.LocalTextToolbar
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
-import androidx.hilt.navigation.compose.hiltViewModel
-import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import net.onefivefour.sessiontimer.core.theme.SessionTimerTheme
 import net.onefivefour.sessiontimer.core.ui.R
-
-@Composable
-fun DurationInputContainer(modifier: Modifier = Modifier) {
-    val viewModel: DurationViewModel = hiltViewModel()
-    val state = viewModel.state.collectAsStateWithLifecycle()
-    DurationInput(
-        modifier = modifier,
-        state = state.value,
-        onNumberEntered = viewModel::onNumberEntered
-    )
-}
+import kotlin.time.Duration
+import kotlin.time.Duration.Companion.seconds
 
 internal val TILE_SIZE = 60.dp
 
 @Composable
-fun CenteredTextBox(
-    isFocused: Boolean,
-    content: @Composable () -> Unit,
-) {
-    val borderWidth = when {
-        isFocused -> 1.dp
-        else -> 0.dp
-    }
-    Box(
-        contentAlignment = Alignment.Center,
-        modifier = Modifier
-            .size(TILE_SIZE)
-            .clip(RoundedCornerShape(8.dp))
-            .background(MaterialTheme.colorScheme.onSurfaceVariant)
-            .border(
-                width = borderWidth,
-                color = MaterialTheme.colorScheme.primary,
-                shape = RoundedCornerShape(8.dp)
-            )
-    ) {
-        content()
-    }
-}
-
-@Composable
 fun DurationInput(
     modifier: Modifier = Modifier,
-    state: DurationState,
-    onNumberEntered: (Char) -> Unit,
-
-    ) {
+    duration: Duration,
+    onNumberEntered: (String, Char) -> Unit,
+) {
 
     val hiddenTextSelectionColors = TextSelectionColors(
         handleColor = Color.Transparent,
@@ -108,6 +53,14 @@ fun DurationInput(
     var isFocused = remember { false }
 
     val focusRequester = remember { FocusRequester() }
+
+    val totalSeconds = duration.inWholeSeconds
+
+    val hours = (totalSeconds / 3600).toString().padStart(3, '0')
+    val minutes = ((totalSeconds % 3600) / 60).toString().padStart(2, '0')
+    val seconds = (totalSeconds % 60).toString().padStart(2, '0')
+
+    val currentString = hours + minutes + seconds
 
     CompositionLocalProvider(
         LocalTextToolbar provides EmptyTextToolbar,
@@ -127,7 +80,7 @@ fun DurationInput(
             CenteredTextBox(isFocused) {
                 Text(
                     modifier = Modifier.fillMaxWidth(),
-                    text = state.hours,
+                    text = hours,
                     color = MaterialTheme.colorScheme.onSurface,
                     style = MaterialTheme.typography.labelSmall,
                     textAlign = TextAlign.Center
@@ -143,7 +96,7 @@ fun DurationInput(
             CenteredTextBox(isFocused) {
                 Text(
                     modifier = Modifier.fillMaxWidth(),
-                    text = state.minutes,
+                    text = minutes,
                     color = MaterialTheme.colorScheme.onSurface,
                     style = MaterialTheme.typography.labelSmall,
                     textAlign = TextAlign.Center
@@ -156,10 +109,11 @@ fun DurationInput(
             )
 
             BasicTextField(
-                value = TextFieldValue(state.seconds),
+                value = TextFieldValue(seconds),
                 onValueChange = { newNumber ->
                     if (newNumber.text.isNotEmpty()) {
-                        onNumberEntered(newNumber.text.first())
+                        val numberEntered = newNumber.text.first()
+                        onNumberEntered(currentString, numberEntered)
                     }
                 },
                 keyboardOptions = KeyboardOptions(
@@ -171,7 +125,7 @@ fun DurationInput(
                         val didPressDelete =
                             event.nativeKeyEvent.keyCode == KeyEvent.KEYCODE_DEL
                         if (didPressDelete) {
-                            onNumberEntered('\b')
+                            onNumberEntered(currentString, '\b')
                         }
                         false
                     }
@@ -201,14 +155,9 @@ fun DurationInput(
 private fun DurationInputPreview() {
     SessionTimerTheme {
         Surface {
-            val state = DurationState(
-                hours = "001",
-                minutes = "02",
-                seconds = "03"
-            )
             DurationInput(
-                state = state,
-                onNumberEntered = { }
+                duration = 6333.seconds,
+                onNumberEntered = { _, _ -> }
             )
         }
     }

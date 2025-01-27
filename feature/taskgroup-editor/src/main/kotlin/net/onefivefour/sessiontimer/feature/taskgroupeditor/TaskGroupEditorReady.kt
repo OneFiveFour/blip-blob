@@ -1,13 +1,10 @@
 package net.onefivefour.sessiontimer.feature.taskgroupeditor
 
 import android.content.res.Configuration.UI_MODE_NIGHT_YES
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.BoxWithConstraints
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
@@ -22,7 +19,7 @@ import androidx.compose.ui.unit.dp
 import net.onefivefour.sessiontimer.core.taskgroupeditor.R
 import net.onefivefour.sessiontimer.core.theme.SessionTimerTheme
 import net.onefivefour.sessiontimer.core.theme.taskGroupColors
-import net.onefivefour.sessiontimer.core.ui.duration.DurationInputContainer
+import net.onefivefour.sessiontimer.core.ui.duration.DurationInput
 import net.onefivefour.sessiontimer.core.ui.labelline.LabelLine
 import net.onefivefour.sessiontimer.core.ui.labelline.LabelLineTextField
 import net.onefivefour.sessiontimer.core.ui.screentitle.ScreenTitle
@@ -120,7 +117,15 @@ internal fun TaskGroupEditorReady(
 
             Column {
 
-                DurationInputContainer()
+                DurationInput(
+                    duration = taskGroup.defaultTaskDuration,
+                    onNumberEntered = { currentString, newDuration ->
+                        onAction(TaskGroupEditorAction.OnDurationNumberEntered(
+                            currentString = currentString,
+                            numberEntered = newDuration
+                        ))
+                    }
+                )
 
                 LabelLine(
                     modifier = Modifier.padding(top = 4.dp),
