@@ -65,6 +65,12 @@ internal class TaskGroupRepositoryImpl @Inject constructor(
             sortOrder = sortOrder.toLong()
         )
 
+    override suspend fun increaseNumberOfRandomTasks(
+        taskGroupId: Long
+    ) = taskGroupDataSource
+        .increaseNumberOfRandomTasks(taskGroupId)
+
+
     override suspend fun setTaskGroupSortOrders(taskGroupIds: List<Long>) = taskGroupDataSource
         .setTaskGroupSortOrders(taskGroupIds)
 

@@ -103,4 +103,10 @@ internal class TaskGroupDataSourceImpl @Inject constructor(
     override fun getLastInsertId(): Long {
         return queries.getLastInsertRowId().executeAsOne()
     }
+
+    override suspend fun increaseNumberOfRandomTasks(taskGroupId: Long) {
+        withContext(dispatcher) {
+            queries.increaseNumberOfRandomTasks(taskGroupId)
+        }
+    }
 }

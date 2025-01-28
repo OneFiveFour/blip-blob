@@ -72,6 +72,9 @@ WHERE id = :id;
 setSortOrder:
 UPDATE taskGroup SET sortOrder = :sortOrder WHERE id = :taskGroupId;
 
+increaseNumberOfRandomTasks:
+UPDATE taskGroup SET numberOfRandomTasks = numberOfRandomTasks + 1 WHERE id = :taskGroupId;
+
 getLastInsertRowId:
 SELECT last_insert_rowid();
 

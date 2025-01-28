@@ -32,7 +32,7 @@ internal fun PlayModeSelection(
     numberOfRandomTasks: Int,
     numberOfTasks: Int,
     gapSize: Dp,
-    onPlayModeChanged: (PlayMode, Int) -> Unit
+    onPlayModeChanged: (PlayMode, Int?) -> Unit,
 ) {
 
     Row(horizontalArrangement = Arrangement.spacedBy(gapSize)) {
@@ -40,7 +40,7 @@ internal fun PlayModeSelection(
         // Sequence Button
         Box(
             modifier = buttonModifier(playMode == PlayMode.SEQUENCE)
-                .clickable { onPlayModeChanged(PlayMode.SEQUENCE, numberOfRandomTasks) },
+                .clickable { onPlayModeChanged(PlayMode.SEQUENCE, null) },
             contentAlignment = Alignment.Center
         ) {
             Icon(
@@ -53,8 +53,15 @@ internal fun PlayModeSelection(
 
         // Shuffle Button
         Box(
-            modifier = buttonModifier(playMode == PlayMode.N_TASKS_SHUFFLED)
-                .clickable { onPlayModeChanged(PlayMode.N_TASKS_SHUFFLED, numberOfRandomTasks) }
+            modifier = buttonModifier(
+                isSelected = playMode == PlayMode.N_TASKS_SHUFFLED ||
+                        playMode == PlayMode.ALL_TASKS_SHUFFLED
+            ).clickable {
+                when (numberOfRandomTasks) {
+                    numberOfTasks -> onPlayModeChanged(PlayMode.ALL_TASKS_SHUFFLED, null)
+                    else -> onPlayModeChanged(PlayMode.N_TASKS_SHUFFLED, numberOfRandomTasks)
+                }
+            }
         ) {
             Row(verticalAlignment = Alignment.CenterVertically) {
                 Icon(
@@ -74,7 +81,10 @@ internal fun PlayModeSelection(
                         .background(MaterialTheme.colorScheme.surfaceVariant)
                         .clickable {
                             if (numberOfRandomTasks > 1) {
-                                onPlayModeChanged(PlayMode.N_TASKS_SHUFFLED, numberOfRandomTasks - 1)
+                                onPlayModeChanged(
+                                    PlayMode.N_TASKS_SHUFFLED,
+                                    numberOfRandomTasks - 1
+                                )
                             }
                         }
                         .padding(10.dp),
@@ -87,8 +97,8 @@ internal fun PlayModeSelection(
                 Text(
                     modifier = Modifier
                         .padding(horizontal = 16.dp),
-                    text = when (numberOfRandomTasks) {
-                        numberOfTasks -> stringResource(R.string.all).uppercase()
+                    text = when (playMode) {
+                        PlayMode.ALL_TASKS_SHUFFLED -> stringResource(R.string.all).uppercase()
                         else -> numberOfRandomTasks.toString()
                     },
                     style = MaterialTheme.typography.labelMedium,
@@ -102,8 +112,16 @@ internal fun PlayModeSelection(
                         .clip(RoundedCornerShape(50))
                         .background(MaterialTheme.colorScheme.surfaceVariant)
                         .clickable {
-                            if (numberOfRandomTasks < numberOfTasks) {
-                                onPlayModeChanged(PlayMode.N_TASKS_SHUFFLED, numberOfRandomTasks + 1)
+                            if (numberOfRandomTasks + 1 == numberOfTasks) {
+                                onPlayModeChanged(
+                                    PlayMode.ALL_TASKS_SHUFFLED,
+                                    numberOfRandomTasks + 1
+                                )
+                            } else if (numberOfRandomTasks < numberOfTasks) {
+                                onPlayModeChanged(
+                                    PlayMode.N_TASKS_SHUFFLED,
+                                    numberOfRandomTasks + 1
+                                )
                             }
                         }
                         .padding(10.dp),

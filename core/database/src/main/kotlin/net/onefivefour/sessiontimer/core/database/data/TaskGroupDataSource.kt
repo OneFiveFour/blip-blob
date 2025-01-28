@@ -36,4 +36,6 @@ internal interface TaskGroupDataSource {
     suspend fun deleteBySessionId(sessionId: Long)
 
     fun getLastInsertId(): Long
+
+    suspend fun increaseNumberOfRandomTasks(taskGroupId: Long)
 }

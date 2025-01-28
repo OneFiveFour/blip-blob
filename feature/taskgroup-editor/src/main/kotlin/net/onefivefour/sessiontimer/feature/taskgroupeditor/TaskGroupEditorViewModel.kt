@@ -118,14 +118,14 @@ internal class TaskGroupEditorViewModel @Inject constructor(
         }
     }
 
-    private fun setPlayMode(newPlayMode: PlayMode, newNumberOfRandomTasks: Int) {
+    private fun setPlayMode(newPlayMode: PlayMode, newNumberOfRandomTasks: Int?) {
         doWhenReady { taskGroup ->
             updateTaskGroupUseCase.execute(
                 id = taskGroup.id,
                 title = taskGroup.title,
                 color = taskGroup.color.toArgb(),
                 playMode = newPlayMode,
-                numberOfRandomTasks = newNumberOfRandomTasks,
+                numberOfRandomTasks = newNumberOfRandomTasks ?: taskGroup.numberOfRandomTasks,
                 defaultTaskDuration = taskGroup.defaultTaskDuration.toDuration(),
                 sortOrder = taskGroup.sortOrder
             )

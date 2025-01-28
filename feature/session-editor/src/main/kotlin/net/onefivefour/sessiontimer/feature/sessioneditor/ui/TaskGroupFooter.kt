@@ -34,12 +34,12 @@ internal fun TaskGroupFooter(
 
     val playModeIconRes = when (uiTaskGroup.playMode) {
         PlayMode.SEQUENCE -> R.drawable.ic_play_mode_sequence
-        PlayMode.N_TASKS_SHUFFLED -> R.drawable.ic_play_mode_shuffle
+        else -> R.drawable.ic_play_mode_shuffle
     }
 
     val playModeDescriptionRes = when (uiTaskGroup.playMode) {
         PlayMode.SEQUENCE -> R.string.play_mode_sequence
-        PlayMode.N_TASKS_SHUFFLED -> R.string.play_mode_shuffle
+        else -> R.string.play_mode_shuffle
     }
 
     Row(

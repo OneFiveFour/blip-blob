@@ -29,6 +29,8 @@ interface TaskGroupRepository {
         sortOrder: Int
     )
 
+    suspend fun increaseNumberOfRandomTasks(taskGroupId: Long)
+
     suspend fun setTaskGroupSortOrders(taskGroupIds: List<Long>)
 
     suspend fun deleteTaskGroupById(taskGroupId: Long)
