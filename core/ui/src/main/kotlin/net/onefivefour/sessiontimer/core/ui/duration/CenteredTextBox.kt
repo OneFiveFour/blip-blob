@@ -14,6 +14,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -24,10 +25,6 @@ internal fun CenteredTextBox(
     isFocused: Boolean,
     content: @Composable () -> Unit,
 ) {
-    val borderWidth = when {
-        isFocused -> 2.dp
-        else -> 0.dp
-    }
     Box(
         contentAlignment = Alignment.Center,
         modifier = Modifier
@@ -35,8 +32,11 @@ internal fun CenteredTextBox(
             .clip(RoundedCornerShape(8.dp))
             .background(MaterialTheme.colorScheme.surfaceVariant)
             .border(
-                width = borderWidth,
-                color = MaterialTheme.colorScheme.onSurface,
+                width = 2.dp,
+                color =  when (isFocused) {
+                    true -> MaterialTheme.colorScheme.onSurface
+                    else -> Color.Transparent
+                },
                 shape = RoundedCornerShape(8.dp)
             )
     ) {

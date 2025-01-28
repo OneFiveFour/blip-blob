@@ -36,8 +36,6 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import net.onefivefour.sessiontimer.core.theme.SessionTimerTheme
 import net.onefivefour.sessiontimer.core.ui.R
-import kotlin.time.Duration
-import kotlin.time.Duration.Companion.seconds
 
 internal val TILE_SIZE = 60.dp
 
@@ -110,7 +108,7 @@ fun DurationInput(
             BasicTextField(
                 value = TextFieldValue(seconds),
                 onValueChange = { newNumber ->
-                    if (newNumber.text.isNotEmpty()) {
+                    if (newNumber.text.length == 3) {
                         val numberEntered = newNumber.text.first()
                         onNumberEntered(currentString, numberEntered)
                     }
