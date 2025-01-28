@@ -219,19 +219,20 @@ internal class SessionEditorViewModelTest {
         // GIVEN
         val sessionId = 1L
         val taskId = 2L
+        val taskGroupId = 3L
         coEvery { getSessionUseCase.execute(any()) } returns flowOf(
             Session(sessionId, "Session 1", 1, emptyList(), NOW)
         )
-        coEvery { deleteTaskUseCase.execute(any()) } returns Unit
+        coEvery { deleteTaskUseCase.execute(any(), taskGroupId) } returns Unit
 
         // WHEN
         val sut = sut()
-        sut.onAction(SessionEditorAction.DeleteTask(taskId))
+        sut.onAction(SessionEditorAction.DeleteTask(taskId, taskGroupId))
         advanceUntilIdle()
 
         // THEN
         coVerify(exactly = 1) {
-            deleteTaskUseCase.execute(taskId)
+            deleteTaskUseCase.execute(taskId, taskGroupId)
         }
     }
 }

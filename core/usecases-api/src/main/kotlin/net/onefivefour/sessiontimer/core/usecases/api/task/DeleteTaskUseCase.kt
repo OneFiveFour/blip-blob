@@ -1,5 +1,5 @@
 package net.onefivefour.sessiontimer.core.usecases.api.task
 
 interface DeleteTaskUseCase {
-    suspend fun execute(taskId: Long)
+    suspend fun execute(taskId: Long, taskGroupId: Long)
 }

@@ -15,6 +15,7 @@
 ```
 
 # Open TODOs
+- [ ] make button animations more visible
 - [ ] check if Repository.updateXXX methods can be atomized into setXXX and then be removed
 - [ ] fix icon sized to be naturally sized
 - [ ] check saved state handle for running session

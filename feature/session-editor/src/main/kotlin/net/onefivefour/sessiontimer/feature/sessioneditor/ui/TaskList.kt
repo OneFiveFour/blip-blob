@@ -1,12 +1,10 @@
 package net.onefivefour.sessiontimer.feature.sessioneditor.ui
 
 import android.content.res.Configuration.*
-import androidx.compose.foundation.background
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.rememberLazyListState
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -58,7 +56,7 @@ internal fun TaskList(
 
                 SwipeToDismissContainer(
                     item = task,
-                    onDelete = { onAction(SessionEditorAction.DeleteTask(task.id)) }
+                    onDelete = { onAction(SessionEditorAction.DeleteTask(task.id, uiTaskGroup.id)) }
                 ) {
 
                     TaskItem(

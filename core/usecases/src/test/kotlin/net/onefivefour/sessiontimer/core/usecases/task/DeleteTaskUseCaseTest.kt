@@ -4,6 +4,7 @@ import io.mockk.coEvery
 import io.mockk.coVerify
 import io.mockk.mockk
 import kotlinx.coroutines.test.runTest
+import net.onefivefour.sessiontimer.core.database.domain.TaskGroupRepository
 import net.onefivefour.sessiontimer.core.database.domain.TaskRepository
 import org.junit.Test
 
@@ -11,8 +12,11 @@ internal class DeleteTaskUseCaseTest {
 
     private val taskRepository: TaskRepository = mockk()
 
+    private val taskGroupRepository: TaskGroupRepository = mockk()
+
     private fun sut() = DeleteTaskUseCaseImpl(
-        taskRepository
+        taskRepository,
+        taskGroupRepository
     )
 
     @Test
@@ -21,9 +25,10 @@ internal class DeleteTaskUseCaseTest {
             // GIVEN
             coEvery { taskRepository.deleteTask(any()) } returns Unit
             val taskId = 1L
+            val taskGroupId = 2L
 
             // WHEN
-            sut().execute(taskId)
+            sut().execute(taskId, taskGroupId)
 
             // THEN
             coVerify(exactly = 1) {

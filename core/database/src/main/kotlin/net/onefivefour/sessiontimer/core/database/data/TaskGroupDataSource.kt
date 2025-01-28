@@ -38,4 +38,6 @@ internal interface TaskGroupDataSource {
     fun getLastInsertId(): Long
 
     suspend fun increaseNumberOfRandomTasks(taskGroupId: Long)
+
+    suspend fun decreaseNumberOfRandomTasks(taskGroupId: Long)
 }

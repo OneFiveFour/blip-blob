@@ -12,7 +12,6 @@ import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import net.onefivefour.sessiontimer.core.usecases.api.session.GetSessionUseCase
-import net.onefivefour.sessiontimer.core.usecases.api.session.SetSessionSortOrdersUseCase
 import net.onefivefour.sessiontimer.core.usecases.api.session.SetSessionTitleUseCase
 import net.onefivefour.sessiontimer.core.usecases.api.task.DeleteTaskUseCase
 import net.onefivefour.sessiontimer.core.usecases.api.task.NewTaskUseCase
@@ -61,7 +60,7 @@ internal class SessionEditorViewModel @Inject constructor(
             is SessionEditorAction.CreateTaskGroup -> createTaskGroup()
             is SessionEditorAction.DeleteTaskGroup -> deleteTaskGroup(action.taskGroupId)
             is SessionEditorAction.CreateTask -> createTask(action.taskGroupId)
-            is SessionEditorAction.DeleteTask -> deleteTask(action.taskId)
+            is SessionEditorAction.DeleteTask -> deleteTask(action.taskId, action.taskGroupId)
             is SessionEditorAction.UpdateTaskGroupSortOrders -> setTaskGroupSortOrders(action.taskGroupIds)
             is SessionEditorAction.UpdateTaskSortOrders -> setTaskSortOrders(action.taskIds)
             is SessionEditorAction.SetTaskTitle -> setTaskTitle(action.taskId, action.newTitle)
@@ -87,9 +86,9 @@ internal class SessionEditorViewModel @Inject constructor(
         }
     }
 
-    private fun deleteTask(taskId: Long) {
+    private fun deleteTask(taskId: Long, taskGroupId: Long) {
         viewModelScope.launch {
-            deleteTaskUseCase.execute(taskId)
+            deleteTaskUseCase.execute(taskId, taskGroupId)
         }
     }
 

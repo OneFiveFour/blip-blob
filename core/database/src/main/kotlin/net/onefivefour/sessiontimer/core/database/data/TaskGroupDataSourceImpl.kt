@@ -109,4 +109,10 @@ internal class TaskGroupDataSourceImpl @Inject constructor(
             queries.increaseNumberOfRandomTasks(taskGroupId)
         }
     }
+
+    override suspend fun decreaseNumberOfRandomTasks(taskGroupId: Long) {
+        withContext(dispatcher) {
+            queries.decreaseNumberOfRandomTasks(taskGroupId)
+        }
+    }
 }

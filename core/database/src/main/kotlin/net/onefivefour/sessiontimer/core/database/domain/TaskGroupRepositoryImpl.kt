@@ -1,18 +1,18 @@
 package net.onefivefour.sessiontimer.core.database.domain
 
-import javax.inject.Inject
-import kotlin.time.Duration.Companion.seconds
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.mapNotNull
 import kotlinx.datetime.Instant
 import net.onefivefour.sessiontimer.core.common.domain.model.PlayMode
+import net.onefivefour.sessiontimer.core.database.DenormalizedTaskGroupView
+import net.onefivefour.sessiontimer.core.database.data.TaskGroupDataSource
+import javax.inject.Inject
+import kotlin.time.Duration
+import kotlin.time.Duration.Companion.seconds
 import net.onefivefour.sessiontimer.core.common.domain.model.Task as DomainTask
 import net.onefivefour.sessiontimer.core.common.domain.model.TaskGroup as DomainTaskGroup
-import net.onefivefour.sessiontimer.core.database.DenormalizedTaskGroupView
 import net.onefivefour.sessiontimer.core.database.TaskGroup as DatabaseTaskGroup
-import net.onefivefour.sessiontimer.core.database.data.TaskGroupDataSource
-import kotlin.time.Duration
 
 internal class TaskGroupRepositoryImpl @Inject constructor(
     private val taskGroupDataSource: TaskGroupDataSource
@@ -24,7 +24,7 @@ internal class TaskGroupRepositoryImpl @Inject constructor(
         playMode: PlayMode,
         numberOfRandomTasks: Int,
         defaultTaskDuration: Duration,
-        sessionId: Long
+        sessionId: Long,
     ) {
         taskGroupDataSource.insert(
             title = title,
@@ -53,7 +53,7 @@ internal class TaskGroupRepositoryImpl @Inject constructor(
         playMode: PlayMode,
         numberOfRandomTasks: Int,
         defaultTaskDuration: Duration,
-        sortOrder: Int
+        sortOrder: Int,
     ) = taskGroupDataSource
         .update(
             taskGroupId = taskGroupId,
@@ -66,10 +66,12 @@ internal class TaskGroupRepositoryImpl @Inject constructor(
         )
 
     override suspend fun increaseNumberOfRandomTasks(
-        taskGroupId: Long
+        taskGroupId: Long,
     ) = taskGroupDataSource
         .increaseNumberOfRandomTasks(taskGroupId)
 
+    override suspend fun decreaseNumberOfRandomTasks(taskGroupId: Long) = taskGroupDataSource
+        .decreaseNumberOfRandomTasks(taskGroupId)
 
     override suspend fun setTaskGroupSortOrders(taskGroupIds: List<Long>) = taskGroupDataSource
         .setTaskGroupSortOrders(taskGroupIds)
@@ -120,7 +122,12 @@ internal fun List<DenormalizedTaskGroupView>.toDomainTaskGroup(): DomainTaskGrou
     val sortOrder = firstTaskGroup.taskGroupSortOrder.toInt()
     val sessionId = firstTaskGroup.sessionId
 
-    val tasks = this.map {
+    val tasks = this.mapNotNull {
+
+        if (it.taskId == null) {
+            return@mapNotNull null
+        }
+
         checkNotNull(it.taskId)
         checkNotNull(it.taskTitle)
         checkNotNull(it.taskDuration)
