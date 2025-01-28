@@ -33,7 +33,7 @@ internal fun uiTaskGroup() = UiTaskGroup(
     color = MaterialTheme.taskGroupColors.color01,
     playMode = PlayMode.SEQUENCE,
     numberOfRandomTasks = 1,
-    defaultTaskDuration = 1.minutes,
+    defaultTaskDuration = 1.minutes.toUiTaskDuration(),
     sortOrder = 1,
     tasks = fakeTasks
 )

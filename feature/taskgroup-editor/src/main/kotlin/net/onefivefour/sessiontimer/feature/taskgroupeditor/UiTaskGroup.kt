@@ -11,7 +11,7 @@ internal data class UiTaskGroup(
     val color: Color,
     val playMode: PlayMode,
     val numberOfRandomTasks: Int = 0,
-    val defaultTaskDuration: Duration,
+    val defaultTaskDuration: UiTaskDuration,
     val sortOrder: Int,
     val tasks: List<UiTask>
 )
@@ -22,7 +22,7 @@ internal fun TaskGroup.toUiTaskGroup() = UiTaskGroup(
     color = Color(this.color),
     playMode = this.playMode,
     numberOfRandomTasks = this.numberOfRandomTasks,
-    defaultTaskDuration = this.defaultTaskDuration,
+    defaultTaskDuration = this.defaultTaskDuration.toUiTaskDuration(),
     sortOrder = this.sortOrder,
     tasks = this.tasks.toUiTasks()
 )

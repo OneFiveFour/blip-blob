@@ -41,7 +41,9 @@ internal val TILE_SIZE = 60.dp
 @Composable
 fun DurationInput(
     modifier: Modifier = Modifier,
-    duration: Duration,
+    hours: String,
+    minutes: String,
+    seconds: String,
     onNumberEntered: (String, Char) -> Unit,
 ) {
 
@@ -53,12 +55,6 @@ fun DurationInput(
     var isFocused = remember { false }
 
     val focusRequester = remember { FocusRequester() }
-
-    val totalSeconds = duration.inWholeSeconds
-
-    val hours = (totalSeconds / 3600).toString().padStart(3, '0')
-    val minutes = ((totalSeconds % 3600) / 60).toString().padStart(2, '0')
-    val seconds = (totalSeconds % 60).toString().padStart(2, '0')
 
     val currentString = hours + minutes + seconds
 
@@ -156,7 +152,9 @@ private fun DurationInputPreview() {
     SessionTimerTheme {
         Surface {
             DurationInput(
-                duration = 6333.seconds,
+                hours = "001",
+                minutes = "02",
+                seconds = "03",
                 onNumberEntered = { _, _ -> }
             )
         }

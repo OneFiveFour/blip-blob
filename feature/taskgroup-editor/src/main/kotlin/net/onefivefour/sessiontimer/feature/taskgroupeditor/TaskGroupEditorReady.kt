@@ -118,7 +118,9 @@ internal fun TaskGroupEditorReady(
             Column {
 
                 DurationInput(
-                    duration = taskGroup.defaultTaskDuration,
+                    hours = taskGroup.defaultTaskDuration.hours,
+                    minutes = taskGroup.defaultTaskDuration.minutes,
+                    seconds = taskGroup.defaultTaskDuration.seconds,
                     onNumberEntered = { currentString, newDuration ->
                         onAction(TaskGroupEditorAction.OnDurationNumberEntered(
                             currentString = currentString,
