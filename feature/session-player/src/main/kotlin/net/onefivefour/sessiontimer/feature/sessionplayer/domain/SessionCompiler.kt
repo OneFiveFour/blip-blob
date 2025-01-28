@@ -50,10 +50,6 @@ internal class SessionCompiler @Inject constructor() {
                 taskGroup.tasks
                     .shuffled()
                     .take(taskGroup.numberOfRandomTasks)
-
-            PlayMode.ALL_TASKS_SHUFFLED ->
-                taskGroup.tasks
-                    .shuffled()
         }
 
         return selectedTasks.map { task ->

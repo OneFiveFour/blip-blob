@@ -53,15 +53,8 @@ internal fun PlayModeSelection(
 
         // Shuffle Button
         Box(
-            modifier = buttonModifier(
-                isSelected = playMode == PlayMode.N_TASKS_SHUFFLED ||
-                        playMode == PlayMode.ALL_TASKS_SHUFFLED
-            ).clickable {
-                when (numberOfRandomTasks) {
-                    numberOfTasks -> onPlayModeChanged(PlayMode.ALL_TASKS_SHUFFLED, null)
-                    else -> onPlayModeChanged(PlayMode.N_TASKS_SHUFFLED, numberOfRandomTasks)
-                }
-            }
+            modifier = buttonModifier(isSelected = playMode == PlayMode.N_TASKS_SHUFFLED)
+                .clickable { onPlayModeChanged(PlayMode.N_TASKS_SHUFFLED, numberOfRandomTasks) }
         ) {
             Row(verticalAlignment = Alignment.CenterVertically) {
                 Icon(
@@ -97,8 +90,8 @@ internal fun PlayModeSelection(
                 Text(
                     modifier = Modifier
                         .padding(horizontal = 16.dp),
-                    text = when (playMode) {
-                        PlayMode.ALL_TASKS_SHUFFLED -> stringResource(R.string.all).uppercase()
+                    text = when (numberOfRandomTasks) {
+                        numberOfTasks -> stringResource(R.string.all).uppercase()
                         else -> numberOfRandomTasks.toString()
                     },
                     style = MaterialTheme.typography.labelMedium,
@@ -112,12 +105,7 @@ internal fun PlayModeSelection(
                         .clip(RoundedCornerShape(50))
                         .background(MaterialTheme.colorScheme.surfaceVariant)
                         .clickable {
-                            if (numberOfRandomTasks + 1 == numberOfTasks) {
-                                onPlayModeChanged(
-                                    PlayMode.ALL_TASKS_SHUFFLED,
-                                    numberOfRandomTasks + 1
-                                )
-                            } else if (numberOfRandomTasks < numberOfTasks) {
+                            if (numberOfRandomTasks < numberOfTasks) {
                                 onPlayModeChanged(
                                     PlayMode.N_TASKS_SHUFFLED,
                                     numberOfRandomTasks + 1
