@@ -58,7 +58,7 @@ internal fun TaskGroupEditorReady(
         val gapSize = with(LocalDensity.current) { horizontalGapPx.toDp() }
 
         val scrollState = rememberScrollState()
-        
+
         ScreenTitle(
             modifier = Modifier.align(Alignment.TopCenter),
             titleRes = R.string.edit_task_group

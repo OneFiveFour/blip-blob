@@ -21,7 +21,6 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import net.onefivefour.sessiontimer.core.theme.SessionTimerTheme
 import net.onefivefour.sessiontimer.core.theme.taskGroupColors
-import net.onefivefour.sessiontimer.core.ui.modifier.innerShadow
 
 @Composable
 internal fun ColorGrid(
@@ -71,20 +70,11 @@ internal fun ColorGrid(
                         else -> color
                     }
 
-                    val shadowColor = when {
-                        isSelectedColor -> Color.Black
-                        else -> Color.Transparent
-                    }
-
                     Box(
                         modifier = Modifier
                             .size(TILE_SIZE)
                             .background(
                                 color = color,
-                                shape = borderShape
-                            )
-                            .innerShadow(
-                                color = shadowColor,
                                 shape = borderShape
                             )
                             .border(
