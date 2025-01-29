@@ -1,5 +1,6 @@
 package net.onefivefour.sessiontimer.feature.taskgroupeditor
 
+import androidx.compose.foundation.text.input.TextFieldState
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import net.onefivefour.sessiontimer.core.common.domain.model.PlayMode
@@ -29,7 +30,7 @@ internal val fakeTasks = listOf(
 @Composable
 internal fun uiTaskGroup() = UiTaskGroup(
     id = 1L,
-    title = "TaskGroup Title",
+    title = TextFieldState(initialText = "TaskGroup Title"),
     color = MaterialTheme.taskGroupColors.color01,
     playMode = PlayMode.SEQUENCE,
     numberOfRandomTasks = 1,

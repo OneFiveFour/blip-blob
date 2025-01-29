@@ -18,7 +18,7 @@ internal fun PlayModeSelection(
     numberOfRandomTasks: Int,
     numberOfTasks: Int,
     gapSize: Dp,
-    onPlayModeChanged: (PlayMode, Int?) -> Unit,
+    onPlayModeChanged: (PlayMode, Int) -> Unit,
 ) {
 
     Row(horizontalArrangement = Arrangement.spacedBy(gapSize)) {
@@ -28,7 +28,7 @@ internal fun PlayModeSelection(
             iconRes = UiR.drawable.ic_play_mode_sequence,
             contentDescription = UiR.string.play_mode_sequence,
             isSelected = playMode == PlayMode.SEQUENCE,
-            onClick = { onPlayModeChanged(PlayMode.SEQUENCE, null) }
+            onClick = { onPlayModeChanged(PlayMode.SEQUENCE, numberOfRandomTasks) }
         )
 
         // Shuffle Button

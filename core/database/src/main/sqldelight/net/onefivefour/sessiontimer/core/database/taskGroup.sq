@@ -78,6 +78,18 @@ UPDATE taskGroup SET numberOfRandomTasks = numberOfRandomTasks + 1 WHERE id = :t
 decreaseNumberOfRandomTasks:
 UPDATE taskGroup SET numberOfRandomTasks = numberOfRandomTasks - 1 WHERE id = :taskGroupId;
 
+setTitle:
+UPDATE taskGroup SET title = :title WHERE id = :taskGroupId;
+
+setColor:
+UPDATE taskGroup SET color = :color WHERE id = :taskGroupId;
+
+setPlayMode:
+UPDATE taskGroup SET playMode = :playMode, numberOfRandomTasks = :numberOfRandomTasks WHERE id = :taskGroupId;
+
+setDefaultTaskDuration:
+UPDATE taskGroup SET defaultTaskDuration = :defaultTaskDuration WHERE id = :taskGroupId;
+
 getLastInsertRowId:
 SELECT last_insert_rowid();
 

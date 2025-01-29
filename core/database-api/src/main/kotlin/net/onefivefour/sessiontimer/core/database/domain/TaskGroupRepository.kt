@@ -37,5 +37,14 @@ interface TaskGroupRepository {
 
     suspend fun deleteTaskGroupById(taskGroupId: Long)
 
+
+    suspend fun setTaskGroupTitle(taskGroupId: Long, newTitle: String)
+
+    suspend fun setTaskGroupPlayMode(taskGroupId: Long, newPlayMode: PlayMode, newNumberOfRandomTasks: Int)
+
+    suspend fun setTaskGroupDefaultTaskDuration(taskGroupId: Long, newDefaultTaskDuration: Duration)
+
+    suspend fun setTaskGroupColor(taskGroupId: Long, newColor: Int)
+
     fun getLastInsertId(): Long
 }

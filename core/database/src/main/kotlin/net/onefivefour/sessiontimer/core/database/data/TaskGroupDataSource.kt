@@ -1,6 +1,7 @@
 package net.onefivefour.sessiontimer.core.database.data
 
 import kotlinx.coroutines.flow.Flow
+import net.onefivefour.sessiontimer.core.common.domain.model.PlayMode
 import net.onefivefour.sessiontimer.core.database.DenormalizedTaskGroupView
 import net.onefivefour.sessiontimer.core.database.TaskGroup
 
@@ -40,4 +41,12 @@ internal interface TaskGroupDataSource {
     suspend fun increaseNumberOfRandomTasks(taskGroupId: Long)
 
     suspend fun decreaseNumberOfRandomTasks(taskGroupId: Long)
+
+    suspend fun setTaskGroupTitle(taskGroupId: Long, newTitle: String)
+
+    suspend fun setTaskGroupPlayMode(taskGroupId: Long, newPlayMode: String, newNumberOfRandomTasks: Long)
+
+    suspend fun setTaskGroupDefaultTaskDuration(taskGroupId: Long, newDuration: Long)
+
+    suspend fun setTaskGroupColor(taskGroupId: Long, newColor: Long)
 }

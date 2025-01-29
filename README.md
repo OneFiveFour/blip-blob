@@ -15,6 +15,7 @@
 ```
 
 # Open TODOs
+- [ ] check that transformation between Ui <> data <> domain models in done in the same layer everywhere (VM, UseCases, Repos?)
 - [ ] check sealed classes if they can be sealed interfaces instead
 - [ ] unify naming for Set[Type]Title in all VM Actions, UseCase Actions and database actions
 - [ ] make button animations more visible

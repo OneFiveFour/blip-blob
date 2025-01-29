@@ -28,7 +28,7 @@ import net.onefivefour.sessiontimer.core.ui.R as UiR
 internal fun ShuffleControls(
     numberOfRandomTasks: Int,
     numberOfTasks: Int,
-    onPlayModeChanged: (PlayMode, Int?) -> Unit
+    onPlayModeChanged: (PlayMode, Int) -> Unit
 ) {
     Row(verticalAlignment = Alignment.CenterVertically) {
 

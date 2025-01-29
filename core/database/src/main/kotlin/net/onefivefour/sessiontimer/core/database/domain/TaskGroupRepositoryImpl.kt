@@ -79,6 +79,26 @@ internal class TaskGroupRepositoryImpl @Inject constructor(
     override suspend fun deleteTaskGroupById(taskGroupId: Long) = taskGroupDataSource
         .deleteById(taskGroupId)
 
+    override suspend fun setTaskGroupTitle(taskGroupId: Long, newTitle: String) =
+        taskGroupDataSource
+            .setTaskGroupTitle(taskGroupId, newTitle)
+
+    override suspend fun setTaskGroupPlayMode(
+        taskGroupId: Long,
+        newPlayMode: PlayMode,
+        newNumberOfRandomTasks: Int
+    ) = taskGroupDataSource
+        .setTaskGroupPlayMode(taskGroupId, newPlayMode.toString(), newNumberOfRandomTasks.toLong())
+
+    override suspend fun setTaskGroupDefaultTaskDuration(
+        taskGroupId: Long,
+        newDefaultTaskDuration: Duration
+    ) = taskGroupDataSource
+        .setTaskGroupDefaultTaskDuration(taskGroupId, newDefaultTaskDuration.inWholeSeconds)
+
+    override suspend fun setTaskGroupColor(taskGroupId: Long, newColor: Int) = taskGroupDataSource
+        .setTaskGroupColor(taskGroupId, newColor.toLong())
+
     override fun getLastInsertId() = taskGroupDataSource
         .getLastInsertId()
 }

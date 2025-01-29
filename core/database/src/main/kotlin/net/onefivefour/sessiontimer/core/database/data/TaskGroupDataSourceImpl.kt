@@ -6,6 +6,7 @@ import javax.inject.Inject
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.withContext
+import net.onefivefour.sessiontimer.core.common.domain.model.PlayMode
 import net.onefivefour.sessiontimer.core.database.DenormalizedTaskGroupView
 import net.onefivefour.sessiontimer.core.database.TaskGroup
 import net.onefivefour.sessiontimer.core.database.TaskGroupQueries
@@ -81,7 +82,6 @@ internal class TaskGroupDataSourceImpl @Inject constructor(
         withContext(dispatcher) {
             queries.transaction {
                 taskGroupIds.forEachIndexed { index, taskGroupId ->
-                    println("+++ setting taskGroupId $taskGroupId to sort order $index")
                     queries.setSortOrder(index.toLong(), taskGroupId)
                 }
             }
@@ -113,6 +113,34 @@ internal class TaskGroupDataSourceImpl @Inject constructor(
     override suspend fun decreaseNumberOfRandomTasks(taskGroupId: Long) {
         withContext(dispatcher) {
             queries.decreaseNumberOfRandomTasks(taskGroupId)
+        }
+    }
+
+    override suspend fun setTaskGroupTitle(taskGroupId: Long, newTitle: String) {
+        withContext(dispatcher) {
+            queries.setTitle(newTitle, taskGroupId)
+        }
+    }
+
+    override suspend fun setTaskGroupPlayMode(
+        taskGroupId: Long,
+        newPlayMode: String,
+        newNumberOfRandomTasks: Long
+    ) {
+        withContext(dispatcher) {
+            queries.setPlayMode(newPlayMode, newNumberOfRandomTasks, taskGroupId)
+        }
+    }
+
+    override suspend fun setTaskGroupDefaultTaskDuration(taskGroupId: Long, newDuration: Long) {
+        withContext(dispatcher) {
+            queries.setDefaultTaskDuration(newDuration, taskGroupId)
+        }
+    }
+
+    override suspend fun setTaskGroupColor(taskGroupId: Long, newColor: Long) {
+        withContext(dispatcher) {
+            queries.setColor(newColor, taskGroupId)
         }
     }
 }

@@ -18,7 +18,7 @@ internal fun TaskGroupEditor(
         is UiState.Ready -> {
             checkNotNull(uiState.taskGroup)
             TaskGroupEditorReady(
-                taskGroup = uiState.taskGroup,
+                uiTaskGroup = uiState.taskGroup,
                 onAction = onAction,
                 goBack = goBack
             )

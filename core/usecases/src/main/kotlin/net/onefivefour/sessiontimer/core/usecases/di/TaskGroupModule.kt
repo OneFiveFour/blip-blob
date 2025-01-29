@@ -8,13 +8,19 @@ import dagger.hilt.android.scopes.ViewModelScoped
 import net.onefivefour.sessiontimer.core.usecases.api.taskgroup.DeleteTaskGroupUseCase
 import net.onefivefour.sessiontimer.core.usecases.api.taskgroup.GetTaskGroupUseCase
 import net.onefivefour.sessiontimer.core.usecases.api.taskgroup.NewTaskGroupUseCase
+import net.onefivefour.sessiontimer.core.usecases.api.taskgroup.SetTaskGroupColorUseCase
+import net.onefivefour.sessiontimer.core.usecases.api.taskgroup.SetTaskGroupDefaultTaskDurationUseCase
+import net.onefivefour.sessiontimer.core.usecases.api.taskgroup.SetTaskGroupPlayModeUseCase
 import net.onefivefour.sessiontimer.core.usecases.api.taskgroup.SetTaskGroupSortOrdersUseCase
-import net.onefivefour.sessiontimer.core.usecases.api.taskgroup.UpdateTaskGroupUseCase
+import net.onefivefour.sessiontimer.core.usecases.api.taskgroup.SetTaskGroupTitleUseCase
 import net.onefivefour.sessiontimer.core.usecases.taskgroup.DeleteTaskGroupUseCaseImpl
 import net.onefivefour.sessiontimer.core.usecases.taskgroup.GetTaskGroupUseCaseImpl
 import net.onefivefour.sessiontimer.core.usecases.taskgroup.NewTaskGroupUseCaseImpl
+import net.onefivefour.sessiontimer.core.usecases.taskgroup.SetTaskGroupColorUseCaseImpl
+import net.onefivefour.sessiontimer.core.usecases.taskgroup.SetTaskGroupDefaultTaskDurationUseCaseImpl
+import net.onefivefour.sessiontimer.core.usecases.taskgroup.SetTaskGroupPlayModeUseCaseImpl
 import net.onefivefour.sessiontimer.core.usecases.taskgroup.SetTaskGroupSortOrdersUseCaseImpl
-import net.onefivefour.sessiontimer.core.usecases.taskgroup.UpdateTaskGroupUseCaseImpl
+import net.onefivefour.sessiontimer.core.usecases.taskgroup.SetTaskGroupTitleUseCaseImpl
 
 @Module
 @InstallIn(ViewModelComponent::class)
@@ -34,7 +40,19 @@ internal interface TaskGroupModule {
 
     @Binds
     @ViewModelScoped
-    fun bindSetTaskGroupTitleUseCase(impl: UpdateTaskGroupUseCaseImpl): UpdateTaskGroupUseCase
+    fun bindSetTaskGroupTitleUseCase(impl: SetTaskGroupTitleUseCaseImpl): SetTaskGroupTitleUseCase
+
+    @Binds
+    @ViewModelScoped
+    fun bindSetTaskGroupColorUseCase(impl: SetTaskGroupColorUseCaseImpl): SetTaskGroupColorUseCase
+
+    @Binds
+    @ViewModelScoped
+    fun bindSetTaskGroupPlayModeUseCase(impl: SetTaskGroupPlayModeUseCaseImpl): SetTaskGroupPlayModeUseCase
+
+    @Binds
+    @ViewModelScoped
+    fun bindSetTaskGroupDefaultTaskDurationUseCase(impl: SetTaskGroupDefaultTaskDurationUseCaseImpl): SetTaskGroupDefaultTaskDurationUseCase
 
     @Binds
     @ViewModelScoped

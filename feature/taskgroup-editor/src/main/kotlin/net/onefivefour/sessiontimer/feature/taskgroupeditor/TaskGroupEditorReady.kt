@@ -10,6 +10,7 @@ import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.text.BasicTextField
+import androidx.compose.foundation.text.input.TextFieldLineLimits
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
@@ -19,8 +20,6 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.SolidColor
 import androidx.compose.ui.platform.LocalDensity
-import androidx.compose.ui.text.TextRange
-import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.times
@@ -42,7 +41,7 @@ internal val MINIMAL_GAP_SIZE_DP = 8.dp
 
 @Composable
 internal fun TaskGroupEditorReady(
-    taskGroup: UiTaskGroup,
+    uiTaskGroup: UiTaskGroup,
     onAction: (TaskGroupEditorAction) -> Unit,
     goBack: () -> Unit,
 ) {
@@ -88,20 +87,15 @@ internal fun TaskGroupEditorReady(
                 val textStyle = MaterialTheme.typography.titleMedium
                 val offset = textStyle.topToAscentDp() - 4.dp
 
-                // TODO replace by new basictextfield
                 BasicTextField(
                     modifier = Modifier
                         .zIndex(1f)
                         .offset(y = offset)
                         .fillMaxWidth()
                         .clearFocusOnKeyboardDismiss(),
-                    value = TextFieldValue(
-                        text = taskGroup.title,
-                        selection = TextRange(taskGroup.title.length)
-                    ),
-                    onValueChange = { newText -> onAction(TaskGroupEditorAction.SetTitle(newText.text)) },
+                    state = uiTaskGroup.title,
                     cursorBrush = SolidColor(MaterialTheme.colorScheme.onSurface),
-                    singleLine = true,
+                    lineLimits = TextFieldLineLimits.SingleLine,
                     textStyle = MaterialTheme.typography.titleMedium
                         .copy(color = MaterialTheme.colorScheme.onSurface),
                 )
@@ -110,7 +104,7 @@ internal fun TaskGroupEditorReady(
             LabeledSection(labelRes = R.string.color) {
                 ColorGrid(
                     colors = MaterialTheme.taskGroupColors.getAll(),
-                    selectedColor = taskGroup.color,
+                    selectedColor = uiTaskGroup.color,
                     columnsCount = columnCount,
                     gapSize = gapSizeDp,
                     onColorClick = { color -> onAction(TaskGroupEditorAction.SetColor(color)) }
@@ -119,9 +113,9 @@ internal fun TaskGroupEditorReady(
 
             LabeledSection(labelRes = R.string.play_mode) {
                 PlayModeSelection(
-                    playMode = taskGroup.playMode,
-                    numberOfRandomTasks = taskGroup.numberOfRandomTasks,
-                    numberOfTasks = taskGroup.tasks.size,
+                    playMode = uiTaskGroup.playMode,
+                    numberOfRandomTasks = uiTaskGroup.numberOfRandomTasks,
+                    numberOfTasks = uiTaskGroup.tasks.size,
                     gapSize = gapSizeDp,
                     onPlayModeChanged = { playMode, numberOfRandomTasks ->
                         onAction(
@@ -137,9 +131,9 @@ internal fun TaskGroupEditorReady(
 
             LabeledSection(labelRes = R.string.default_task_duration)  {
                 DurationInput(
-                    hours = taskGroup.defaultTaskDuration.hours,
-                    minutes = taskGroup.defaultTaskDuration.minutes,
-                    seconds = taskGroup.defaultTaskDuration.seconds,
+                    hours = uiTaskGroup.defaultTaskDuration.hours,
+                    minutes = uiTaskGroup.defaultTaskDuration.minutes,
+                    seconds = uiTaskGroup.defaultTaskDuration.seconds,
                     onNumberEntered = { currentString, newDuration ->
                         onAction(
                             TaskGroupEditorAction.OnDurationNumberEntered(

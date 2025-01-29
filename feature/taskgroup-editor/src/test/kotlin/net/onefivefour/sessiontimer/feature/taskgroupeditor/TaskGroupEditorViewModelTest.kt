@@ -19,7 +19,10 @@ import net.onefivefour.sessiontimer.core.test.NOW
 import net.onefivefour.sessiontimer.core.test.SavedStateHandleRule
 import net.onefivefour.sessiontimer.core.test.StandardTestDispatcherRule
 import net.onefivefour.sessiontimer.core.usecases.api.taskgroup.GetTaskGroupUseCase
-import net.onefivefour.sessiontimer.core.usecases.api.taskgroup.UpdateTaskGroupUseCase
+import net.onefivefour.sessiontimer.core.usecases.api.taskgroup.SetTaskGroupColorUseCase
+import net.onefivefour.sessiontimer.core.usecases.api.taskgroup.SetTaskGroupDefaultTaskDurationUseCase
+import net.onefivefour.sessiontimer.core.usecases.api.taskgroup.SetTaskGroupPlayModeUseCase
+import net.onefivefour.sessiontimer.core.usecases.api.taskgroup.SetTaskGroupTitleUseCase
 import net.onefivefour.sessiontimer.feature.taskgroupeditor.api.TaskGroupEditorRoute
 import org.junit.Rule
 import org.junit.Test
@@ -38,12 +41,21 @@ internal class TaskGroupEditorViewModelTest {
 
     private val getTaskGroupUseCase: GetTaskGroupUseCase = mockk()
 
-    private val updateTaskGroupUseCase: UpdateTaskGroupUseCase = mockk()
+    private val setTaskGroupTitleUseCase: SetTaskGroupTitleUseCase = mockk()
+
+    private val setTaskGroupColorUseCase: SetTaskGroupColorUseCase = mockk()
+
+    private val setTaskGroupPlayModeUseCase: SetTaskGroupPlayModeUseCase = mockk()
+
+    private val setTaskGroupDefaultTaskDurationUseCase: SetTaskGroupDefaultTaskDurationUseCase = mockk()
 
     private fun sut() = TaskGroupEditorViewModel(
-        savedStateHandleRule.savedStateHandleMock,
-        getTaskGroupUseCase,
-        updateTaskGroupUseCase
+        savedStateHandle = savedStateHandleRule.savedStateHandleMock,
+        getTaskGroupUseCase = getTaskGroupUseCase,
+        setTitle = setTaskGroupTitleUseCase,
+        setColor = setTaskGroupColorUseCase,
+        setPlayMode = setTaskGroupPlayModeUseCase,
+        setDefaultTaskDuration = setTaskGroupDefaultTaskDurationUseCase
     )
 
     @Test
