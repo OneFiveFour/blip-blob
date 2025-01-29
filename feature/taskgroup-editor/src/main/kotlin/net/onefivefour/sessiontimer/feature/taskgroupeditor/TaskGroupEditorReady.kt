@@ -5,29 +5,40 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.BoxWithConstraints
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.text.BasicTextField
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.SolidColor
 import androidx.compose.ui.platform.LocalDensity
+import androidx.compose.ui.text.TextRange
+import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.times
+import androidx.compose.ui.zIndex
 import net.onefivefour.sessiontimer.core.taskgroupeditor.R
 import net.onefivefour.sessiontimer.core.theme.SessionTimerTheme
 import net.onefivefour.sessiontimer.core.theme.taskGroupColors
 import net.onefivefour.sessiontimer.core.ui.duration.DurationInput
-import net.onefivefour.sessiontimer.core.ui.labelline.LabelLine
-import net.onefivefour.sessiontimer.core.ui.labelline.LabelLineTextField
+import net.onefivefour.sessiontimer.core.ui.label.LabeledSection
+import net.onefivefour.sessiontimer.core.ui.modifier.clearFocusOnKeyboardDismiss
 import net.onefivefour.sessiontimer.core.ui.screentitle.ScreenTitle
 import net.onefivefour.sessiontimer.core.ui.sqarebutton.SquareButton
-import net.onefivefour.sessiontimer.core.ui.utils.toPx
+import net.onefivefour.sessiontimer.core.ui.utils.topToAscentDp
 import net.onefivefour.sessiontimer.core.ui.R as UiR
 
-internal val TILE_SIZE = 60.dp
+internal val TILE_SIZE_DP = 60.dp
+
+internal val MINIMAL_GAP_SIZE_DP = 8.dp
 
 @Composable
 internal fun TaskGroupEditorReady(
@@ -35,6 +46,8 @@ internal fun TaskGroupEditorReady(
     onAction: (TaskGroupEditorAction) -> Unit,
     goBack: () -> Unit,
 ) {
+
+    val scrollState = rememberScrollState()
 
     BoxWithConstraints(
         modifier = Modifier
@@ -46,18 +59,17 @@ internal fun TaskGroupEditorReady(
             )
     ) {
 
-        // available width minus 24.dp horizontal padding
-        val totalWidthPx = constraints.maxWidth
-        val tileSizePx = TILE_SIZE.toPx()
+        val density = LocalDensity.current
 
-        // calculaate the maximum column count based on available width
-        val columnCount = (totalWidthPx / tileSizePx).toInt()
-
-        // Calculate horizontal gap based on available width
-        val horizontalGapPx = (totalWidthPx - (columnCount * tileSizePx)) / (columnCount - 1)
-        val gapSize = with(LocalDensity.current) { horizontalGapPx.toDp() }
-
-        val scrollState = rememberScrollState()
+        val (columnCount, gapSizeDp) = remember(constraints.maxWidth, density) {
+            val totalWidthDp = with(density) { constraints.maxWidth.toDp() }
+            val colCount = (totalWidthDp / (MINIMAL_GAP_SIZE_DP + TILE_SIZE_DP)).toInt()
+            val gapSize = when {
+                colCount > 1 -> (totalWidthDp - (colCount * TILE_SIZE_DP)) / (colCount - 1)
+                else -> 0.dp
+            }
+            colCount to gapSize
+        }
 
         ScreenTitle(
             modifier = Modifier.align(Alignment.TopCenter),
@@ -72,33 +84,45 @@ internal fun TaskGroupEditorReady(
             verticalArrangement = Arrangement.spacedBy(21.dp)
         ) {
 
-            LabelLineTextField(
-                labelRes = R.string.title,
-                text = taskGroup.title,
-                onValueChange = { newText -> onAction(TaskGroupEditorAction.SetTitle(newText.text)) }
-            )
+            LabeledSection(R.string.title) {
+                val textStyle = MaterialTheme.typography.titleMedium
+                val offset = textStyle.topToAscentDp() - 4.dp
 
-            Column {
-                ColorGrid(
-                    colors = MaterialTheme.taskGroupColors.getAll(),
-                    selectedColor = taskGroup.color,
-                    columnsCount = 5,
-                    gapSize = gapSize,
-                    onColorClick = { color -> onAction(TaskGroupEditorAction.SetColor(color)) }
-                )
-
-                LabelLine(
-                    modifier = Modifier.padding(top = 4.dp),
-                    labelRes = R.string.color
+                // TODO replace by new basictextfield
+                BasicTextField(
+                    modifier = Modifier
+                        .zIndex(1f)
+                        .offset(y = offset)
+                        .fillMaxWidth()
+                        .clearFocusOnKeyboardDismiss(),
+                    value = TextFieldValue(
+                        text = taskGroup.title,
+                        selection = TextRange(taskGroup.title.length)
+                    ),
+                    onValueChange = { newText -> onAction(TaskGroupEditorAction.SetTitle(newText.text)) },
+                    cursorBrush = SolidColor(MaterialTheme.colorScheme.onSurface),
+                    singleLine = true,
+                    textStyle = MaterialTheme.typography.titleMedium
+                        .copy(color = MaterialTheme.colorScheme.onSurface),
                 )
             }
 
-            Column {
+            LabeledSection(labelRes = R.string.color) {
+                ColorGrid(
+                    colors = MaterialTheme.taskGroupColors.getAll(),
+                    selectedColor = taskGroup.color,
+                    columnsCount = columnCount,
+                    gapSize = gapSizeDp,
+                    onColorClick = { color -> onAction(TaskGroupEditorAction.SetColor(color)) }
+                )
+            }
+
+            LabeledSection(labelRes = R.string.play_mode) {
                 PlayModeSelection(
                     playMode = taskGroup.playMode,
                     numberOfRandomTasks = taskGroup.numberOfRandomTasks,
                     numberOfTasks = taskGroup.tasks.size,
-                    gapSize = gapSize,
+                    gapSize = gapSizeDp,
                     onPlayModeChanged = { playMode, numberOfRandomTasks ->
                         onAction(
                             TaskGroupEditorAction.SetPlayMode(
@@ -108,30 +132,22 @@ internal fun TaskGroupEditorReady(
                         )
                     }
                 )
-
-                LabelLine(
-                    modifier = Modifier.padding(top = 4.dp),
-                    labelRes = R.string.play_mode
-                )
             }
 
-            Column {
 
+            LabeledSection(labelRes = R.string.default_task_duration)  {
                 DurationInput(
                     hours = taskGroup.defaultTaskDuration.hours,
                     minutes = taskGroup.defaultTaskDuration.minutes,
                     seconds = taskGroup.defaultTaskDuration.seconds,
                     onNumberEntered = { currentString, newDuration ->
-                        onAction(TaskGroupEditorAction.OnDurationNumberEntered(
-                            currentString = currentString,
-                            numberEntered = newDuration
-                        ))
+                        onAction(
+                            TaskGroupEditorAction.OnDurationNumberEntered(
+                                currentString = currentString,
+                                numberEntered = newDuration
+                            )
+                        )
                     }
-                )
-
-                LabelLine(
-                    modifier = Modifier.padding(top = 4.dp),
-                    labelRes = R.string.default_task_duration
                 )
             }
         }
@@ -144,7 +160,6 @@ internal fun TaskGroupEditorReady(
         )
     }
 }
-
 
 @Preview
 @Preview(uiMode = UI_MODE_NIGHT_YES)

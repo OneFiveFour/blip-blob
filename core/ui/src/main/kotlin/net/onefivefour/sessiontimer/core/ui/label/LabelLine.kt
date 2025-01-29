@@ -1,4 +1,4 @@
-package net.onefivefour.sessiontimer.core.ui.labelline
+package net.onefivefour.sessiontimer.core.ui.label
 
 import android.content.res.Configuration.UI_MODE_NIGHT_YES
 import androidx.annotation.StringRes
@@ -22,7 +22,7 @@ import net.onefivefour.sessiontimer.core.ui.R
 import net.onefivefour.sessiontimer.core.ui.utils.topToAscentDp
 
 @Composable
-fun LabelLine(
+internal fun LabelLine(
     modifier: Modifier = Modifier,
     @StringRes labelRes: Int,
 ) {

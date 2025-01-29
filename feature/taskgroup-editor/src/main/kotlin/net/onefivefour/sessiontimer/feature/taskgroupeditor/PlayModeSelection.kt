@@ -44,7 +44,7 @@ internal fun PlayModeSelection(
             contentAlignment = Alignment.Center
         ) {
             Icon(
-                modifier = Modifier.size(TILE_SIZE),
+                modifier = Modifier.size(TILE_SIZE_DP),
                 painter = painterResource(id = UiR.drawable.ic_play_mode_sequence),
                 contentDescription = stringResource(id = UiR.string.play_mode_sequence),
                 tint = MaterialTheme.colorScheme.onSurface
@@ -59,7 +59,7 @@ internal fun PlayModeSelection(
             Row(verticalAlignment = Alignment.CenterVertically) {
                 Icon(
                     modifier = Modifier
-                        .size(TILE_SIZE)
+                        .size(TILE_SIZE_DP)
                         .background(MaterialTheme.colorScheme.surfaceVariant),
                     painter = painterResource(id = UiR.drawable.ic_play_mode_shuffle),
                     contentDescription = stringResource(UiR.string.play_mode_shuffle),

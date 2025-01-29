@@ -15,6 +15,7 @@
 ```
 
 # Open TODOs
+- [ ] unify naming for Set[Type]Title in all VM Actions, UseCase Actions and database actions
 - [ ] make button animations more visible
 - [ ] check if Repository.updateXXX methods can be atomized into setXXX and then be removed
 - [ ] fix icon sized to be naturally sized
