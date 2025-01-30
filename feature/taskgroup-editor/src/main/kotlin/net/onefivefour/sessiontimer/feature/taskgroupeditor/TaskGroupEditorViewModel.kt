@@ -69,52 +69,14 @@ internal class TaskGroupEditorViewModel @Inject constructor(
         viewModelScope.launch {
             durationInputFlow
                 .debounce(1_000)
-        }
-    }
-
-    fun updateUiTaskDuration() {
-        viewModelScope.launch {
-            snapshotFlow { titleTextFieldState }.collectLatest { newState ->
-                updateWhenReady { taskGroup ->
-
-                    val newText = newState.text
-                    val numberEntered = newText.last()
-                    val isNumber = numberEntered.isDigit()
-                    val isBackspace = numberEntered == '\b'
-
-                    val newNumberString = when {
-                        isBackspace -> newText.dropLast(1)
-                        isNumber -> "0$newText$numberEntered"
-                        else -> return@updateWhenReady taskGroup
-                    }
-
-                    val newSeconds = newNumberString
-                        .takeLast(2)
-                        .padStart(2, '0')
-                        .toString()
-
-                    val newMinutes = newNumberString
-                        .dropLast(2)
-                        .takeLast(2)
-                        .padStart(2, '0')
-                        .toString()
-
-                    val newHours = newNumberString
-                        .dropLast(4)
-                        .takeLast(3)
-                        .padStart(3, '0')
-                        .toString()
-
-                    // immediately update UI
-                    taskGroup.copy(
-                        defaultTaskDuration = UiTaskDuration(
-                            hours = newHours,
-                            minutes = newMinutes,
-                            seconds = newSeconds
+                .collectLatest { newDefaultTaskDuration ->
+                    doWhenReady { taskGroup ->
+                        setDefaultTaskDuration(
+                            taskGroupId = taskGroup.id,
+                            newDefaultTaskDuration = newDefaultTaskDuration,
                         )
-                    )
+                    }
                 }
-            }
         }
     }
 
@@ -133,10 +95,10 @@ internal class TaskGroupEditorViewModel @Inject constructor(
             }
 
             is TaskGroupEditorAction.OnDurationNumberEntered -> {
-//                setDefaultTaskDuration(
-//                    action.currentString,
-//                    action.numberEntered
-//                )
+                setDefaultTaskDuration(
+                    action.currentString,
+                    action.numberEntered
+                )
             }
         }
     }
@@ -168,54 +130,54 @@ internal class TaskGroupEditorViewModel @Inject constructor(
             )
         }
     }
-//
-//    private fun setDefaultTaskDuration(
-//        currentString: String,
-//        numberEntered: Char,
-//    ) {
-//        updateWhenReady { taskGroup ->
-//
-//            val isNumber = numberEntered.isDigit()
-//            val isBackspace = numberEntered == '\b'
-//
-//            val newNumberString = when {
-//                isBackspace -> currentString.dropLast(1)
-//                isNumber -> "0$currentString$numberEntered"
-//                else -> return@updateWhenReady taskGroup
-//            }
-//
-//            val newSeconds = newNumberString
-//                .takeLast(2)
-//                .padStart(2, '0')
-//
-//            val newMinutes = newNumberString
-//                .dropLast(2)
-//                .takeLast(2)
-//                .padStart(2, '0')
-//
-//            val newHours = newNumberString
-//                .dropLast(4)
-//                .takeLast(3)
-//                .padStart(3, '0')
-//
-//            val newTotalSeconds = newHours.toIntOrZero() * 3600 +
-//                    newMinutes.toIntOrZero() * 60 +
-//                    newSeconds.toIntOrZero()
-//
-//            // trigger the debounced database update
-//            durationInputFlow.tryEmit(Duration.parse("${newTotalSeconds}s"))
-//
-//            // immediately update UI
-//            taskGroup.copy(
-//                defaultTaskDuration = UiTaskDuration(
-//                    hours = newHours,
-//                    minutes = newMinutes,
-//                    seconds = newSeconds
-//                )
-//            )
-//
-//        }
-//    }
+
+    private fun setDefaultTaskDuration(
+        currentString: String,
+        numberEntered: Char,
+    ) {
+        updateWhenReady { taskGroup ->
+
+            val isNumber = numberEntered.isDigit()
+            val isBackspace = numberEntered == '\b'
+
+            val newNumberString = when {
+                isBackspace -> currentString.dropLast(1)
+                isNumber -> "0$currentString$numberEntered"
+                else -> return@updateWhenReady taskGroup
+            }
+
+            val newSeconds = newNumberString
+                .takeLast(2)
+                .padStart(2, '0')
+
+            val newMinutes = newNumberString
+                .dropLast(2)
+                .takeLast(2)
+                .padStart(2, '0')
+
+            val newHours = newNumberString
+                .dropLast(4)
+                .takeLast(3)
+                .padStart(3, '0')
+
+            val newTotalSeconds = newHours.toIntOrZero() * 3600 +
+                    newMinutes.toIntOrZero() * 60 +
+                    newSeconds.toIntOrZero()
+
+            // trigger the debounced database update
+            durationInputFlow.tryEmit(Duration.parse("${newTotalSeconds}s"))
+
+            // immediately update UI
+            taskGroup.copy(
+                defaultTaskDuration = UiTaskDuration(
+                    hours = newHours,
+                    minutes = newMinutes,
+                    seconds = newSeconds
+                )
+            )
+
+        }
+    }
 
     private fun doWhenReady(action: suspend (UiTaskGroup) -> Unit) {
         _uiState.value.let {
