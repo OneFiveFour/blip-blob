@@ -1,17 +1,14 @@
 package net.onefivefour.sessiontimer.core.ui.duration
 
 import android.content.res.Configuration.UI_MODE_NIGHT_YES
-import android.view.KeyEvent
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.text.BasicTextField
 import androidx.compose.foundation.text.KeyboardOptions
-import androidx.compose.foundation.text.input.InputTransformation.Companion.keyboardOptions
-import androidx.compose.foundation.text.input.TextFieldState
 import androidx.compose.foundation.text.input.rememberTextFieldState
 import androidx.compose.foundation.text.selection.LocalTextSelectionColors
 import androidx.compose.foundation.text.selection.TextSelectionColors
@@ -33,16 +30,12 @@ import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.focus.onFocusChanged
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.SolidColor
-import androidx.compose.ui.input.key.onKeyEvent
 import androidx.compose.ui.platform.LocalTextToolbar
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.TextRange
 import androidx.compose.ui.text.input.KeyboardType
-import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.min
 import net.onefivefour.sessiontimer.core.theme.SessionTimerTheme
 import net.onefivefour.sessiontimer.core.ui.R
 
@@ -51,16 +44,9 @@ internal val TILE_SIZE = 60.dp
 @Composable
 fun DurationInput(
     modifier: Modifier = Modifier,
-    hours: String,
-    minutes: String,
-    seconds: String,
-    onNumberEntered: (String) -> Unit,
+    defaultTaskDuration: String,
+    onDurationEntered: (String) -> Unit,
 ) {
-
-    val hiddenTextSelectionColors = TextSelectionColors(
-        handleColor = Color.Transparent,
-        backgroundColor = Color.Transparent,
-    )
 
     var isFocused by remember { mutableStateOf(false) }
 
@@ -68,12 +54,12 @@ fun DurationInput(
 
     val textFieldState = rememberTextFieldState()
 
-    LaunchedEffect(hours, minutes, seconds) {
+    LaunchedEffect(defaultTaskDuration) {
         textFieldState.edit {
             replace(
                 start = 0,
                 end = length,
-                text = hours + minutes + seconds
+                text = defaultTaskDuration
             )
         }
     }
@@ -83,14 +69,23 @@ fun DurationInput(
         // Hidden text field to capture keyboard input
         CompositionLocalProvider(
             LocalTextToolbar provides EmptyTextToolbar,
-            LocalTextSelectionColors provides hiddenTextSelectionColors
+            LocalTextSelectionColors provides TextSelectionColors(
+                handleColor = Color.Transparent,
+                backgroundColor = Color.Transparent,
+            )
         ) {
             BasicTextField(
                 state = textFieldState,
                 inputTransformation = {
-                    val digits = asCharSequence().filter { it.isDigit() }
-                    replace(0, length, digits.takeLast(6))
-                    onNumberEntered(digits.toString())
+                    val digits = asCharSequence()
+                        .filter { it.isDigit() }
+                        .takeLast(6)
+                        .padStart(6, '0')
+                        .toString()
+
+                    replace(0, length, digits)
+
+                    onDurationEntered(digits)
                 },
                 keyboardOptions = KeyboardOptions(
                     keyboardType = KeyboardType.Number
@@ -179,10 +174,8 @@ private fun DurationInputPreview() {
     SessionTimerTheme {
         Surface {
             DurationInput(
-                hours = "01",
-                minutes = "02",
-                seconds = "03",
-                onNumberEntered = { }
+                defaultTaskDuration = "010203",
+                onDurationEntered = { }
             )
         }
     }
