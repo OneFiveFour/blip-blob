@@ -30,7 +30,7 @@ internal val fakeTasks = listOf(
 @Composable
 internal fun uiTaskGroup() = UiTaskGroup(
     id = 1L,
-    title = TextFieldState(initialText = "TaskGroup Title"),
+    title = "TaskGroup Title",
     color = MaterialTheme.taskGroupColors.color01,
     playMode = PlayMode.SEQUENCE,
     numberOfRandomTasks = 1,

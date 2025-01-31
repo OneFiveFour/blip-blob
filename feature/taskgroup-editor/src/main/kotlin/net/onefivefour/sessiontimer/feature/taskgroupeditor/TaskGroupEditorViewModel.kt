@@ -48,17 +48,11 @@ internal class TaskGroupEditorViewModel @Inject constructor(
     // Give the user a bit of time to enter the duration before updating the database
     private val durationInputFlow = MutableSharedFlow<Duration>(extraBufferCapacity = 1)
 
-    private val titleTextFieldState = TextFieldState()
-
     init {
         viewModelScope.launch {
             getTaskGroupUseCase.execute(taskGroupId).collectLatest { taskGroup ->
                 _uiState.update {
                     val uiTaskGroup = taskGroup.toUiTaskGroup()
-                    titleTextFieldState.edit {
-                        this.delete(0, this.length)
-                        this.insert(0, uiTaskGroup.title.text.toString())
-                    }
                     UiState.Ready(uiTaskGroup)
                 }
             }

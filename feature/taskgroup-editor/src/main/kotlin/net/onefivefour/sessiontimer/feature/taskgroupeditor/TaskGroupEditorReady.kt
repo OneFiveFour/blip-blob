@@ -11,10 +11,12 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.text.BasicTextField
 import androidx.compose.foundation.text.input.TextFieldLineLimits
+import androidx.compose.foundation.text.input.rememberTextFieldState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -87,13 +89,28 @@ internal fun TaskGroupEditorReady(
                 val textStyle = MaterialTheme.typography.titleMedium
                 val offset = textStyle.topToAscentDp() - 4.dp
 
+                val textFieldState = rememberTextFieldState()
+
+                LaunchedEffect(uiTaskGroup.title) {
+                    textFieldState.edit {
+                        replace(
+                            start = 0,
+                            end = length,
+                            text = uiTaskGroup.title
+                        )
+                    }
+                }
                 BasicTextField(
                     modifier = Modifier
                         .zIndex(1f)
                         .offset(y = offset)
                         .fillMaxWidth()
                         .clearFocusOnKeyboardDismiss(),
-                    state = uiTaskGroup.title,
+                    inputTransformation = {
+                        val newTitle = asCharSequence().toString()
+                        onAction(TaskGroupEditorAction.SetTitle(newTitle))
+                    },
+                    state = textFieldState,
                     cursorBrush = SolidColor(MaterialTheme.colorScheme.onSurface),
                     lineLimits = TextFieldLineLimits.SingleLine,
                     textStyle = MaterialTheme.typography.titleMedium
