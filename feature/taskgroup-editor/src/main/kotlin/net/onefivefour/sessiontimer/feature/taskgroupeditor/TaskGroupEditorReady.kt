@@ -134,11 +134,10 @@ internal fun TaskGroupEditorReady(
                     hours = uiTaskGroup.defaultTaskDuration.hours,
                     minutes = uiTaskGroup.defaultTaskDuration.minutes,
                     seconds = uiTaskGroup.defaultTaskDuration.seconds,
-                    onNumberEntered = { currentString, newDuration ->
+                    onNumberEntered = { newDurationString ->
                         onAction(
-                            TaskGroupEditorAction.OnDurationNumberEntered(
-                                currentString = currentString,
-                                numberEntered = newDuration
+                            TaskGroupEditorAction.OnDurationEntered(
+                                newDurationString = newDurationString,
                             )
                         )
                     }

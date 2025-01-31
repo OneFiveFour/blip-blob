@@ -4,10 +4,15 @@ import android.content.res.Configuration.UI_MODE_NIGHT_YES
 import android.view.KeyEvent
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.text.BasicTextField
 import androidx.compose.foundation.text.KeyboardOptions
+import androidx.compose.foundation.text.input.InputTransformation.Companion.keyboardOptions
+import androidx.compose.foundation.text.input.TextFieldState
+import androidx.compose.foundation.text.input.rememberTextFieldState
 import androidx.compose.foundation.text.selection.LocalTextSelectionColors
 import androidx.compose.foundation.text.selection.TextSelectionColors
 import androidx.compose.material3.MaterialTheme
@@ -15,12 +20,14 @@ import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.focus.onFocusChanged
@@ -29,11 +36,13 @@ import androidx.compose.ui.graphics.SolidColor
 import androidx.compose.ui.input.key.onKeyEvent
 import androidx.compose.ui.platform.LocalTextToolbar
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.TextRange
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.min
 import net.onefivefour.sessiontimer.core.theme.SessionTimerTheme
 import net.onefivefour.sessiontimer.core.ui.R
 
@@ -45,7 +54,7 @@ fun DurationInput(
     hours: String,
     minutes: String,
     seconds: String,
-    onNumberEntered: (String, Char) -> Unit,
+    onNumberEntered: (String) -> Unit,
 ) {
 
     val hiddenTextSelectionColors = TextSelectionColors(
@@ -57,12 +66,54 @@ fun DurationInput(
 
     val focusRequester = remember { FocusRequester() }
 
-    val currentString = hours + minutes + seconds
+    val textFieldState = rememberTextFieldState()
 
-    CompositionLocalProvider(
-        LocalTextToolbar provides EmptyTextToolbar,
-        LocalTextSelectionColors provides hiddenTextSelectionColors
-    ) {
+    LaunchedEffect(hours, minutes, seconds) {
+        textFieldState.edit {
+            replace(
+                start = 0,
+                end = length,
+                text = hours + minutes + seconds
+            )
+        }
+    }
+
+    Box {
+
+        // Hidden text field to capture keyboard input
+        CompositionLocalProvider(
+            LocalTextToolbar provides EmptyTextToolbar,
+            LocalTextSelectionColors provides hiddenTextSelectionColors
+        ) {
+            BasicTextField(
+                state = textFieldState,
+                inputTransformation = {
+                    val digits = asCharSequence().filter { it.isDigit() }
+                    replace(0, length, digits.takeLast(6))
+                    onNumberEntered(digits.toString())
+                },
+                keyboardOptions = KeyboardOptions(
+                    keyboardType = KeyboardType.Number
+                ),
+                cursorBrush = SolidColor(Color.Transparent),
+                modifier = Modifier
+                    .alpha(0f)
+                    .focusRequester(focusRequester)
+                    .onFocusChanged { focusState ->
+                        isFocused = focusState.isFocused
+                    },
+                textStyle = MaterialTheme.typography.labelSmall
+                    .copy(
+                        color = MaterialTheme.colorScheme.onSurface,
+                        textAlign = TextAlign.Center
+                    ),
+                decorator = { innerTextField ->
+                    CenteredTextBox(isFocused) {
+                        innerTextField()
+                    }
+                }
+            )
+        }
 
         Row(
             modifier = modifier
@@ -74,10 +125,11 @@ fun DurationInput(
             horizontalArrangement = Arrangement.spacedBy(8.dp)
         ) {
 
+            // Hours
             CenteredTextBox(isFocused) {
                 Text(
                     modifier = Modifier.fillMaxWidth(),
-                    text = hours,
+                    text = textFieldState.text.take(2).toString(),
                     color = MaterialTheme.colorScheme.onSurface,
                     style = MaterialTheme.typography.labelSmall,
                     textAlign = TextAlign.Center
@@ -90,10 +142,11 @@ fun DurationInput(
                 style = MaterialTheme.typography.labelSmall
             )
 
+            // Minutes
             CenteredTextBox(isFocused) {
                 Text(
                     modifier = Modifier.fillMaxWidth(),
-                    text = minutes,
+                    text = textFieldState.text.dropLast(2).takeLast(2).toString(),
                     color = MaterialTheme.colorScheme.onSurface,
                     style = MaterialTheme.typography.labelSmall,
                     textAlign = TextAlign.Center
@@ -105,43 +158,16 @@ fun DurationInput(
                 style = MaterialTheme.typography.labelSmall
             )
 
-            BasicTextField(
-                value = TextFieldValue(seconds),
-                onValueChange = { newNumber ->
-                    if (newNumber.text.length == 3) {
-                        val numberEntered = newNumber.text.first()
-                        onNumberEntered(currentString, numberEntered)
-                    }
-                },
-                keyboardOptions = KeyboardOptions(
-                    keyboardType = KeyboardType.Number
-                ),
-                cursorBrush = SolidColor(Color.Transparent),
-                modifier = Modifier
-                    .onKeyEvent { event ->
-                        val didPressDelete =
-                            event.nativeKeyEvent.keyCode == KeyEvent.KEYCODE_DEL
-                        if (didPressDelete) {
-                            onNumberEntered(currentString, '\b')
-                        }
-                        false
-                    }
-                    .focusRequester(focusRequester)
-                    .onFocusChanged { focusState ->
-                        isFocused = focusState.isFocused
-                    },
-                textStyle = MaterialTheme.typography.labelSmall
-                    .copy(
-                        color = MaterialTheme.colorScheme.onSurface,
-                        textAlign = TextAlign.Center
-                    ),
-
-                ) { innerTextField ->
-                CenteredTextBox(isFocused) {
-                    innerTextField()
-                }
+            // Seconds
+            CenteredTextBox(isFocused) {
+                Text(
+                    modifier = Modifier.fillMaxWidth(),
+                    text = textFieldState.text.takeLast(2).toString(),
+                    color = MaterialTheme.colorScheme.onSurface,
+                    style = MaterialTheme.typography.labelSmall,
+                    textAlign = TextAlign.Center
+                )
             }
-
         }
     }
 }
@@ -153,10 +179,10 @@ private fun DurationInputPreview() {
     SessionTimerTheme {
         Surface {
             DurationInput(
-                hours = "001",
+                hours = "01",
                 minutes = "02",
                 seconds = "03",
-                onNumberEntered = { _, _ -> }
+                onNumberEntered = { }
             )
         }
     }

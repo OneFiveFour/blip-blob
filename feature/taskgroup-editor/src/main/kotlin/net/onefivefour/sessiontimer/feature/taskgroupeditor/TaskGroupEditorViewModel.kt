@@ -3,8 +3,6 @@ package net.onefivefour.sessiontimer.feature.taskgroupeditor
 import androidx.compose.foundation.text.input.TextFieldState
 import androidx.compose.foundation.text.input.delete
 import androidx.compose.foundation.text.input.insert
-import androidx.compose.foundation.text.input.selectAll
-import androidx.compose.runtime.snapshotFlow
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.toArgb
 import androidx.lifecycle.SavedStateHandle
@@ -94,13 +92,29 @@ internal class TaskGroupEditorViewModel @Inject constructor(
                 setPlayMode(action.newPlayMode, action.newNumberOfRandomTasks)
             }
 
-            is TaskGroupEditorAction.OnDurationNumberEntered -> {
-                setDefaultTaskDuration(
-                    action.currentString,
-                    action.numberEntered
-                )
+            is TaskGroupEditorAction.OnDurationEntered -> {
+                onDurationEntered(action.newDurationString)
             }
         }
+    }
+
+    private fun onDurationEntered(newNumberString: String) {
+
+        val newHours = newNumberString
+            .take(2)
+
+        val newMinutes = newNumberString
+            .dropLast(2)
+            .takeLast(2)
+
+        val newSeconds = newNumberString
+            .takeLast(2)
+
+        val newTotalSeconds = newHours.toIntOrZero() * 3600 +
+                newMinutes.toIntOrZero() * 60 +
+                newSeconds.toIntOrZero()
+
+        durationInputFlow.tryEmit(Duration.parse("${newTotalSeconds}s"))
     }
 
     private fun setTitle(newTitle: String) {
@@ -128,54 +142,6 @@ internal class TaskGroupEditorViewModel @Inject constructor(
                 newPlayMode = newPlayMode,
                 newNumberOfRandomTasks = newNumberOfRandomTasks
             )
-        }
-    }
-
-    private fun setDefaultTaskDuration(
-        currentString: String,
-        numberEntered: Char,
-    ) {
-        updateWhenReady { taskGroup ->
-
-            val isNumber = numberEntered.isDigit()
-            val isBackspace = numberEntered == '\b'
-
-            val newNumberString = when {
-                isBackspace -> currentString.dropLast(1)
-                isNumber -> "0$currentString$numberEntered"
-                else -> return@updateWhenReady taskGroup
-            }
-
-            val newSeconds = newNumberString
-                .takeLast(2)
-                .padStart(2, '0')
-
-            val newMinutes = newNumberString
-                .dropLast(2)
-                .takeLast(2)
-                .padStart(2, '0')
-
-            val newHours = newNumberString
-                .dropLast(4)
-                .takeLast(3)
-                .padStart(3, '0')
-
-            val newTotalSeconds = newHours.toIntOrZero() * 3600 +
-                    newMinutes.toIntOrZero() * 60 +
-                    newSeconds.toIntOrZero()
-
-            // trigger the debounced database update
-            durationInputFlow.tryEmit(Duration.parse("${newTotalSeconds}s"))
-
-            // immediately update UI
-            taskGroup.copy(
-                defaultTaskDuration = UiTaskDuration(
-                    hours = newHours,
-                    minutes = newMinutes,
-                    seconds = newSeconds
-                )
-            )
-
         }
     }
 
