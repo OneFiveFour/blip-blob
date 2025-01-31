@@ -35,7 +35,7 @@ import net.onefivefour.sessiontimer.core.ui.sqarebutton.SquareButton
 import net.onefivefour.sessiontimer.core.ui.utils.topToAscentDp
 import net.onefivefour.sessiontimer.core.ui.R as UiR
 
-internal val TILE_SIZE_DP = 60.dp
+internal val TILE_SIZE_DP = 56.dp
 
 internal val MINIMAL_GAP_SIZE_DP = 8.dp
 
