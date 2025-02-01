@@ -22,6 +22,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.SolidColor
 import androidx.compose.ui.platform.LocalDensity
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.times
@@ -85,7 +86,7 @@ internal fun TaskGroupEditorReady(
             verticalArrangement = Arrangement.spacedBy(21.dp)
         ) {
 
-            LabeledSection(R.string.title) {
+            LabeledSection(labelRes = R.string.title) {
                 val textStyle = MaterialTheme.typography.titleMedium
                 val offset = textStyle.topToAscentDp() - 4.dp
 
@@ -163,7 +164,7 @@ internal fun TaskGroupEditorReady(
         SquareButton(
             modifier = Modifier.align(Alignment.BottomEnd),
             iconRes = UiR.drawable.ic_save,
-            contentDescriptionRes = R.string.save,
+            contentDescription = stringResource(R.string.save),
             onClick = goBack
         )
     }

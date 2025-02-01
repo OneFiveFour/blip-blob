@@ -64,7 +64,7 @@ internal fun TaskGroupFooter(
 
         SquareButton(
             iconRes = R.drawable.ic_edit,
-            contentDescriptionRes = R.string.edit,
+            contentDescription = stringResource(R.string.edit),
             onClick = onEditTaskGroup
         )
     }

@@ -15,6 +15,7 @@
 ```
 
 # Open TODOs
+- [ ] add "onXXX" colors for taskGroup colors
 - [ ] check for hardcoded Dispatchers and replace them with injected DispatcherProvider interface
 - [ ] check that transformation between Ui <> data <> domain models in done in the same layer everywhere (VM, UseCases, Repos?)
 - [ ] check sealed classes if they can be sealed interfaces instead

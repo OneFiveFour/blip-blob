@@ -7,9 +7,10 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.aspectRatio
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
@@ -28,8 +29,8 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.SolidColor
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -56,19 +57,14 @@ internal fun SessionEditorReady(
 
     val coroutineScope = rememberCoroutineScope()
 
-    Column(
-        modifier = Modifier
-            .fillMaxSize()
-            .padding(
-                start = 24.dp,
-                end = 24.dp,
-                bottom = 24.dp
-            )
-    ) {
+    Column(modifier = Modifier.fillMaxSize()) {
 
         ScreenTitle(titleRes = R.string.edit_session)
 
-        LabeledSection(R.string.title) {
+        LabeledSection(
+            modifier = Modifier.padding(horizontal = 24.dp),
+            labelRes = R.string.title,
+        ) {
             val textStyle = MaterialTheme.typography.titleMedium
             val offset = textStyle.topToAscentDp() - 4.dp
 
@@ -103,50 +99,54 @@ internal fun SessionEditorReady(
 
         HorizontalPager(
             state = pagerState,
-            modifier = Modifier.weight(1f),
+            modifier = Modifier.weight(1f).padding(horizontal = 12.dp),
         ) { page ->
+
+            val taskGroup = uiSession.taskGroups[page]
+
             Box(
                 modifier =
                 Modifier
-                    .padding(10.dp)
-                    .background(Color.Blue)
-                    .fillMaxWidth()
-                    .aspectRatio(1f),
+                    .fillMaxSize()
+                    .background(taskGroup.color)
+                ,
                 contentAlignment = Alignment.Center
             ) {
                 Text(
-                    modifier = Modifier.clickable { openTaskGroupEditor(uiSession.taskGroups[page].id) },
-                    text = uiSession.taskGroups[page].title, fontSize = 32.sp
+                    modifier = Modifier.clickable { openTaskGroupEditor(taskGroup.id) },
+                    text = taskGroup.title, fontSize = 32.sp
                 )
             }
         }
 
         Row(
-            modifier = Modifier.fillMaxWidth(),
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(all = 24.dp)
+                .height(64.dp),
             horizontalArrangement = Arrangement.End
         ) {
 
             LazyRow(
-                modifier = Modifier.fillMaxWidth(),
-                horizontalArrangement = Arrangement.Center
+                modifier = Modifier.weight(1f).fillMaxHeight(),
+                horizontalArrangement = Arrangement.spacedBy(24.dp, alignment = Alignment.End),
+                verticalAlignment = Alignment.CenterVertically
             ) {
                 items(uiSession.taskGroups.size) { index ->
+
                     val isSelected = pagerState.currentPage == index
-                    val size = if (isSelected) 12.dp else 8.dp
-                    Box(
-                        modifier = Modifier
-                            .padding(4.dp)
-                            .size(size)
-                            .background(
-                                color = uiSession.taskGroups[index].color,
-                                shape = CircleShape
-                            )
-                            .clickable {
-                                coroutineScope.launch {
-                                    pagerState.scrollToPage(index)
-                                }
-                            }
-                    )
+                    val size = if (isSelected) 24.dp else 12.dp
+                    val uiTaskGroup = uiSession.taskGroups[index]
+
+                    SquareButton(
+                        size = size,
+                        backgroundColor = uiTaskGroup.color,
+                        contentDescription = uiTaskGroup.title
+                    ) {
+                        coroutineScope.launch {
+                            pagerState.scrollToPage(index)
+                        }
+                    }
                 }
             }
 
@@ -154,7 +154,7 @@ internal fun SessionEditorReady(
 
             SquareButton(
                 iconRes = R.drawable.ic_add,
-                contentDescriptionRes = R.string.new_task_group,
+                contentDescription = stringResource(R.string.new_task_group),
                 onClick = { onAction(SessionEditorAction.CreateTaskGroup) }
             )
         }

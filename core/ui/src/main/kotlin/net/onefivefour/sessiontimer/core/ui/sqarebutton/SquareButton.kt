@@ -1,8 +1,8 @@
 package net.onefivefour.sessiontimer.core.ui.sqarebutton
 
 import android.content.res.Configuration.UI_MODE_NIGHT_YES
+import androidx.annotation.ColorInt
 import androidx.annotation.DrawableRes
-import androidx.annotation.StringRes
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Box
@@ -14,6 +14,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
@@ -26,8 +27,9 @@ import net.onefivefour.sessiontimer.core.ui.R
 @Composable
 fun SquareButton(
     modifier: Modifier = Modifier,
-    @DrawableRes iconRes: Int,
-    @StringRes contentDescriptionRes: Int,
+    @DrawableRes iconRes: Int? = null,
+    contentDescription: String,
+    @ColorInt backgroundColor: Color = MaterialTheme.colorScheme.surface,
     size: Dp = 64.dp,
     onClick: () -> Unit,
 ) {
@@ -41,17 +43,19 @@ fun SquareButton(
                 onClick = onClick,
                 interactionSource = interactionSource,
                 indication = SquareButtonIndicationNodeFactory(
-                    backgroundColor = MaterialTheme.colorScheme.surface,
+                    backgroundColor = backgroundColor,
                     glowColor = MaterialTheme.customColors.surfaceGlow
                 )
             ),
         contentAlignment = Alignment.Center
     ) {
 
-        Icon(
-            painter = painterResource(iconRes),
-            contentDescription = stringResource(contentDescriptionRes)
-        )
+        if (iconRes != null) {
+            Icon(
+                painter = painterResource(iconRes),
+                contentDescription = contentDescription
+            )
+        }
 
     }
 }
@@ -64,7 +68,7 @@ private fun EditButtonPreview() {
         Surface {
             SquareButton(
                 iconRes = R.drawable.ic_edit,
-                contentDescriptionRes = R.string.edit,
+                contentDescription = "Edit",
                 onClick = { }
             )
         }

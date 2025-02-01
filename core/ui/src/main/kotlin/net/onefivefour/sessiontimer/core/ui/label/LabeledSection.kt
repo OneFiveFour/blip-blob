@@ -16,8 +16,12 @@ import net.onefivefour.sessiontimer.core.theme.SessionTimerTheme
 import net.onefivefour.sessiontimer.core.ui.R
 
 @Composable
-fun LabeledSection(@StringRes labelRes: Int, content: @Composable () -> Unit) {
-    Column {
+fun LabeledSection(
+    modifier: Modifier = Modifier,
+    @StringRes labelRes: Int,
+    content: @Composable () -> Unit,
+) {
+    Column(modifier = modifier) {
         content()
         LabelLine(
             modifier = Modifier.padding(top = 4.dp),
@@ -32,9 +36,11 @@ private fun LabeledSectionPreview() {
     SessionTimerTheme {
         Surface {
             LabeledSection(labelRes = R.string.title) {
-                Box(Modifier
-                    .size(30.dp)
-                    .background(Color.Blue))
+                Box(
+                    Modifier
+                        .size(30.dp)
+                        .background(Color.Blue)
+                )
             }
         }
     }

@@ -8,6 +8,7 @@ import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import kotlinx.datetime.Clock
@@ -42,7 +43,7 @@ internal fun SessionOverviewReady(
         SquareButton(
             modifier = Modifier.align(Alignment.End).padding(end = 24.dp),
             iconRes = UiR.drawable.ic_add,
-            contentDescriptionRes = R.string.new_session,
+            contentDescription = stringResource(R.string.new_session),
             onClick = { onAction(SessionOverviewAction.CreateSession) }
         )
     }
