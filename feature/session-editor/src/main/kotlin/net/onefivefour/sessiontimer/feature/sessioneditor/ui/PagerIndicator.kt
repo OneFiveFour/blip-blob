@@ -31,8 +31,8 @@ internal fun PagerIndicator(
     coroutineScope: CoroutineScope,
 ) {
     LazyRow(
-        state = lazyListState,
         modifier = modifier,
+        state = lazyListState,
         horizontalArrangement = Arrangement.spacedBy(24.dp, alignment = Alignment.End),
         verticalAlignment = Alignment.CenterVertically
     ) {
@@ -69,14 +69,22 @@ private fun calculateAnimatedSize(
     val isCurrentPage = index == pagerState.currentPage
 
     return when (progress) {
-        in 0f..0.5f -> when {
-            isCurrentPage -> lerp(maxSize, halfSize, progress * 2)
-            else -> minSize
+        in 0f..0.5f -> {
+            val isTargetPage = index == pagerState.currentPage + 1
+            when {
+                isCurrentPage -> lerp(maxSize, halfSize, progress * 2)
+                isTargetPage -> lerp(minSize, halfSize, progress * 2)
+                else -> minSize
+            }
         }
 
-        in -0.5f..0f -> when {
-            isCurrentPage -> lerp(maxSize, halfSize, progress * -2)
-            else -> minSize
+        in -0.5f..0f -> {
+            val isTargetPage = index == pagerState.currentPage - 1
+            when {
+                isCurrentPage -> lerp(maxSize, halfSize, progress * -2)
+                isTargetPage -> lerp(minSize, halfSize, progress * -2)
+                else -> minSize
+            }
         }
 
         else -> minSize
