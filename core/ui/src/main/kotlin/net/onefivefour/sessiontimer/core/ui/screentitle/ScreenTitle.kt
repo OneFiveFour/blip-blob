@@ -24,7 +24,7 @@ fun ScreenTitle(
     Text(
         modifier = modifier
             .fillMaxWidth()
-            .padding(top = 24.dp, bottom = 42.dp),
+            .padding(top = 24.dp),
         text = stringResource(titleRes),
         style = MaterialTheme.typography.displayLarge,
         color = MaterialTheme.colorScheme.onBackground,

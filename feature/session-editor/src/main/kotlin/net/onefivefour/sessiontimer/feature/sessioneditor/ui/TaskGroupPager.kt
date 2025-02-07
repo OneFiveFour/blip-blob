@@ -10,6 +10,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import net.onefivefour.sessiontimer.core.theme.SessionTimerTheme
 import net.onefivefour.sessiontimer.feature.sessioneditor.model.UiSession
+import net.onefivefour.sessiontimer.feature.sessioneditor.viewmodel.SessionEditorAction
 
 @Composable
 internal fun TaskGroupPager(
@@ -17,6 +18,7 @@ internal fun TaskGroupPager(
     pagerState: PagerState,
     uiSession: UiSession,
     onOpenTaskGroupEditor: (Long) -> Unit,
+    onAction: (SessionEditorAction) -> Unit
 ) {
     HorizontalPager(
         state = pagerState,
@@ -27,7 +29,8 @@ internal fun TaskGroupPager(
 
         TaskGroupPage(
             uiTaskGroup = uiTaskGroup,
-            onOpenTaskGroupEditor = onOpenTaskGroupEditor
+            onOpenTaskGroupEditor = onOpenTaskGroupEditor,
+            onAction = onAction
         )
     }
 }
@@ -48,7 +51,8 @@ private fun SessionTitlePreview() {
                         fakeUiTaskGroup()
                     )
                 ),
-                onOpenTaskGroupEditor = {}
+                onOpenTaskGroupEditor = {},
+                onAction = {}
             )
         }
     }

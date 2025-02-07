@@ -56,7 +56,10 @@ internal fun TaskList(
 
                 SwipeToDismissContainer(
                     item = task,
-                    onDelete = { onAction(SessionEditorAction.DeleteTask(task.id, uiTaskGroup.id)) }
+                    onDelete = { onAction(SessionEditorAction.DeleteTask(
+                        taskId = task.id,
+                        taskGroupId = uiTaskGroup.id
+                    )) }
                 ) {
 
                     TaskItem(

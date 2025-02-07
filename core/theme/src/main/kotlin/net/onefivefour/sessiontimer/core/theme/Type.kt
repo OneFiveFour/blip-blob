@@ -31,7 +31,7 @@ val typography = Typography(
     titleSmall = TextStyle(
         fontFamily = sairaFontFamily,
         fontWeight = FontWeight.Normal,
-        fontSize = 16.sp
+        fontSize = 32.sp
     ),
     labelLarge = TextStyle(
         fontFamily = sairaFontFamily,
@@ -47,7 +47,7 @@ val typography = Typography(
     labelSmall = TextStyle(
         fontFamily = sairaFontFamily,
         fontWeight = FontWeight.Bold,
-        fontSize = 26.sp,
+        fontSize = 24.sp,
         letterSpacing = 0.7.sp
     )
 )

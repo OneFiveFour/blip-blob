@@ -34,12 +34,16 @@ internal fun TaskItem(
 
     Row(
         modifier = modifier
-            .height(TASK_ITEM_HEIGHT)
-            .background(MaterialTheme.colorScheme.surfaceVariant)
-            .padding(horizontal = 8.dp),
+            .height(64.dp)
+            .background(MaterialTheme.colorScheme.background),
         verticalAlignment = Alignment.CenterVertically
     ) {
 
+        DragHandler()
+
+        Spacer(Modifier.width(12.dp))
+
+        // TODO change to textfieldstate
         BasicTextField(
             modifier = Modifier
                 .weight(1f)
@@ -51,7 +55,7 @@ internal fun TaskItem(
             onValueChange = { newText -> onTaskTitleChanged(newText.text) },
             cursorBrush = SolidColor(MaterialTheme.colorScheme.onSurface),
             singleLine = true,
-            textStyle = MaterialTheme.typography.titleMedium
+            textStyle = MaterialTheme.typography.titleSmall
                 .copy(color = MaterialTheme.colorScheme.onSurface)
         )
 
@@ -60,17 +64,6 @@ internal fun TaskItem(
             style = MaterialTheme.typography.labelSmall
                 .copy(color = MaterialTheme.colorScheme.onSurface),
         )
-
-        Spacer(modifier = Modifier.width(8.dp))
-
-//        Icon(
-//            modifier = Modifier.clip(RoundedCornerShape(8.dp)),
-//            painter = painterResource(id = R.drawable.ic_stopwatch),
-//            tint = MaterialTheme.colorScheme.onSurface,
-//            contentDescription = stringResource(id = R.string.set_duration)
-//        )
-
-        DragHandler()
     }
 }
 
