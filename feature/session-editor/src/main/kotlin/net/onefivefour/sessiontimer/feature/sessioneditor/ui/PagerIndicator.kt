@@ -110,23 +110,24 @@ private fun calculateAnimatedSize(
     val halfSize = (maxSize + INDICATOR_SIZE_DP) / 2
 
     val progress = pagerState.currentPageOffsetFraction
+
     val isCurrentPage = index == pagerState.currentPage
+    val isNextPage = index == pagerState.currentPage + 1
+    val isPreviousPage = index == pagerState.currentPage - 1
 
     return when (progress) {
         in 0f..0.5f -> {
-            val isTargetPage = index == pagerState.currentPage + 1
             when {
                 isCurrentPage -> lerp(maxSize, halfSize, progress * 2)
-                isTargetPage -> lerp(INDICATOR_SIZE_DP, halfSize, progress * 2)
+                isNextPage -> lerp(INDICATOR_SIZE_DP, halfSize, progress * 2)
                 else -> INDICATOR_SIZE_DP
             }
         }
 
         in -0.5f..0f -> {
-            val isTargetPage = index == pagerState.currentPage - 1
             when {
                 isCurrentPage -> lerp(maxSize, halfSize, progress * -2)
-                isTargetPage -> lerp(INDICATOR_SIZE_DP, halfSize, progress * -2)
+                isPreviousPage -> lerp(INDICATOR_SIZE_DP, halfSize, progress * -2)
                 else -> INDICATOR_SIZE_DP
             }
         }
