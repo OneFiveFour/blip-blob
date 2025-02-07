@@ -30,6 +30,7 @@ SELECT
     TG.id AS taskGroupId,
     TG.title AS taskGroupTitle,
     TG.color AS taskGroupColor,
+    TG.onColor AS taskGroupOnColor,
     TG.playMode AS taskGroupPlayMode,
     TG.numberOfRandomTasks AS taskGroupNumberOfRandomTasks,
     TG.defaultTaskDuration AS taskGroupDefaultTaskDuration,

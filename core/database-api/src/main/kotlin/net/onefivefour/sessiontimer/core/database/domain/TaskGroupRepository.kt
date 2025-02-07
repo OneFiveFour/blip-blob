@@ -9,6 +9,7 @@ interface TaskGroupRepository {
     suspend fun newTaskGroup(
         title: String,
         color: Long,
+        onColor: Long,
         playMode: PlayMode,
         numberOfRandomTasks: Int,
         defaultTaskDuration: Duration,
@@ -18,16 +19,6 @@ interface TaskGroupRepository {
     suspend fun getTaskGroupById(taskGroupId: Long): Flow<TaskGroup>
 
     suspend fun getTaskGroupBySessionId(sessionId: Long): Flow<List<TaskGroup>>
-
-    suspend fun updateTaskGroup(
-        taskGroupId: Long,
-        title: String,
-        color: Int,
-        playMode: PlayMode,
-        numberOfRandomTasks: Int,
-        defaultTaskDuration: Duration,
-        sortOrder: Int
-    )
 
     suspend fun decreaseNumberOfRandomTasks(taskGroupId: Long)
 
@@ -44,7 +35,7 @@ interface TaskGroupRepository {
 
     suspend fun setTaskGroupDefaultTaskDuration(taskGroupId: Long, newDefaultTaskDuration: Duration)
 
-    suspend fun setTaskGroupColor(taskGroupId: Long, newColor: Int)
+    suspend fun setTaskGroupColor(taskGroupId: Long, newColor: Int, newOnColor: Int)
 
     fun getLastInsertId(): Long
 }

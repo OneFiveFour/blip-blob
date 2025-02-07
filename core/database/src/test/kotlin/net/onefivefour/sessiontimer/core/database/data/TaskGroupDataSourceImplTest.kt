@@ -45,6 +45,7 @@ internal class TaskGroupDataSourceImplTest {
                     id = any(),
                     title = any(),
                     color = any(),
+                    onColor = any(),
                     playMode = any(),
                     numberOfRandomTasks = any(),
                     defaultTaskDuration = any(),
@@ -55,6 +56,7 @@ internal class TaskGroupDataSourceImplTest {
             val sessionId = 321L
             val title = "Test TaskGroup Title"
             val color = 123L
+            val onColor = 321L
             val playMode = PlayMode.N_TASKS_SHUFFLED.toString()
             val numberOfRandomTasks = 53L
             val defaultTaskDuration = 1.minutes.inWholeSeconds
@@ -64,6 +66,7 @@ internal class TaskGroupDataSourceImplTest {
             sut().insert(
                 title = title,
                 color = color,
+                onColor = onColor,
                 playMode = playMode,
                 numberOfRandomTasks = numberOfRandomTasks,
                 defaultTaskDuration = defaultTaskDuration,
@@ -76,6 +79,7 @@ internal class TaskGroupDataSourceImplTest {
                     id = null,
                     title = title,
                     color = color,
+                    onColor = onColor,
                     playMode = playMode,
                     numberOfRandomTasks = numberOfRandomTasks,
                     defaultTaskDuration = defaultTaskDuration,
@@ -111,44 +115,6 @@ internal class TaskGroupDataSourceImplTest {
 
             // THEN
             coVerify(exactly = 1) { taskGroupQueries.getBySessionId(sessionId) }
-        }
-
-    @Test
-    fun `GIVEN taskGroup data WHEN update is called THEN the call is delegated to taskGroupQueries`() =
-        runTest {
-            // GIVEN
-            coEvery { taskGroupQueries.update(any(), any(), any(), any(), any(), any(), any()) } returns mockk()
-            val taskGroupId = 5L
-            val title = "Test TaskGroup Title"
-            val color = 123L
-            val playMode = PlayMode.N_TASKS_SHUFFLED.toString()
-            val numberOfRandomTasks = 53L
-            val defaultTaskDuration = 1.minutes.inWholeSeconds
-            val sortOrder = 1L
-
-            // WHEN
-            sut().update(
-                taskGroupId = taskGroupId,
-                title = title,
-                color = color,
-                playMode = playMode,
-                numberOfRandomTasks = numberOfRandomTasks,
-                defaultTaskDuration = defaultTaskDuration,
-                sortOrder = sortOrder
-            )
-
-            // THEN
-            coVerify(exactly = 1) {
-                taskGroupQueries.update(
-                    title = title,
-                    color = color,
-                    playMode = playMode,
-                    numberOfRandomTasks = numberOfRandomTasks,
-                    defaultTaskDuration = defaultTaskDuration,
-                    sortOrder = taskGroupId,
-                    id = sortOrder
-                )
-            }
         }
 
     @Test

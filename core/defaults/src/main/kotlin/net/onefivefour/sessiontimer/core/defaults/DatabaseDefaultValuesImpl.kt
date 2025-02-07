@@ -21,7 +21,10 @@ internal class DatabaseDefaultValuesImpl @Inject constructor(
 
     override fun getTaskGroupTitle() = context.getString(R.string.default_taskgroup_title)
 
-    override fun getTaskGroupColor() = TaskGroupColors().getAll().random().toArgb().toLong()
+    override fun getTaskGroupColors(): Pair<Long, Long> {
+        val colors =  TaskGroupColors().getAll().random()
+        return colors.first.toArgb().toLong() to colors.second.toArgb().toLong()
+    }
 
     override fun getTaskGroupPlayMode() = SEQUENCE
 

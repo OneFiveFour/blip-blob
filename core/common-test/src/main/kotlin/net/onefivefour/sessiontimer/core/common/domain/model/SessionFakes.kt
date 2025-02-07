@@ -15,6 +15,7 @@ val FAKE_SESSION = Session(
             id = 2L,
             title = "Test Task Group",
             color = 0xFF0000,
+            onColor = 0xFFFF00,
             playMode = PlayMode.SEQUENCE,
             numberOfRandomTasks = 1,
             defaultTaskDuration = 1.minutes,

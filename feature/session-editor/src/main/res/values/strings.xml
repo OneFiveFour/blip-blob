@@ -5,4 +5,5 @@
     <string name="set_duration">Set Duration</string>
     <string name="add_task">Add task</string>
     <string name="playMode">Play Mode</string>
+    <string name="edit_task_group">Edit task group</string>
 </resources>

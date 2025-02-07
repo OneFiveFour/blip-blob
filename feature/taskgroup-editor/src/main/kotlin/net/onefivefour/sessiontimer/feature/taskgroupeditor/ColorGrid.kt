@@ -19,11 +19,11 @@ import net.onefivefour.sessiontimer.core.theme.taskGroupColors
 @Composable
 internal fun ColorGrid(
     modifier: Modifier = Modifier,
-    colors: List<Color>,
+    colors: List<Pair<Color, Color>>,
     selectedColor: Color,
     columnsCount: Int,
     gapSize: Dp,
-    onColorClick: (Color) -> Unit,
+    onColorClick: (Color, Color) -> Unit,
 ) {
 
     val rowsCount = (colors.size + columnsCount - 1) / columnsCount
@@ -41,10 +41,12 @@ internal fun ColorGrid(
                 val endIndex = minOf(startIndex + columnsCount, colors.size)
 
                 for (index in startIndex until endIndex) {
+                    val color = colors[index].first
+                    val onColor = colors[index].second
                     ColorTile(
-                        color = colors[index],
-                        isSelected = colors[index] == selectedColor,
-                        onClick = { onColorClick(colors[index]) }
+                        color = color,
+                        isSelected = color == selectedColor,
+                        onClick = { onColorClick(color, onColor) }
                     )
                 }
             }
@@ -63,10 +65,10 @@ private fun ColorGridPreview() {
 
             ColorGrid(
                 colors = colors,
-                selectedColor = MaterialTheme.taskGroupColors.color12,
+                selectedColor = MaterialTheme.taskGroupColors.color12.first,
                 columnsCount = 5,
                 gapSize = 8.dp,
-                onColorClick = { }
+                onColorClick = { _, _ -> }
             )
         }
     }

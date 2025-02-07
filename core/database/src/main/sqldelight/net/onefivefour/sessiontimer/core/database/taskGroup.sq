@@ -2,6 +2,7 @@ CREATE TABLE taskGroup (
   id INTEGER PRIMARY KEY NOT NULL,
   title TEXT NOT NULL,
   color INTEGER NOT NULL,
+  onColor INTEGER NOT NULL,
   playMode TEXT NOT NULL,
   numberOfRandomTasks INTEGER NOT NULL,
   defaultTaskDuration INTEGER NOT NULL,
@@ -13,6 +14,7 @@ INSERT INTO taskGroup (
     id,
     title,
     color,
+    onColor,
     playMode,
     numberOfRandomTasks,
     defaultTaskDuration,
@@ -20,18 +22,19 @@ INSERT INTO taskGroup (
     sessionId
 )
 VALUES
-    (1,"TaskGroup 1", 16711680, "SEQUENCE", 1, 60, 1, 1),
-    (2,"TaskGroup 2", 16711680, "SEQUENCE", 1, 60, 2, 1)
+    (1,"TaskGroup 1", 16711680, 0, "SEQUENCE", 1, 60, 1, 1),
+    (2,"TaskGroup 2", 16711680, 0, "SEQUENCE", 1, 60, 2, 1)
 ;
 
 new:
-INSERT INTO taskGroup VALUES (?,?,?,?,?,?,?,?);
+INSERT INTO taskGroup VALUES (?,?,?,?,?,?,?,?,?);
 
 denormalizedTaskGroupView:
 SELECT
     TG.id AS taskGroupId,
     TG.title AS taskGroupTitle,
     TG.color AS taskGroupColor,
+    TG.onColor AS taskGroupOnColor,
     TG.playMode AS taskGroupPlayMode,
     TG.numberOfRandomTasks AS taskGroupNumberOfRandomTasks,
     TG.defaultTaskDuration AS taskGroupDefaultTaskDuration,
@@ -63,6 +66,7 @@ update:
 UPDATE taskGroup SET
     title = :title,
     color = :color,
+    onColor = :onColor,
     playMode = :playMode,
     numberOfRandomTasks = :numberOfRandomTasks,
     defaultTaskDuration = :defaultTaskDuration,
@@ -82,7 +86,7 @@ setTitle:
 UPDATE taskGroup SET title = :title WHERE id = :taskGroupId;
 
 setColor:
-UPDATE taskGroup SET color = :color WHERE id = :taskGroupId;
+UPDATE taskGroup SET color = :color, onColor = :onColor WHERE id = :taskGroupId;
 
 setPlayMode:
 UPDATE taskGroup SET playMode = :playMode, numberOfRandomTasks = :numberOfRandomTasks WHERE id = :taskGroupId;

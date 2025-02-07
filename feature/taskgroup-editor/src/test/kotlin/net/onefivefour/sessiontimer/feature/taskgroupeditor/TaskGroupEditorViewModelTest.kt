@@ -77,6 +77,7 @@ internal class TaskGroupEditorViewModelTest {
                     id = taskGroupId,
                     title = "TaskGroup 1",
                     color = 0xFFFF0000,
+                    onColor = 0xFF000000,
                     playMode = PlayMode.SEQUENCE,
                     numberOfRandomTasks = 3,
                     defaultTaskDuration = 1.minutes,

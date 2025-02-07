@@ -37,6 +37,7 @@ internal class NewSessionUseCaseTest {
                 taskGroupRepository.newTaskGroup(
                     title = any(),
                     color = any(),
+                    onColor = any(),
                     playMode = any(),
                     numberOfRandomTasks = any(),
                     defaultTaskDuration = any(),
@@ -53,9 +54,11 @@ internal class NewSessionUseCaseTest {
             coVerify(ordering = Ordering.ORDERED) {
                 sessionRepository.newSession(FAKE_DB_DEFAULT_VALUES.getSessionTitle())
 
+                val color = FAKE_DB_DEFAULT_VALUES.getTaskGroupColors()
                 taskGroupRepository.newTaskGroup(
                     title = FAKE_DB_DEFAULT_VALUES.getTaskGroupTitle(),
-                    color = FAKE_DB_DEFAULT_VALUES.getTaskGroupColor(),
+                    color = color.first,
+                    onColor = color.second,
                     playMode = FAKE_DB_DEFAULT_VALUES.getTaskGroupPlayMode(),
                     numberOfRandomTasks = FAKE_DB_DEFAULT_VALUES.getTaskGroupNumberOfRandomTasks(),
                     defaultTaskDuration = FAKE_DB_DEFAULT_VALUES.getTaskGroupDefaultTaskDuration(),

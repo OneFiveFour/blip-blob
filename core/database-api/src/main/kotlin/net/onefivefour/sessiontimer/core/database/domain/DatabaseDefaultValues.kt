@@ -8,7 +8,7 @@ interface DatabaseDefaultValues {
     fun getSessionTitle(): String
 
     fun getTaskGroupTitle(): String
-    fun getTaskGroupColor(): Long
+    fun getTaskGroupColors(): Pair<Long, Long>
     fun getTaskGroupPlayMode(): PlayMode
     fun getTaskGroupNumberOfRandomTasks(): Int
     fun getTaskGroupDefaultTaskDuration(): Duration

@@ -31,6 +31,7 @@ internal class GetTaskGroupUseCaseTest {
                     id = taskGroupId,
                     title = "TaskGroup 1",
                     color = 0xFF0000,
+                    onColor = 0xFFFF00,
                     playMode = PlayMode.N_TASKS_SHUFFLED,
                     tasks = emptyList(),
                     numberOfRandomTasks = 5,

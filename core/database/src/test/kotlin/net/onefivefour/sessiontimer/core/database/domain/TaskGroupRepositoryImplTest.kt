@@ -27,9 +27,18 @@ internal class TaskGroupRepositoryImplTest {
     fun `GIVEN task group data WHEN newTaskGroup is called THEN the call is delegated to taskGroupDataSource`() =
         runTest {
             // GIVEN
-            coEvery { taskGroupDataSource.insert(any(), any(), any(), any(), any(), any()) } returns Unit
+            coEvery { taskGroupDataSource.insert(
+                title = any(),
+                color = any(),
+                onColor = any(),
+                playMode = any(),
+                numberOfRandomTasks = any(),
+                defaultTaskDuration = any(),
+                sessionId = any()
+            ) } returns Unit
             val title = "Sample Task Group"
             val color = 0xFF0000L
+            val onColor = 0xFFFF00L
             val playMode = PlayMode.SEQUENCE
             val numberOfRandomTasks = 3
             val defaultTaskDuration = 1.minutes
@@ -39,6 +48,7 @@ internal class TaskGroupRepositoryImplTest {
             sut().newTaskGroup(
                 title = title,
                 color = color,
+                onColor = onColor,
                 playMode = playMode,
                 numberOfRandomTasks = numberOfRandomTasks,
                 defaultTaskDuration = defaultTaskDuration,
@@ -50,6 +60,7 @@ internal class TaskGroupRepositoryImplTest {
                 taskGroupDataSource.insert(
                     title = title,
                     color = color,
+                    onColor = onColor,
                     playMode = playMode.toString(),
                     numberOfRandomTasks = numberOfRandomTasks.toLong(),
                     defaultTaskDuration = defaultTaskDuration.inWholeSeconds,
@@ -68,6 +79,7 @@ internal class TaskGroupRepositoryImplTest {
                     taskGroupId = 1L,
                     taskGroupTitle = "Task Group 1",
                     taskGroupColor = 0xFF00FFL,
+                    taskGroupOnColor = 0xFFF0FFL,
                     taskGroupPlayMode = PlayMode.N_TASKS_SHUFFLED.toString(),
                     taskGroupNumberOfRandomTasks = 2L,
                     taskGroupDefaultTaskDuration = 1.minutes.inWholeSeconds,
@@ -83,6 +95,7 @@ internal class TaskGroupRepositoryImplTest {
                     taskGroupId = 1L,
                     taskGroupTitle = "Task Group 1",
                     taskGroupColor = 0xFF00FFL,
+                    taskGroupOnColor = 0xFF0FFFL,
                     taskGroupPlayMode = PlayMode.N_TASKS_SHUFFLED.toString(),
                     taskGroupNumberOfRandomTasks = 2L,
                     taskGroupDefaultTaskDuration = 1.minutes.inWholeSeconds,
@@ -120,6 +133,7 @@ internal class TaskGroupRepositoryImplTest {
                     id = 1L,
                     title = "Task Group 1",
                     color = 0xFF00FFL,
+                    onColor = 0xFF00FFL,
                     playMode = PlayMode.N_TASKS_SHUFFLED.toString(),
                     numberOfRandomTasks = 2L,
                     defaultTaskDuration = 1.minutes.inWholeSeconds,
@@ -130,6 +144,7 @@ internal class TaskGroupRepositoryImplTest {
                     id = 2L,
                     title = "Task Group 2",
                     color = 0x00FFFFL,
+                    onColor = 0x00FFFFL,
                     playMode = PlayMode.SEQUENCE.toString(),
                     numberOfRandomTasks = 1L,
                     defaultTaskDuration = 1.minutes.inWholeSeconds,
@@ -149,54 +164,6 @@ internal class TaskGroupRepositoryImplTest {
                 val result = awaitItem()
                 assertThat(result).isEqualTo(databaseTaskGroups.map { it.toDomainTaskGroup() })
                 awaitComplete()
-            }
-        }
-
-    @Test
-    fun `GIVEN taskGroup data WHEN updateTaskGroup is called THEN the call is delegated to taskGroupDataSource`() =
-        runTest {
-            // GIVEN
-            coEvery {
-                taskGroupDataSource.update(
-                    any(),
-                    any(),
-                    any(),
-                    any(),
-                    any(),
-                    any(),
-                    any()
-                )
-            } returns Unit
-            val taskGroupId = 1L
-            val title = "Updated Task Group"
-            val color = 0x00FF00
-            val playMode = PlayMode.SEQUENCE
-            val numberOfRandomTasks = 4
-            val defaultTaskDuration = 1.minutes
-            val sortOrder = 1
-
-            // WHEN
-            sut().updateTaskGroup(
-                taskGroupId = taskGroupId,
-                title = title,
-                color = color,
-                playMode = playMode,
-                numberOfRandomTasks = numberOfRandomTasks,
-                defaultTaskDuration = defaultTaskDuration,
-                sortOrder = sortOrder
-            )
-
-            // THEN
-            coVerify(exactly = 1) {
-                taskGroupDataSource.update(
-                    taskGroupId = taskGroupId,
-                    title = title,
-                    color = color.toLong(),
-                    playMode = playMode.toString(),
-                    numberOfRandomTasks = numberOfRandomTasks.toLong(),
-                    defaultTaskDuration = defaultTaskDuration.inWholeSeconds,
-                    sortOrder = sortOrder.toLong()
-                )
             }
         }
 

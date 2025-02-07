@@ -104,6 +104,7 @@ internal class SessionEditorViewModelTest {
                             id = 1L,
                             title = "TaskGroup Title",
                             color = 0xFFFF0000,
+                            onColor = 0xFFFFFF00,
                             playMode = PlayMode.SEQUENCE,
                             numberOfRandomTasks = 1,
                             defaultTaskDuration = 1.minutes,

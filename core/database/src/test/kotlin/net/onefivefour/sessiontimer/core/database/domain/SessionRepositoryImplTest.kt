@@ -81,6 +81,7 @@ internal class SessionRepositoryImplTest {
                 taskGroupId = 2L,
                 taskGroupTitle = "Task Group 1",
                 taskGroupColor = 0xFF00FFL,
+                taskGroupOnColor = 0xFFFFFFL,
                 taskGroupPlayMode = PlayMode.N_TASKS_SHUFFLED.toString(),
                 taskGroupNumberOfRandomTasks = 3,
                 taskGroupDefaultTaskDuration = 1.minutes.inWholeSeconds,

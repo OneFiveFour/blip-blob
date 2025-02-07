@@ -48,6 +48,7 @@ internal class DeleteSessionUseCaseTest {
                         id = taskGroupId1,
                         title = "Task Group Title",
                         color = 0x00FF00,
+                        onColor = 0xFFFF00,
                         playMode = PlayMode.N_TASKS_SHUFFLED,
                         tasks = listOf(
                             Task(
@@ -84,6 +85,7 @@ internal class DeleteSessionUseCaseTest {
                         id = taskGroupId2,
                         title = "Task Group Title 2",
                         color = 0x00FFFF,
+                        onColor = 0xFFFFFF,
                         playMode = PlayMode.SEQUENCE,
                         tasks = listOf(
                             Task(

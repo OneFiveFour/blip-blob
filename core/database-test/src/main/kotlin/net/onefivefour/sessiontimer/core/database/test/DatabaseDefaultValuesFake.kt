@@ -16,8 +16,8 @@ val FAKE_DB_DEFAULT_VALUES = object : DatabaseDefaultValues {
         return "DEFAULT_SESSION_TITLE"
     }
 
-    override fun getTaskGroupColor(): Long {
-        return 0xFF0000L
+    override fun getTaskGroupColors(): Pair<Long, Long> {
+        return 0xFF0000L to 0xFFFF00L
     }
 
     override fun getTaskGroupPlayMode(): PlayMode {

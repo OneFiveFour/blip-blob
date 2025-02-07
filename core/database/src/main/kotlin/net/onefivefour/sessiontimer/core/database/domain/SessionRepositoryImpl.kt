@@ -15,7 +15,7 @@ import net.onefivefour.sessiontimer.core.database.Session as DatabaseSession
 import net.onefivefour.sessiontimer.core.database.data.SessionDataSource
 
 internal class SessionRepositoryImpl @Inject constructor(
-    private val sessionDataSource: SessionDataSource
+    private val sessionDataSource: SessionDataSource,
 ) : SessionRepository {
 
     override suspend fun newSession(title: String) {
@@ -74,6 +74,7 @@ internal fun List<DenormalizedSessionView>.toDomainSession(): DomainSession? {
             // sanity checks
             checkNotNull(fullSession.taskGroupTitle)
             checkNotNull(fullSession.taskGroupColor)
+            checkNotNull(fullSession.taskGroupOnColor)
             checkNotNull(fullSession.taskGroupPlayMode)
             checkNotNull(fullSession.taskGroupNumberOfRandomTasks)
             checkNotNull(fullSession.taskGroupDefaultTaskDuration)
@@ -81,6 +82,7 @@ internal fun List<DenormalizedSessionView>.toDomainSession(): DomainSession? {
 
             val taskGroupTitle = fullSession.taskGroupTitle
             val taskGroupColor = fullSession.taskGroupColor
+            val taskGroupOnColor = fullSession.taskGroupOnColor
             val taskGroupPlayMode = PlayMode.valueOf(fullSession.taskGroupPlayMode)
             val taskGroupNumberOfRandomTasks = fullSession.taskGroupNumberOfRandomTasks.toInt()
             val taskGroupSortOrder = fullSession.taskGroupSortOrder.toInt()
@@ -111,6 +113,7 @@ internal fun List<DenormalizedSessionView>.toDomainSession(): DomainSession? {
                 id = taskGroupId,
                 title = taskGroupTitle,
                 color = taskGroupColor,
+                onColor = taskGroupOnColor,
                 playMode = taskGroupPlayMode,
                 tasks = tasks,
                 numberOfRandomTasks = taskGroupNumberOfRandomTasks,

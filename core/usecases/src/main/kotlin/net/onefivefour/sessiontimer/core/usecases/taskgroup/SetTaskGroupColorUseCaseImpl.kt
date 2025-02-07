@@ -10,8 +10,8 @@ class SetTaskGroupColorUseCaseImpl @Inject constructor(
     private val taskGroupRepository: TaskGroupRepository
 ) : SetTaskGroupColorUseCase {
 
-    override suspend fun invoke(taskGroupId: Long, newColor: Int) {
-        taskGroupRepository.setTaskGroupColor(taskGroupId, newColor)
+    override suspend fun invoke(taskGroupId: Long, newColor: Int, newOnColor: Int) {
+        taskGroupRepository.setTaskGroupColor(taskGroupId, newColor, newOnColor)
     }
 
 }

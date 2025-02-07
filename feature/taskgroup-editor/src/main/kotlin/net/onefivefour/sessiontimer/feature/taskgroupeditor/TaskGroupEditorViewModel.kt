@@ -79,7 +79,7 @@ internal class TaskGroupEditorViewModel @Inject constructor(
             }
 
             is TaskGroupEditorAction.SetColor -> {
-                setColor(action.newColor)
+                setColor(action.newColor, action.newOnColor)
             }
 
             is TaskGroupEditorAction.SetPlayMode -> {
@@ -120,11 +120,12 @@ internal class TaskGroupEditorViewModel @Inject constructor(
         }
     }
 
-    private fun setColor(newColor: Color) {
+    private fun setColor(newColor: Color, newOnColor: Color) {
         doWhenReady { taskGroup ->
             setColor(
                 taskGroupId = taskGroup.id,
-                newColor = newColor.toArgb()
+                newColor = newColor.toArgb(),
+                newOnColor = newOnColor.toArgb()
             )
         }
     }

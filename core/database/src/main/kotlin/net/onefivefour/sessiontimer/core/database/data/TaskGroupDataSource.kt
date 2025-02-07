@@ -10,6 +10,7 @@ internal interface TaskGroupDataSource {
     suspend fun insert(
         title: String,
         color: Long,
+        onColor: Long,
         playMode: String,
         numberOfRandomTasks: Long,
         defaultTaskDuration: Long,
@@ -21,16 +22,6 @@ internal interface TaskGroupDataSource {
     suspend fun getBySessionId(sessionId: Long): Flow<List<TaskGroup>>
 
     suspend fun deleteById(taskGroupId: Long)
-
-    suspend fun update(
-        taskGroupId: Long,
-        title: String,
-        color: Long,
-        playMode: String,
-        numberOfRandomTasks: Long,
-        defaultTaskDuration: Long,
-        sortOrder: Long
-    )
 
     suspend fun setTaskGroupSortOrders(taskGroupIds: List<Long>)
 
@@ -48,5 +39,5 @@ internal interface TaskGroupDataSource {
 
     suspend fun setTaskGroupDefaultTaskDuration(taskGroupId: Long, newDuration: Long)
 
-    suspend fun setTaskGroupColor(taskGroupId: Long, newColor: Long)
+    suspend fun setTaskGroupColor(taskGroupId: Long, newColor: Long, newOnColor: Long)
 }

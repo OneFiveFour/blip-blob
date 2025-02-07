@@ -125,7 +125,14 @@ internal fun TaskGroupEditorReady(
                     selectedColor = uiTaskGroup.color,
                     columnsCount = columnCount,
                     gapSize = gapSizeDp,
-                    onColorClick = { color -> onAction(TaskGroupEditorAction.SetColor(color)) }
+                    onColorClick = { color, onColor ->
+                        onAction(
+                            TaskGroupEditorAction.SetColor(
+                                color,
+                                onColor
+                            )
+                        )
+                    }
                 )
             }
 
@@ -147,7 +154,7 @@ internal fun TaskGroupEditorReady(
             }
 
 
-            LabeledSection(labelRes = R.string.default_task_duration)  {
+            LabeledSection(labelRes = R.string.default_task_duration) {
                 DurationInput(
                     defaultTaskDuration = uiTaskGroup.defaultTaskDuration,
                     onDurationEntered = { newDurationString ->

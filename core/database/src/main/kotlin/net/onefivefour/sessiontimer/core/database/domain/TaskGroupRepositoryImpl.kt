@@ -21,6 +21,7 @@ internal class TaskGroupRepositoryImpl @Inject constructor(
     override suspend fun newTaskGroup(
         title: String,
         color: Long,
+        onColor: Long,
         playMode: PlayMode,
         numberOfRandomTasks: Int,
         defaultTaskDuration: Duration,
@@ -29,6 +30,7 @@ internal class TaskGroupRepositoryImpl @Inject constructor(
         taskGroupDataSource.insert(
             title = title,
             color = color,
+            onColor = onColor,
             playMode = playMode.toString(),
             numberOfRandomTasks = numberOfRandomTasks.toLong(),
             defaultTaskDuration = defaultTaskDuration.inWholeSeconds,
@@ -45,25 +47,6 @@ internal class TaskGroupRepositoryImpl @Inject constructor(
         .getBySessionId(sessionId)
         .distinctUntilChanged()
         .map { it.toDomainTaskGroup() }
-
-    override suspend fun updateTaskGroup(
-        taskGroupId: Long,
-        title: String,
-        color: Int,
-        playMode: PlayMode,
-        numberOfRandomTasks: Int,
-        defaultTaskDuration: Duration,
-        sortOrder: Int,
-    ) = taskGroupDataSource
-        .update(
-            taskGroupId = taskGroupId,
-            title = title,
-            color = color.toLong(),
-            playMode = playMode.toString(),
-            numberOfRandomTasks = numberOfRandomTasks.toLong(),
-            defaultTaskDuration = defaultTaskDuration.inWholeSeconds,
-            sortOrder = sortOrder.toLong()
-        )
 
     override suspend fun increaseNumberOfRandomTasks(
         taskGroupId: Long,
@@ -96,8 +79,8 @@ internal class TaskGroupRepositoryImpl @Inject constructor(
     ) = taskGroupDataSource
         .setTaskGroupDefaultTaskDuration(taskGroupId, newDefaultTaskDuration.inWholeSeconds)
 
-    override suspend fun setTaskGroupColor(taskGroupId: Long, newColor: Int) = taskGroupDataSource
-        .setTaskGroupColor(taskGroupId, newColor.toLong())
+    override suspend fun setTaskGroupColor(taskGroupId: Long, newColor: Int, newOnColor: Int) = taskGroupDataSource
+        .setTaskGroupColor(taskGroupId, newColor.toLong(), newOnColor.toLong())
 
     override fun getLastInsertId() = taskGroupDataSource
         .getLastInsertId()
@@ -112,6 +95,7 @@ private fun List<DatabaseTaskGroup>.toDomainTaskGroup(): List<DomainTaskGroup> {
 internal fun DatabaseTaskGroup.toDomainTaskGroup(): DomainTaskGroup {
     val title = this.title
     val color = this.color
+    val onColor = this.onColor
     val playMode = PlayMode.valueOf(this.playMode)
     val numberOfRandomTasks = this.numberOfRandomTasks.toInt()
     val defaultTaskDuration = this.defaultTaskDuration.seconds
@@ -121,6 +105,7 @@ internal fun DatabaseTaskGroup.toDomainTaskGroup(): DomainTaskGroup {
         id = this.id,
         title = title,
         color = color,
+        onColor = onColor,
         playMode = playMode,
         tasks = emptyList(),
         numberOfRandomTasks = numberOfRandomTasks,
@@ -136,6 +121,7 @@ internal fun List<DenormalizedTaskGroupView>.toDomainTaskGroup(): DomainTaskGrou
     val id = firstTaskGroup.taskGroupId
     val title = firstTaskGroup.taskGroupTitle
     val color = firstTaskGroup.taskGroupColor
+    val onColor = firstTaskGroup.taskGroupOnColor
     val playMode = PlayMode.valueOf(firstTaskGroup.taskGroupPlayMode)
     val numberOfRandomTasks = firstTaskGroup.taskGroupNumberOfRandomTasks.toInt()
     val defaultTaskDuration = firstTaskGroup.taskGroupDefaultTaskDuration.seconds
@@ -168,6 +154,7 @@ internal fun List<DenormalizedTaskGroupView>.toDomainTaskGroup(): DomainTaskGrou
         id = id,
         title = title,
         color = color,
+        onColor = onColor,
         playMode = playMode,
         tasks = tasks,
         numberOfRandomTasks = numberOfRandomTasks,

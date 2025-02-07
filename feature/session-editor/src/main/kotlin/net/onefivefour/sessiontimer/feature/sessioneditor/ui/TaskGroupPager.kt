@@ -10,7 +10,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import net.onefivefour.sessiontimer.core.theme.SessionTimerTheme
 import net.onefivefour.sessiontimer.feature.sessioneditor.model.UiSession
-import net.onefivefour.sessiontimer.feature.sessioneditor.model.UiTaskGroup
 
 @Composable
 internal fun TaskGroupPager(
@@ -31,16 +30,6 @@ internal fun TaskGroupPager(
             onOpenTaskGroupEditor = onOpenTaskGroupEditor
         )
     }
-}
-
-@Composable
-internal fun TaskGroupPage(
-    modifier: Modifier = Modifier,
-    uiTaskGroup: UiTaskGroup,
-    onOpenTaskGroupEditor: (Long) -> Unit,
-) {
-
-
 }
 
 @Preview

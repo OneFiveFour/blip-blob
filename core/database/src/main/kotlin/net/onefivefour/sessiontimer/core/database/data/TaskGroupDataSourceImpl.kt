@@ -20,6 +20,7 @@ internal class TaskGroupDataSourceImpl @Inject constructor(
     override suspend fun insert(
         title: String,
         color: Long,
+        onColor: Long,
         playMode: String,
         numberOfRandomTasks: Long,
         defaultTaskDuration: Long,
@@ -32,6 +33,7 @@ internal class TaskGroupDataSourceImpl @Inject constructor(
                     id = null,
                     title = title,
                     color = color,
+                    onColor = onColor,
                     playMode = playMode,
                     numberOfRandomTasks = numberOfRandomTasks,
                     defaultTaskDuration = defaultTaskDuration,
@@ -53,28 +55,6 @@ internal class TaskGroupDataSourceImpl @Inject constructor(
     override suspend fun getBySessionId(sessionId: Long): Flow<List<TaskGroup>> {
         return withContext(dispatcher) {
             queries.getBySessionId(sessionId).asFlow().mapToList(dispatcher)
-        }
-    }
-
-    override suspend fun update(
-        taskGroupId: Long,
-        title: String,
-        color: Long,
-        playMode: String,
-        numberOfRandomTasks: Long,
-        defaultTaskDuration: Long,
-        sortOrder: Long
-    ) {
-        withContext(dispatcher) {
-            queries.update(
-                id = taskGroupId,
-                title = title,
-                color = color,
-                playMode = playMode,
-                numberOfRandomTasks = numberOfRandomTasks,
-                defaultTaskDuration = defaultTaskDuration,
-                sortOrder = sortOrder
-            )
         }
     }
 
@@ -138,9 +118,9 @@ internal class TaskGroupDataSourceImpl @Inject constructor(
         }
     }
 
-    override suspend fun setTaskGroupColor(taskGroupId: Long, newColor: Long) {
+    override suspend fun setTaskGroupColor(taskGroupId: Long, newColor: Long, newOnColor: Long) {
         withContext(dispatcher) {
-            queries.setColor(newColor, taskGroupId)
+            queries.setColor(newColor, newOnColor, taskGroupId)
         }
     }
 }
