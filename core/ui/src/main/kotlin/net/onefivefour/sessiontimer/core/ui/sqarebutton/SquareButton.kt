@@ -30,6 +30,7 @@ fun SquareButton(
     contentDescription: String,
     @ColorInt backgroundColor: Color = MaterialTheme.colorScheme.surface,
     size: Dp = 64.dp,
+    cornerRadius: Dp = 8.dp,
     onClick: () -> Unit,
 ) {
 
@@ -43,7 +44,8 @@ fun SquareButton(
                 interactionSource = interactionSource,
                 indication = SquareButtonIndicationNodeFactory(
                     backgroundColor = backgroundColor,
-                    glowColor = MaterialTheme.customColors.surfaceGlow
+                    glowColor = MaterialTheme.customColors.surfaceGlow,
+                    cornerRadius = cornerRadius
                 )
             ),
         contentAlignment = Alignment.Center

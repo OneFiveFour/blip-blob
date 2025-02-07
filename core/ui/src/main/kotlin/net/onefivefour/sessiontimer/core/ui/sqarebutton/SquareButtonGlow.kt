@@ -11,6 +11,7 @@ import androidx.compose.ui.graphics.Paint
 import androidx.compose.ui.graphics.drawscope.ContentDrawScope
 import androidx.compose.ui.graphics.drawscope.drawIntoCanvas
 import androidx.compose.ui.graphics.toArgb
+import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.lerp
 
@@ -18,8 +19,9 @@ internal fun ContentDrawScope.squareButtonGlow(
     glowColor: Color,
     backgroundColor: Color,
     animatedPercent: Animatable<Float, AnimationVector1D>,
+    cornerRadius: Dp,
 ) {
-    val cornerRadiusPx = 8.dp.toPx()
+    val cornerRadiusPx = cornerRadius.toPx()
 
     val blurRadius = lerp(12.dp, 6.dp, animatedPercent.value).toPx()
 

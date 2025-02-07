@@ -50,7 +50,7 @@ internal fun SessionEditorReady(
                 .padding(horizontal = 12.dp),
             pagerState = pagerState,
             uiSession = uiSession,
-            openTaskGroupEditor = openTaskGroupEditor
+            onOpenTaskGroupEditor = openTaskGroupEditor
         )
 
         Row(

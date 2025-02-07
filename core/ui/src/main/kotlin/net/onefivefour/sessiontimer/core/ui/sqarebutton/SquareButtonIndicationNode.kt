@@ -10,13 +10,15 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.drawscope.ContentDrawScope
 import androidx.compose.ui.node.DrawModifierNode
+import androidx.compose.ui.unit.Dp
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 
 internal class SquareButtonIndicationNode(
     private val interactionSource: InteractionSource,
     private val backgroundColor: Color,
-    private val glowColor: Color
+    private val glowColor: Color,
+    private val cornerRadius: Dp
 ) : Modifier.Node(), DrawModifierNode {
 
     private val animatedPercent: Animatable<Float, AnimationVector1D> = Animatable(0f)
@@ -51,6 +53,7 @@ internal class SquareButtonIndicationNode(
         squareButtonGlow(
             glowColor = glowColor,
             backgroundColor = backgroundColor,
+            cornerRadius = cornerRadius,
             animatedPercent = animatedPercent
         )
     }

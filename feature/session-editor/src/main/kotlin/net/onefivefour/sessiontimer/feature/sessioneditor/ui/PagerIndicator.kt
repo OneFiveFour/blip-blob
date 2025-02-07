@@ -18,6 +18,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.lerp
+import androidx.compose.ui.util.lerp
 import kotlinx.coroutines.launch
 import net.onefivefour.sessiontimer.core.theme.SessionTimerTheme
 import net.onefivefour.sessiontimer.core.ui.sqarebutton.SquareButton
@@ -25,7 +26,7 @@ import net.onefivefour.sessiontimer.core.ui.utils.toPx
 import net.onefivefour.sessiontimer.feature.sessioneditor.model.UiSession
 
 private val INDICATOR_SPACING_DP = 24.dp
-private val INDICATOR_SIZE_DP = 18.dp
+private val INDICATOR_SIZE_DP = 16.dp
 
 @Composable
 internal fun PagerIndicator(
@@ -50,12 +51,13 @@ internal fun PagerIndicator(
     ) {
         items(uiSession.taskGroups.size) { index ->
 
-            val animatedSize = calculateAnimatedSize(index, pagerState)
+            val buttonSize = calculateAnimatedSize(index, pagerState)
 
             val uiTaskGroup = uiSession.taskGroups[index]
 
             SquareButton(
-                size = animatedSize,
+                size = buttonSize,
+                cornerRadius = 3.dp,
                 backgroundColor = uiTaskGroup.color,
                 contentDescription = uiTaskGroup.title
             ) {

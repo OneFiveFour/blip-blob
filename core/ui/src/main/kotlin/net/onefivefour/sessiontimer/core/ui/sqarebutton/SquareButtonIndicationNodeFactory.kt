@@ -4,16 +4,19 @@ import androidx.compose.foundation.IndicationNodeFactory
 import androidx.compose.foundation.interaction.InteractionSource
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.node.DelegatableNode
+import androidx.compose.ui.unit.Dp
 
 class SquareButtonIndicationNodeFactory(
     private val glowColor: Color,
-    private val backgroundColor: Color
+    private val backgroundColor: Color,
+    private val cornerRadius: Dp
 ) : IndicationNodeFactory {
     override fun create(interactionSource: InteractionSource): DelegatableNode {
         return SquareButtonIndicationNode(
             interactionSource = interactionSource,
             backgroundColor = backgroundColor,
-            glowColor = glowColor
+            glowColor = glowColor,
+            cornerRadius = cornerRadius
         )
     }
 
