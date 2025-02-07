@@ -10,20 +10,14 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.foundation.lazy.rememberLazyListState
-import androidx.compose.foundation.pager.PagerState
 import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.launch
 import net.onefivefour.sessiontimer.core.theme.SessionTimerTheme
 import net.onefivefour.sessiontimer.core.ui.R
 import net.onefivefour.sessiontimer.core.ui.screentitle.ScreenTitle
@@ -31,43 +25,15 @@ import net.onefivefour.sessiontimer.core.ui.sqarebutton.SquareButton
 import net.onefivefour.sessiontimer.feature.sessioneditor.model.UiSession
 import net.onefivefour.sessiontimer.feature.sessioneditor.viewmodel.SessionEditorAction
 
-
-@Composable
-private fun EnsurePageIndicatorVisible(
-    pagerState: PagerState,
-    lazyListState: LazyListState,
-    coroutineScope: CoroutineScope
-) {
-    LaunchedEffect(pagerState.currentPage) {
-        val visibleItems = lazyListState.layoutInfo.visibleItemsInfo.map { it.index }
-        if (pagerState.currentPage !in visibleItems) {
-            coroutineScope.launch {
-                lazyListState.animateScrollToItem(
-                    pagerState.currentPage,
-                    scrollOffset = 0
-                )
-            }
-        }
-    }
-}
-
-
 @Composable
 internal fun SessionEditorReady(
     uiSession: UiSession,
     onAction: (SessionEditorAction) -> Unit,
-    openTaskGroupEditor: (Long) -> Unit
+    openTaskGroupEditor: (Long) -> Unit,
 ) {
 
     val pagerState = rememberPagerState { uiSession.taskGroups.size }
     val lazyListState = rememberLazyListState()
-    val coroutineScope = rememberCoroutineScope()
-
-    EnsurePageIndicatorVisible(
-        pagerState = pagerState,
-        lazyListState = lazyListState,
-        coroutineScope = coroutineScope
-    )
 
     Column(modifier = Modifier.fillMaxSize()) {
 
@@ -101,8 +67,7 @@ internal fun SessionEditorReady(
                     .fillMaxHeight(),
                 lazyListState = lazyListState,
                 uiSession = uiSession,
-                pagerState = pagerState,
-                coroutineScope = coroutineScope
+                pagerState = pagerState
             )
 
             Spacer(modifier = Modifier.size(16.dp))
