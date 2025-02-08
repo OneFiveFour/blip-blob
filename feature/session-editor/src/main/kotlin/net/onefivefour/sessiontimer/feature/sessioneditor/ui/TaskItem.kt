@@ -1,8 +1,8 @@
-
 package net.onefivefour.sessiontimer.feature.sessioneditor.ui
 
 import android.content.res.Configuration.*
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -11,14 +11,23 @@ import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.text.BasicTextField
+import androidx.compose.foundation.text.KeyboardActions
+import androidx.compose.foundation.text.input.KeyboardActionHandler
 import androidx.compose.foundation.text.input.TextFieldLineLimits
 import androidx.compose.foundation.text.input.rememberTextFieldState
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.focus.FocusRequester
+import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.graphics.SolidColor
 import androidx.compose.ui.text.TextRange
 import androidx.compose.ui.text.input.TextFieldValue
@@ -35,7 +44,7 @@ import net.onefivefour.sessiontimer.feature.sessioneditor.viewmodel.SessionEdito
 internal fun TaskItem(
     modifier: Modifier = Modifier,
     uiTask: UiTask,
-    onAction: (SessionEditorAction) -> Unit
+    onAction: (SessionEditorAction) -> Unit,
 ) {
 
     Row(
@@ -49,30 +58,56 @@ internal fun TaskItem(
 
         Spacer(Modifier.width(12.dp))
 
-        val textFieldState = rememberTextFieldState(
-            initialText = uiTask.title,
-            initialSelection = TextRange(uiTask.title.length)
-        )
+        var isInEditMode by remember { mutableStateOf(false) }
 
-        Text(
-            modifier = Modifier.weight(1f),
-            text = uiTask.title,
-            style = MaterialTheme.typography.titleSmall
-                .copy(color = MaterialTheme.colorScheme.onSurface),
-        )
+        val focusRequester = remember { FocusRequester() }
 
-//        BasicTextField(
-//            modifier = Modifier.clearFocusOnKeyboardDismiss(),
-//            inputTransformation = {
-//                val newTitle = asCharSequence().toString()
-//                onAction(SessionEditorAction.SetTaskTitle(uiTask.id, newTitle))
-//            },
-//            state = textFieldState,
-//            cursorBrush = SolidColor(MaterialTheme.colorScheme.onSurface),
-//            lineLimits = TextFieldLineLimits.SingleLine,
-//            textStyle = MaterialTheme.typography.titleSmall
-//                .copy(color = MaterialTheme.colorScheme.onSurface),
-//        )
+        if (isInEditMode) {
+            val textFieldState = rememberTextFieldState(
+                initialText = uiTask.title,
+                initialSelection = TextRange(uiTask.title.length)
+            )
+            BasicTextField(
+                modifier = Modifier
+                    .weight(1f)
+                    .clearFocusOnKeyboardDismiss()
+                    .focusRequester(focusRequester)
+                ,
+                inputTransformation = {
+                    val newTitle = asCharSequence().toString()
+                    onAction(SessionEditorAction.SetTaskTitle(uiTask.id, newTitle))
+                },
+                onKeyboardAction = { performDefaultAction ->
+                    onAction(
+                        SessionEditorAction.SetTaskTitle(
+                            uiTask.id,
+                            textFieldState.text.toString()
+                        )
+                    )
+                    isInEditMode = false
+                    performDefaultAction()
+                },
+                state = textFieldState,
+                cursorBrush = SolidColor(MaterialTheme.colorScheme.onSurface),
+                lineLimits = TextFieldLineLimits.SingleLine,
+                textStyle = MaterialTheme.typography.titleSmall
+                    .copy(color = MaterialTheme.colorScheme.onSurface),
+            )
+
+            LaunchedEffect(Unit) {
+                focusRequester.requestFocus()
+            }
+        } else {
+            Text(
+                modifier = Modifier
+                    .weight(1f)
+                    .clickable { isInEditMode = true },
+                text = uiTask.title,
+                style = MaterialTheme.typography.titleSmall
+                    .copy(color = MaterialTheme.colorScheme.onSurface),
+            )
+        }
+
 
         Text(
             text = uiTask.duration.toString(),

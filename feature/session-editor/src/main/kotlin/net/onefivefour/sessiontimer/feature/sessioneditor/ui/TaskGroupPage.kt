@@ -56,15 +56,11 @@ internal fun TaskGroupPage(
             onAction = onAction
         )
 
-        TaskItem(
-            modifier = Modifier
-                .padding(horizontal = 12.dp)
-                .clickable {
-                    onAction(SessionEditorAction.CreateTask(uiTaskGroup.id))
-                }
-                .alpha(0.4f),
-            uiTask = addTask,
-            onAction = { }
+        AddTaskItem(
+            modifier = Modifier.padding(horizontal = 12.dp),
+            taskGroupId = uiTaskGroup.id,
+            defaultDuration = uiTaskGroup.defaultTaskDuration,
+            onAction = onAction
         )
 
         Row(
