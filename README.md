@@ -15,9 +15,13 @@
 ```
 
 # Open TODOs
+- [ ]
+- [ ] Decide for uppercase "Edit session" vs. "Edit Session" in the whole app
 - [ ] create onAction accordingly onNavigate to group composable action params
 - [ ] clear separation on when taskGroup colors are handled as pair and when as singular units (Ui Domain Data)
+- [ ] create tutorial sessions that are sorted always on top
 - [ ] add "onXXX" colors for taskGroup colors
+- [ ] include taskgroupPager padding into the page so that the pages dont stick to each other as much
 - [ ] check for hardcoded Dispatchers and replace them with injected DispatcherProvider interface
 - [ ] check that transformation between Ui <> data <> domain models in done in the same layer everywhere (VM, UseCases, Repos?)
 - [ ] check sealed classes if they can be sealed interfaces instead

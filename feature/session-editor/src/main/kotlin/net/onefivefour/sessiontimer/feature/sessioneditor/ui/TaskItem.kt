@@ -5,10 +5,14 @@ import android.content.res.Configuration.*
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.text.BasicTextField
+import androidx.compose.foundation.text.input.TextFieldLineLimits
+import androidx.compose.foundation.text.input.rememberTextFieldState
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
@@ -20,16 +24,18 @@ import androidx.compose.ui.text.TextRange
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.zIndex
 import net.onefivefour.sessiontimer.core.theme.SessionTimerTheme
 import net.onefivefour.sessiontimer.core.ui.draghandler.DragHandler
 import net.onefivefour.sessiontimer.core.ui.modifier.clearFocusOnKeyboardDismiss
 import net.onefivefour.sessiontimer.feature.sessioneditor.model.UiTask
+import net.onefivefour.sessiontimer.feature.sessioneditor.viewmodel.SessionEditorAction
 
 @Composable
 internal fun TaskItem(
     modifier: Modifier = Modifier,
     uiTask: UiTask,
-    onTaskTitleChanged: (String) -> Unit
+    onAction: (SessionEditorAction) -> Unit
 ) {
 
     Row(
@@ -43,21 +49,30 @@ internal fun TaskItem(
 
         Spacer(Modifier.width(12.dp))
 
-        // TODO change to textfieldstate
-        BasicTextField(
-            modifier = Modifier
-                .weight(1f)
-                .clearFocusOnKeyboardDismiss(),
-            value = TextFieldValue(
-                text = uiTask.title,
-                selection = TextRange(uiTask.title.length)
-            ),
-            onValueChange = { newText -> onTaskTitleChanged(newText.text) },
-            cursorBrush = SolidColor(MaterialTheme.colorScheme.onSurface),
-            singleLine = true,
-            textStyle = MaterialTheme.typography.titleSmall
-                .copy(color = MaterialTheme.colorScheme.onSurface)
+        val textFieldState = rememberTextFieldState(
+            initialText = uiTask.title,
+            initialSelection = TextRange(uiTask.title.length)
         )
+
+        Text(
+            modifier = Modifier.weight(1f),
+            text = uiTask.title,
+            style = MaterialTheme.typography.titleSmall
+                .copy(color = MaterialTheme.colorScheme.onSurface),
+        )
+
+//        BasicTextField(
+//            modifier = Modifier.clearFocusOnKeyboardDismiss(),
+//            inputTransformation = {
+//                val newTitle = asCharSequence().toString()
+//                onAction(SessionEditorAction.SetTaskTitle(uiTask.id, newTitle))
+//            },
+//            state = textFieldState,
+//            cursorBrush = SolidColor(MaterialTheme.colorScheme.onSurface),
+//            lineLimits = TextFieldLineLimits.SingleLine,
+//            textStyle = MaterialTheme.typography.titleSmall
+//                .copy(color = MaterialTheme.colorScheme.onSurface),
+//        )
 
         Text(
             text = uiTask.duration.toString(),
@@ -75,7 +90,7 @@ private fun TaskItemPreview() {
         Surface {
             TaskItem(
                 uiTask = uiTask3,
-                onTaskTitleChanged = { }
+                onAction = { }
             )
         }
     }

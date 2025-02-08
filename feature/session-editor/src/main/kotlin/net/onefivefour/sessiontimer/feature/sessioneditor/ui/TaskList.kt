@@ -2,6 +2,7 @@ package net.onefivefour.sessiontimer.feature.sessioneditor.ui
 
 import android.content.res.Configuration.*
 import androidx.compose.foundation.interaction.MutableInteractionSource
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.rememberLazyListState
@@ -44,6 +45,7 @@ internal fun TaskList(
 
     LazyColumn(
         modifier = modifier,
+        verticalArrangement = Arrangement.Bottom,
         state = lazyListState
     ) {
         items(
@@ -71,14 +73,12 @@ internal fun TaskList(
                                 onDragStopped = {
                                     haptic.performHapticFeedback(ReorderHapticFeedbackType.END)
                                     val taskIds = taskList.map { it.id }
-                                    onAction(SessionEditorAction.UpdateTaskGroupSortOrders(taskIds))
+                                    onAction(SessionEditorAction.UpdateTaskSortOrders(taskIds))
                                 },
                                 interactionSource = interactionSource
                             ),
                         uiTask = task,
-                        onTaskTitleChanged = { newTitle ->
-                            onAction(SessionEditorAction.SetTaskTitle(task.id, newTitle))
-                        }
+                        onAction = onAction
                     )
                 }
             }

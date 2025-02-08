@@ -20,7 +20,7 @@ class NewTaskUseCaseImpl @Inject constructor(
         val isShuffleAll = taskGroup.tasks.size == taskGroup.numberOfRandomTasks
 
         val title = defaultValues.getTaskTitle()
-        val duration = defaultValues.getTaskDuration()
+        val duration = taskGroup.defaultTaskDuration
         taskRepository.newTask(title, duration, taskGroupId)
 
         if (isShuffleAll) {

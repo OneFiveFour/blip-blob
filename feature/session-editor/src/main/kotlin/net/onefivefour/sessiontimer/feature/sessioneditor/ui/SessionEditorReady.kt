@@ -47,9 +47,7 @@ internal fun SessionEditorReady(
         Spacer(modifier = Modifier.height(16.dp))
 
         TaskGroupPager(
-            modifier = Modifier
-                .weight(1f)
-                .padding(horizontal = 12.dp),
+            modifier = Modifier.weight(1f),
             pagerState = pagerState,
             uiSession = uiSession,
             onOpenTaskGroupEditor = openTaskGroupEditor,
