@@ -1,27 +1,24 @@
 package net.onefivefour.sessiontimer.feature.sessioneditor.ui
 
 import androidx.compose.foundation.background
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import kotlinx.datetime.Clock
 import net.onefivefour.sessiontimer.core.theme.SessionTimerTheme
 import net.onefivefour.sessiontimer.core.ui.sqarebutton.SquareButton
 import net.onefivefour.sessiontimer.feature.sessioneditor.R
-import net.onefivefour.sessiontimer.feature.sessioneditor.model.UiTask
 import net.onefivefour.sessiontimer.feature.sessioneditor.model.UiTaskGroup
 import net.onefivefour.sessiontimer.feature.sessioneditor.viewmodel.SessionEditorAction
 import net.onefivefour.sessiontimer.core.ui.R as UiR
@@ -34,13 +31,7 @@ internal fun TaskGroupPage(
     onAction: (SessionEditorAction) -> Unit,
 ) {
 
-    val addTask = UiTask(
-        id = 0,
-        title = stringResource(R.string.add_task),
-        createdAt = Clock.System.now(),
-        duration = uiTaskGroup.defaultTaskDuration,
-        sortOrder = uiTaskGroup.tasks.minOf { it.sortOrder } + 1,
-    )
+    val lazyListState = rememberLazyListState()
 
     Column(
         modifier = modifier
@@ -52,14 +43,14 @@ internal fun TaskGroupPage(
             modifier = Modifier
                 .weight(1f)
                 .padding(horizontal = 12.dp),
+            lazyListState = lazyListState,
             uiTaskGroup = uiTaskGroup,
             onAction = onAction
         )
 
         AddTaskItem(
             modifier = Modifier.padding(horizontal = 12.dp),
-            taskGroupId = uiTaskGroup.id,
-            defaultDuration = uiTaskGroup.defaultTaskDuration,
+            uiTaskGroup = uiTaskGroup,
             onAction = onAction
         )
 

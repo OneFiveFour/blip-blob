@@ -5,14 +5,9 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.offset
-import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.text.BasicTextField
-import androidx.compose.foundation.text.KeyboardActions
-import androidx.compose.foundation.text.input.KeyboardActionHandler
 import androidx.compose.foundation.text.input.TextFieldLineLimits
 import androidx.compose.foundation.text.input.rememberTextFieldState
 import androidx.compose.material3.MaterialTheme
@@ -30,10 +25,8 @@ import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.graphics.SolidColor
 import androidx.compose.ui.text.TextRange
-import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.zIndex
 import net.onefivefour.sessiontimer.core.theme.SessionTimerTheme
 import net.onefivefour.sessiontimer.core.ui.draghandler.DragHandler
 import net.onefivefour.sessiontimer.core.ui.modifier.clearFocusOnKeyboardDismiss
@@ -45,6 +38,7 @@ internal fun TaskItem(
     modifier: Modifier = Modifier,
     uiTask: UiTask,
     onAction: (SessionEditorAction) -> Unit,
+    setTaskEditMode: (Long?) -> Unit,
 ) {
 
     Row(
@@ -58,11 +52,11 @@ internal fun TaskItem(
 
         Spacer(Modifier.width(12.dp))
 
-        var isInEditMode by remember { mutableStateOf(false) }
+        var editMode by remember { mutableStateOf(EditMode.NONE) }
 
         val focusRequester = remember { FocusRequester() }
 
-        if (isInEditMode) {
+        if (editMode == EditMode.TITLE) {
             val textFieldState = rememberTextFieldState(
                 initialText = uiTask.title,
                 initialSelection = TextRange(uiTask.title.length)
@@ -71,8 +65,7 @@ internal fun TaskItem(
                 modifier = Modifier
                     .weight(1f)
                     .clearFocusOnKeyboardDismiss()
-                    .focusRequester(focusRequester)
-                ,
+                    .focusRequester(focusRequester),
                 inputTransformation = {
                     val newTitle = asCharSequence().toString()
                     onAction(SessionEditorAction.SetTaskTitle(uiTask.id, newTitle))
@@ -84,7 +77,7 @@ internal fun TaskItem(
                             textFieldState.text.toString()
                         )
                     )
-                    isInEditMode = false
+                    setTaskEditMode(null)
                     performDefaultAction()
                 },
                 state = textFieldState,
@@ -101,7 +94,10 @@ internal fun TaskItem(
             Text(
                 modifier = Modifier
                     .weight(1f)
-                    .clickable { isInEditMode = true },
+                    .clickable {
+                        editMode = EditMode.TITLE
+                        setTaskEditMode(uiTask.id)
+                    },
                 text = uiTask.title,
                 style = MaterialTheme.typography.titleSmall
                     .copy(color = MaterialTheme.colorScheme.onSurface),
@@ -110,11 +106,21 @@ internal fun TaskItem(
 
 
         Text(
+            modifier = Modifier.clickable {
+                editMode = EditMode.DURATION
+                setTaskEditMode(uiTask.id)
+            },
             text = uiTask.duration.toString(),
             style = MaterialTheme.typography.labelSmall
                 .copy(color = MaterialTheme.colorScheme.onSurface),
         )
     }
+}
+
+enum class EditMode {
+    NONE,
+    TITLE,
+    DURATION
 }
 
 @Preview
@@ -125,7 +131,8 @@ private fun TaskItemPreview() {
         Surface {
             TaskItem(
                 uiTask = uiTask3,
-                onAction = { }
+                onAction = { },
+                setTaskEditMode = { }
             )
         }
     }

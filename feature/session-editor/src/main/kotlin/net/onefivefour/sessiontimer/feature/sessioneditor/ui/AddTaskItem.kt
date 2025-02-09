@@ -20,14 +20,13 @@ import androidx.compose.ui.unit.dp
 import net.onefivefour.sessiontimer.core.theme.SessionTimerTheme
 import net.onefivefour.sessiontimer.core.ui.draghandler.DragHandler
 import net.onefivefour.sessiontimer.feature.sessioneditor.R
+import net.onefivefour.sessiontimer.feature.sessioneditor.model.UiTaskGroup
 import net.onefivefour.sessiontimer.feature.sessioneditor.viewmodel.SessionEditorAction
-import kotlin.time.Duration
 
 @Composable
 internal fun AddTaskItem(
     modifier: Modifier = Modifier,
-    defaultDuration: Duration,
-    taskGroupId: Long,
+    uiTaskGroup: UiTaskGroup,
     onAction: (SessionEditorAction) -> Unit,
 ) {
 
@@ -36,7 +35,9 @@ internal fun AddTaskItem(
             .alpha(0.4f)
             .height(64.dp)
             .background(MaterialTheme.colorScheme.background)
-            .clickable { onAction(SessionEditorAction.CreateTask(taskGroupId)) },
+            .clickable {
+                onAction(SessionEditorAction.CreateTask(uiTaskGroup.id))
+            },
         verticalAlignment = Alignment.CenterVertically
     ) {
 
@@ -53,7 +54,7 @@ internal fun AddTaskItem(
         )
 
         Text(
-            text = defaultDuration.toString(),
+            text = uiTaskGroup.defaultTaskDuration.toString(),
             style = MaterialTheme.typography.labelSmall
                 .copy(color = MaterialTheme.colorScheme.onSurface),
         )
@@ -66,8 +67,8 @@ internal fun AddTaskItem(
 private fun TaskItemPreview() {
     SessionTimerTheme {
         Surface {
-            TaskItem(
-                uiTask = uiTask3,
+            AddTaskItem(
+                uiTaskGroup = fakeUiTaskGroup(),
                 onAction = { }
             )
         }
