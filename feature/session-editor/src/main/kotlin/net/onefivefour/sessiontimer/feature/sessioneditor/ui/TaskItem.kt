@@ -1,6 +1,6 @@
 package net.onefivefour.sessiontimer.feature.sessioneditor.ui
 
-import android.content.res.Configuration.*
+import android.content.res.Configuration.UI_MODE_NIGHT_YES
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Row
@@ -15,10 +15,7 @@ import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.FocusRequester
@@ -38,8 +35,9 @@ internal fun TaskItem(
     modifier: Modifier = Modifier,
     uiTask: UiTask,
     onAction: (SessionEditorAction) -> Unit,
-    setTaskEditMode: (Long?) -> Unit,
 ) {
+
+    val taskEditMode = LocalTaskEditMode.current
 
     Row(
         modifier = modifier
@@ -52,20 +50,21 @@ internal fun TaskItem(
 
         Spacer(Modifier.width(12.dp))
 
-        var editMode by remember { mutableStateOf(EditMode.NONE) }
-
         val focusRequester = remember { FocusRequester() }
 
-        if (editMode == EditMode.TITLE) {
+        if (taskEditMode.value.isEditing(uiTask.id)) {
+
             val textFieldState = rememberTextFieldState(
                 initialText = uiTask.title,
                 initialSelection = TextRange(uiTask.title.length)
             )
+
             BasicTextField(
                 modifier = Modifier
                     .weight(1f)
                     .clearFocusOnKeyboardDismiss()
                     .focusRequester(focusRequester),
+                // TODO call onAction only once!
                 inputTransformation = {
                     val newTitle = asCharSequence().toString()
                     onAction(SessionEditorAction.SetTaskTitle(uiTask.id, newTitle))
@@ -77,7 +76,7 @@ internal fun TaskItem(
                             textFieldState.text.toString()
                         )
                     )
-                    setTaskEditMode(null)
+                    taskEditMode.value = TaskEditMode.None
                     performDefaultAction()
                 },
                 state = textFieldState,
@@ -90,14 +89,12 @@ internal fun TaskItem(
             LaunchedEffect(Unit) {
                 focusRequester.requestFocus()
             }
+
         } else {
             Text(
                 modifier = Modifier
                     .weight(1f)
-                    .clickable {
-                        editMode = EditMode.TITLE
-                        setTaskEditMode(uiTask.id)
-                    },
+                    .clickable { taskEditMode.value = TaskEditMode.TaskTitle(uiTask.id) },
                 text = uiTask.title,
                 style = MaterialTheme.typography.titleSmall
                     .copy(color = MaterialTheme.colorScheme.onSurface),
@@ -107,20 +104,13 @@ internal fun TaskItem(
 
         Text(
             modifier = Modifier.clickable {
-                editMode = EditMode.DURATION
-                setTaskEditMode(uiTask.id)
+                taskEditMode.value = TaskEditMode.TaskDuration(uiTask.id)
             },
             text = uiTask.duration.toString(),
             style = MaterialTheme.typography.labelSmall
                 .copy(color = MaterialTheme.colorScheme.onSurface),
         )
     }
-}
-
-enum class EditMode {
-    NONE,
-    TITLE,
-    DURATION
 }
 
 @Preview
@@ -131,8 +121,7 @@ private fun TaskItemPreview() {
         Surface {
             TaskItem(
                 uiTask = uiTask3,
-                onAction = { },
-                setTaskEditMode = { }
+                onAction = { }
             )
         }
     }

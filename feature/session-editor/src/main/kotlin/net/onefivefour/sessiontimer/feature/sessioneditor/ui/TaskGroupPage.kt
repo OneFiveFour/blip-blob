@@ -1,5 +1,6 @@
 package net.onefivefour.sessiontimer.feature.sessioneditor.ui
 
+import android.content.res.Configuration.UI_MODE_NIGHT_YES
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -27,11 +28,13 @@ import net.onefivefour.sessiontimer.core.ui.R as UiR
 internal fun TaskGroupPage(
     modifier: Modifier = Modifier,
     uiTaskGroup: UiTaskGroup,
-    onOpenTaskGroupEditor: (Long) -> Unit,
+    openTaskGroupEditor: (Long) -> Unit,
     onAction: (SessionEditorAction) -> Unit,
 ) {
 
     val lazyListState = rememberLazyListState()
+
+    val taskEditMode = LocalTaskEditMode.current
 
     Column(
         modifier = modifier
@@ -47,6 +50,10 @@ internal fun TaskGroupPage(
             uiTaskGroup = uiTaskGroup,
             onAction = onAction
         )
+
+        if (taskEditMode.value.isEditing) {
+            return
+        }
 
         AddTaskItem(
             modifier = Modifier.padding(horizontal = 12.dp),
@@ -72,7 +79,7 @@ internal fun TaskGroupPage(
                 iconRes = UiR.drawable.ic_edit,
                 contentDescription = stringResource(R.string.edit_task_group),
             ) {
-                onOpenTaskGroupEditor(uiTaskGroup.id)
+                openTaskGroupEditor(uiTaskGroup.id)
             }
         }
     }
@@ -80,13 +87,14 @@ internal fun TaskGroupPage(
 }
 
 @Preview
+@Preview(uiMode = UI_MODE_NIGHT_YES)
 @Composable
 private fun TaskGroupPagePreview() {
     SessionTimerTheme {
         Surface {
             TaskGroupPage(
                 uiTaskGroup = fakeUiTaskGroup(),
-                onOpenTaskGroupEditor = {},
+                openTaskGroupEditor = {},
                 onAction = {}
             )
         }

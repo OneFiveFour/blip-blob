@@ -20,12 +20,10 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.dp
 import net.onefivefour.sessiontimer.core.theme.SessionTimerTheme
 import net.onefivefour.sessiontimer.core.ui.haptic.ReorderHapticFeedbackType
 import net.onefivefour.sessiontimer.core.ui.haptic.rememberReorderHapticFeedback
 import net.onefivefour.sessiontimer.core.ui.swipedismiss.SwipeToDismissContainer
-import net.onefivefour.sessiontimer.core.ui.utils.toPx
 import net.onefivefour.sessiontimer.feature.sessioneditor.model.UiTaskGroup
 import net.onefivefour.sessiontimer.feature.sessioneditor.viewmodel.SessionEditorAction
 import sh.calvin.reorderable.ReorderableItem
@@ -38,10 +36,9 @@ internal fun TaskList(
     uiTaskGroup: UiTaskGroup,
     onAction: (SessionEditorAction) -> Unit,
 ) {
-    val haptic = rememberReorderHapticFeedback()
-
     var taskList by remember(uiTaskGroup.tasks) { mutableStateOf(uiTaskGroup.tasks) }
-    var previousItemCount by remember { mutableIntStateOf(taskList.size) }
+
+    val haptic = rememberReorderHapticFeedback()
 
     val reorderableLazyColumnState =
         rememberReorderableLazyListState(lazyListState) { from, to ->
@@ -51,8 +48,8 @@ internal fun TaskList(
             haptic.performHapticFeedback(ReorderHapticFeedbackType.MOVE)
         }
 
-    var isEditingTaskId by remember { mutableStateOf<Long?>(null) }
-
+    // scroll down to new items once they are added
+    var previousItemCount by remember { mutableIntStateOf(taskList.size) }
     val localDensity = LocalDensity.current.density
     LaunchedEffect(taskList.size) {
         if (taskList.size > previousItemCount) {
@@ -73,10 +70,6 @@ internal fun TaskList(
             items = taskList,
             key = { task -> task.createdAt.toEpochMilliseconds() }
         ) { task ->
-
-            if (isEditingTaskId != null && isEditingTaskId != task.id) {
-                return@items
-            }
 
             ReorderableItem(
                 state = reorderableLazyColumnState,
@@ -110,10 +103,7 @@ internal fun TaskList(
                                 interactionSource = interactionSource
                             ),
                         uiTask = task,
-                        onAction = onAction,
-                        setTaskEditMode = { taskIdOrNull ->
-                            isEditingTaskId = taskIdOrNull
-                        }
+                        onAction = onAction
                     )
                 }
             }

@@ -1,5 +1,6 @@
 package net.onefivefour.sessiontimer.feature.sessioneditor.ui
 
+import android.content.res.Configuration.UI_MODE_NIGHT_YES
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -11,9 +12,14 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.rememberLazyListState
+import androidx.compose.foundation.pager.HorizontalPager
 import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.CompositionLocalProvider
+import androidx.compose.runtime.compositionLocalOf
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
@@ -25,6 +31,8 @@ import net.onefivefour.sessiontimer.core.ui.sqarebutton.SquareButton
 import net.onefivefour.sessiontimer.feature.sessioneditor.model.UiSession
 import net.onefivefour.sessiontimer.feature.sessioneditor.viewmodel.SessionEditorAction
 
+internal val LocalTaskEditMode = compositionLocalOf { mutableStateOf<TaskEditMode>(TaskEditMode.None) }
+
 @Composable
 internal fun SessionEditorReady(
     uiSession: UiSession,
@@ -33,56 +41,73 @@ internal fun SessionEditorReady(
 ) {
 
     val pagerState = rememberPagerState { uiSession.taskGroups.size }
+
     val lazyListState = rememberLazyListState()
 
-    Column(modifier = Modifier.fillMaxSize()) {
+    val taskEditMode = remember { mutableStateOf<TaskEditMode>(TaskEditMode.None) }
 
-        ScreenTitle(titleRes = R.string.edit_session)
+    CompositionLocalProvider(LocalTaskEditMode provides taskEditMode) {
 
-        SessionTitle(
-            uiSession = uiSession,
-            onAction = onAction
-        )
+        Column(modifier = Modifier.fillMaxSize()) {
 
-        Spacer(modifier = Modifier.height(16.dp))
+            if (!taskEditMode.value.isEditing) {
+                ScreenTitle(titleRes = R.string.edit_session)
+            }
 
-        TaskGroupPager(
-            modifier = Modifier.weight(1f),
-            pagerState = pagerState,
-            uiSession = uiSession,
-            onOpenTaskGroupEditor = openTaskGroupEditor,
-            onAction = onAction
-        )
+            if (!taskEditMode.value.isEditing) {
+                SessionTitle(
+                    uiSession = uiSession,
+                    onAction = onAction
+                )
+                Spacer(modifier = Modifier.height(16.dp))
+            }
 
-        Row(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(all = 24.dp)
-                .height(64.dp),
-            horizontalArrangement = Arrangement.End
-        ) {
+            HorizontalPager(
+                state = pagerState,
+                modifier = Modifier.weight(1f)
+            ) { pageIndex ->
 
-            PagerIndicator(
-                modifier = Modifier
-                    .weight(1f)
-                    .fillMaxHeight(),
-                lazyListState = lazyListState,
-                uiSession = uiSession,
-                pagerState = pagerState
-            )
+                val uiTaskGroup = uiSession.taskGroups[pageIndex]
 
-            Spacer(modifier = Modifier.size(16.dp))
+                TaskGroupPage(
+                    uiTaskGroup = uiTaskGroup,
+                    openTaskGroupEditor = openTaskGroupEditor,
+                    onAction = onAction
+                )
+            }
 
-            SquareButton(
-                iconRes = R.drawable.ic_add,
-                contentDescription = stringResource(R.string.new_task_group),
-                onClick = { onAction(SessionEditorAction.CreateTaskGroup) }
-            )
+            if (!taskEditMode.value.isEditing) {
+                Row(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(all = 24.dp)
+                        .height(64.dp),
+                    horizontalArrangement = Arrangement.End
+                ) {
+                    PagerIndicator(
+                        modifier = Modifier
+                            .weight(1f)
+                            .fillMaxHeight(),
+                        lazyListState = lazyListState,
+                        uiSession = uiSession,
+                        pagerState = pagerState
+                    )
+
+                    Spacer(modifier = Modifier.size(16.dp))
+
+                    SquareButton(
+                        iconRes = R.drawable.ic_add,
+                        contentDescription = stringResource(R.string.new_task_group),
+                        onClick = { onAction(SessionEditorAction.CreateTaskGroup) }
+                    )
+                }
+            }
         }
     }
 }
 
 @Preview
+@Preview(uiMode = UI_MODE_NIGHT_YES)
 @Composable
 private fun SessionEditorReadyPreview() {
     SessionTimerTheme {
