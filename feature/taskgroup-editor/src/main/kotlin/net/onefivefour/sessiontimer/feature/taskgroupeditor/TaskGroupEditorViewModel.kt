@@ -1,8 +1,5 @@
 package net.onefivefour.sessiontimer.feature.taskgroupeditor
 
-import androidx.compose.foundation.text.input.TextFieldState
-import androidx.compose.foundation.text.input.delete
-import androidx.compose.foundation.text.input.insert
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.toArgb
 import androidx.lifecycle.SavedStateHandle
@@ -74,7 +71,7 @@ internal class TaskGroupEditorViewModel @Inject constructor(
 
     fun onAction(action: TaskGroupEditorAction) {
         when (action) {
-            is TaskGroupEditorAction.SetTitle -> {
+            is TaskGroupEditorAction.SetTaskGroupTitle -> {
                 setTitle(action.newTitle)
             }
 

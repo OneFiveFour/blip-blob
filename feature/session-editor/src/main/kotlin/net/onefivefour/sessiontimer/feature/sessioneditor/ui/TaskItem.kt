@@ -8,6 +8,7 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.text.BasicTextField
+import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.text.input.TextFieldLineLimits
 import androidx.compose.foundation.text.input.rememberTextFieldState
 import androidx.compose.material3.MaterialTheme
@@ -22,11 +23,11 @@ import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.graphics.SolidColor
 import androidx.compose.ui.text.TextRange
+import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import net.onefivefour.sessiontimer.core.theme.SessionTimerTheme
 import net.onefivefour.sessiontimer.core.ui.draghandler.DragHandler
-import net.onefivefour.sessiontimer.core.ui.modifier.clearFocusOnKeyboardDismiss
 import net.onefivefour.sessiontimer.feature.sessioneditor.model.UiTask
 import net.onefivefour.sessiontimer.feature.sessioneditor.viewmodel.SessionEditorAction
 
@@ -34,8 +35,11 @@ import net.onefivefour.sessiontimer.feature.sessioneditor.viewmodel.SessionEdito
 internal fun TaskItem(
     modifier: Modifier = Modifier,
     uiTask: UiTask,
+    nextTaskId: Long?,
     onAction: (SessionEditorAction) -> Unit,
 ) {
+
+    println("+++ taskId: ${uiTask.id}, nextTaskId: $nextTaskId")
 
     val taskEditMode = LocalTaskEditMode.current
 
@@ -62,22 +66,22 @@ internal fun TaskItem(
             BasicTextField(
                 modifier = Modifier
                     .weight(1f)
-                    .clearFocusOnKeyboardDismiss()
                     .focusRequester(focusRequester),
-                // TODO call onAction only once!
                 inputTransformation = {
                     val newTitle = asCharSequence().toString()
                     onAction(SessionEditorAction.SetTaskTitle(uiTask.id, newTitle))
                 },
-                onKeyboardAction = { performDefaultAction ->
-                    onAction(
-                        SessionEditorAction.SetTaskTitle(
-                            uiTask.id,
-                            textFieldState.text.toString()
-                        )
-                    )
-                    taskEditMode.value = TaskEditMode.None
-                    performDefaultAction()
+                keyboardOptions = KeyboardOptions.Default.copy(
+                    imeAction = when(nextTaskId) {
+                        null -> ImeAction.Done
+                        else -> ImeAction.Next
+                    }
+                ),
+                onKeyboardAction = {
+                    taskEditMode.value = when(nextTaskId) {
+                        null -> TaskEditMode.None
+                        else -> TaskEditMode.TaskTitle(nextTaskId)
+                    }
                 },
                 state = textFieldState,
                 cursorBrush = SolidColor(MaterialTheme.colorScheme.onSurface),
@@ -121,6 +125,7 @@ private fun TaskItemPreview() {
         Surface {
             TaskItem(
                 uiTask = uiTask3,
+                nextTaskId = 2L,
                 onAction = { }
             )
         }

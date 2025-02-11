@@ -71,7 +71,7 @@ private fun ColorTilePreview() {
     SessionTimerTheme {
         Surface {
             ColorTile(
-                color = MaterialTheme.taskGroupColors.color12,
+                color = MaterialTheme.taskGroupColors.color12.first,
                 isSelected = false,
                 onClick = {}
             )
@@ -86,7 +86,7 @@ private fun ColorTileSelectedPreview() {
     SessionTimerTheme {
         Surface {
             ColorTile(
-                color = MaterialTheme.taskGroupColors.color10,
+                color = MaterialTheme.taskGroupColors.color10.first,
                 isSelected = true,
                 onClick = {}
             )

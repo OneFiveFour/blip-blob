@@ -8,6 +8,7 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
@@ -66,10 +67,10 @@ internal fun TaskList(
         verticalArrangement = Arrangement.Bottom,
         state = lazyListState
     ) {
-        items(
+        itemsIndexed(
             items = taskList,
-            key = { task -> task.createdAt.toEpochMilliseconds() }
-        ) { task ->
+            key = { _, task -> task.createdAt.toEpochMilliseconds() }
+        ) { index, task ->
 
             ReorderableItem(
                 state = reorderableLazyColumnState,
@@ -103,6 +104,7 @@ internal fun TaskList(
                                 interactionSource = interactionSource
                             ),
                         uiTask = task,
+                        nextTaskId = taskList.getOrNull(index + 1)?.id,
                         onAction = onAction
                     )
                 }

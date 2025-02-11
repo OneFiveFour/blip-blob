@@ -109,7 +109,7 @@ internal fun TaskGroupEditorReady(
                         .clearFocusOnKeyboardDismiss(),
                     inputTransformation = {
                         val newTitle = asCharSequence().toString()
-                        onAction(TaskGroupEditorAction.SetTitle(newTitle))
+                        onAction(TaskGroupEditorAction.SetTaskGroupTitle(newTitle))
                     },
                     state = textFieldState,
                     cursorBrush = SolidColor(MaterialTheme.colorScheme.onSurface),
