@@ -19,6 +19,7 @@ import androidx.compose.ui.zIndex
 import net.onefivefour.sessiontimer.core.theme.SessionTimerTheme
 import net.onefivefour.sessiontimer.core.ui.R
 import net.onefivefour.sessiontimer.core.ui.label.LabeledSection
+import net.onefivefour.sessiontimer.core.ui.modifier.clearFocusOnKeyboardDismiss
 import net.onefivefour.sessiontimer.core.ui.utils.topToAscentDp
 import net.onefivefour.sessiontimer.feature.sessioneditor.model.UiSession
 import net.onefivefour.sessiontimer.feature.sessioneditor.viewmodel.SessionEditorAction
@@ -52,6 +53,7 @@ internal fun SessionTitle(
                 .zIndex(1f)
                 .offset(y = offset)
                 .fillMaxWidth()
+                .clearFocusOnKeyboardDismiss()
             ,
             inputTransformation = {
                 val newTitle = asCharSequence().toString()
