@@ -23,6 +23,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import net.onefivefour.sessiontimer.core.theme.SessionTimerTheme
 import net.onefivefour.sessiontimer.core.ui.haptic.ReorderHapticFeedbackType
 import net.onefivefour.sessiontimer.core.ui.haptic.rememberReorderHapticFeedback
+import net.onefivefour.sessiontimer.core.ui.keyboard.keyboardAsState
 import net.onefivefour.sessiontimer.feature.sessioneditor.model.UiTaskGroup
 import net.onefivefour.sessiontimer.feature.sessioneditor.viewmodel.SessionEditorAction
 import sh.calvin.reorderable.rememberReorderableLazyListState
@@ -62,6 +63,14 @@ internal fun TaskList(
 
     val focusRequesterList = remember(taskList.size) { taskList.map { FocusRequester() } }
 
+    val isImeVisible by keyboardAsState()
+
+    LaunchedEffect(isImeVisible) {
+        if (!isImeVisible) {
+            taskEditMode.value = TaskEditMode.None
+        }
+    }
+
     LazyColumn(
         modifier = modifier,
         verticalArrangement = Arrangement.Bottom,
@@ -73,7 +82,7 @@ internal fun TaskList(
         ) { index, uiTask ->
 
             if (taskEditMode.value.isEditing) {
-                val focusRequester = focusRequesterList[index]
+                val focusRequester = remember { focusRequesterList[index] }
 
                 TaskItemEditMode(
                     modifier = Modifier,

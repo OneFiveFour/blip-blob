@@ -87,7 +87,7 @@ internal fun LazyItemScope.TaskItem(
                 Text(
                     modifier = Modifier
                         .weight(1f)
-                        .clickable { taskEditMode.value = TaskEditMode.TaskTitle },
+                        .clickable { taskEditMode.value = TaskEditMode.TaskTitle(uiTask.id) },
                     text = uiTask.title,
                     style = MaterialTheme.typography.titleSmall
                         .copy(color = MaterialTheme.colorScheme.onSurface),

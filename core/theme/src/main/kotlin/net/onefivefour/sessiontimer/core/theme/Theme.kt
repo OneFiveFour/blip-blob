@@ -48,7 +48,7 @@ fun SessionTimerTheme(darkTheme: Boolean = isSystemInDarkTheme(), content: @Comp
     val taskGroupColors = MaterialTheme.taskGroupColors
     val textSelectionColors = TextSelectionColors(
         handleColor = if (darkTheme) darkScheme.onSurface else lightScheme.onSurface,
-        backgroundColor = if (darkTheme) darkScheme.surface else lightScheme.surface
+        backgroundColor = if (darkTheme) darkScheme.surfaceVariant else lightScheme.surfaceVariant
     )
 
     MaterialTheme(

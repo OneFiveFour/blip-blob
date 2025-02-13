@@ -1,6 +1,7 @@
 package net.onefivefour.sessiontimer.feature.sessioneditor.ui
 
 import android.content.res.Configuration.UI_MODE_NIGHT_YES
+import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -40,7 +41,8 @@ import net.onefivefour.sessiontimer.core.ui.sqarebutton.SquareButton
 import net.onefivefour.sessiontimer.feature.sessioneditor.model.UiSession
 import net.onefivefour.sessiontimer.feature.sessioneditor.viewmodel.SessionEditorAction
 
-internal val LocalTaskEditMode = compositionLocalOf { mutableStateOf<TaskEditMode>(TaskEditMode.None) }
+internal val LocalTaskEditMode =
+    compositionLocalOf { mutableStateOf<TaskEditMode>(TaskEditMode.None) }
 
 @Composable
 internal fun SessionEditorReady(
@@ -55,29 +57,17 @@ internal fun SessionEditorReady(
 
     val taskEditMode = remember { mutableStateOf<TaskEditMode>(TaskEditMode.None) }
 
-    val isImeVisible by keyboardAsState()
-
-    LaunchedEffect(isImeVisible) {
-        if (!isImeVisible) {
-//            taskEditMode.value = TaskEditMode.None
-        }
-    }
-
     CompositionLocalProvider(LocalTaskEditMode provides taskEditMode) {
 
         Column(modifier = Modifier.fillMaxSize()) {
 
-            if (!taskEditMode.value.isEditing) {
-                ScreenTitle(titleRes = R.string.edit_session)
-            }
+            ScreenTitle(titleRes = R.string.edit_session)
 
-            if (!taskEditMode.value.isEditing) {
-                SessionTitle(
-                    uiSession = uiSession,
-                    onAction = onAction
-                )
-                Spacer(modifier = Modifier.height(16.dp))
-            }
+            SessionTitle(
+                uiSession = uiSession,
+                onAction = onAction
+            )
+            Spacer(modifier = Modifier.height(16.dp))
 
             HorizontalPager(
                 state = pagerState,
@@ -93,7 +83,7 @@ internal fun SessionEditorReady(
                 )
             }
 
-            if (!taskEditMode.value.isEditing) {
+            AnimatedVisibility(!taskEditMode.value.isEditing) {
                 Row(
                     modifier = Modifier
                         .fillMaxWidth()
