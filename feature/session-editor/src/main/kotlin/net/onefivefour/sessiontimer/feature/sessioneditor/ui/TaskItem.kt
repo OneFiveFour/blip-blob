@@ -8,6 +8,7 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyItemScope
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.BasicTextField
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.text.input.TextFieldLineLimits
@@ -76,7 +77,7 @@ internal fun LazyItemScope.TaskItem(
                         interactionSource = interactionSource
                     )
                     .height(TASK_ITEM_HEIGHT)
-                    .background(MaterialTheme.colorScheme.background),
+                    .background(MaterialTheme.colorScheme.background, shape = RoundedCornerShape(8.dp)),
                 verticalAlignment = Alignment.CenterVertically
             ) {
 

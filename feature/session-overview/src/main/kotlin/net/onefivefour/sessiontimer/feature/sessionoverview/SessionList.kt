@@ -5,6 +5,7 @@ import android.content.res.Configuration.*
 import androidx.compose.foundation.background
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.rememberLazyListState
@@ -63,6 +64,7 @@ internal fun SessionList(
                 val interactionSource = remember { MutableInteractionSource() }
 
                 SwipeToDismissContainer(
+                    modifier = Modifier.padding(start = 8.dp),
                     item = session,
                     onDelete = { onAction(SessionOverviewAction.DeleteSession(session.id)) }
                 ) {

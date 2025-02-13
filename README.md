@@ -16,6 +16,10 @@
 
 # Open TODOs
 - [ ]
+- [ ] individual task duration
+- [ ] Scroll to new TaskGroup when created
+- [ ] Select whole text when editing starts
+- [ ] No intial task, because default task duration is not set
 - [ ] Decide for uppercase "Edit session" vs. "Edit Session" in the whole app
 - [ ] create onAction accordingly onNavigate to group composable action params
 - [ ] clear separation on when taskGroup colors are handled as pair and when as singular units (Ui Domain Data)
@@ -43,3 +47,8 @@
 - [ ] give sessionItem a bit of color to make each session distinguishable
 - [ ] infinite pulsing animation for pause state
 - [ ] rename package name to blip blob
+
+# Feature Requests
+- [ ]
+- [ ] Statistics about what task was executed when/how often/etc.
+- [ ] enable/disable tasks to avoid deleting/recreate them when temporarily not needed

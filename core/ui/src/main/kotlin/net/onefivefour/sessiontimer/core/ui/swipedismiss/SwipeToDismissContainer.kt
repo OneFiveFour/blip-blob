@@ -35,6 +35,7 @@ import net.onefivefour.sessiontimer.core.ui.R
 
 @Composable
 fun <T> SwipeToDismissContainer(
+    modifier: Modifier = Modifier,
     item: T,
     onDelete: (T) -> Unit,
     content: @Composable () -> Unit
@@ -75,7 +76,10 @@ fun <T> SwipeToDismissContainer(
         SwipeToDismissBox(
             state = state,
             backgroundContent = {
-                DeleteBackground(swipeDismissState = state)
+                DeleteBackground(
+                    modifier = modifier,
+                    swipeDismissState = state
+                )
             },
             enableDismissFromStartToEnd = true,
         ) {
@@ -86,6 +90,7 @@ fun <T> SwipeToDismissContainer(
 
 @Composable
 private fun DeleteBackground(
+    modifier: Modifier,
     swipeDismissState: SwipeToDismissBoxState
 ) {
 
@@ -108,9 +113,8 @@ private fun DeleteBackground(
     }
 
     Box(
-        modifier = Modifier
+        modifier = modifier
             .fillMaxSize()
-            .padding(start = 8.dp)
             .clip(RoundedCornerShape(8.dp))
             .background(backgroundColor)
             .padding(start = 24.dp)
