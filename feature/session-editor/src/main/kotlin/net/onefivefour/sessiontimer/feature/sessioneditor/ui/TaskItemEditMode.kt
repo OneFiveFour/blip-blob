@@ -85,14 +85,12 @@ internal fun TaskItemEditMode(
                 .copy(color = MaterialTheme.colorScheme.onSurface),
         )
 
-        Text(
-            modifier = Modifier.clickable {
-                taskEditMode.value = TaskEditMode.TaskDuration
-            },
-            text = uiTask.duration.toString(),
-            style = MaterialTheme.typography.labelSmall
-                .copy(color = MaterialTheme.colorScheme.onSurface),
-        )
+        TaskDuration(
+            uiTask = uiTask,
+            onDurationChanged = { newDuration ->
+                onAction(SessionEditorAction.SetTaskDuration(uiTask.id, newDuration))
+            }
+            )
     }
 
     LaunchedEffect(taskEditMode.value) {

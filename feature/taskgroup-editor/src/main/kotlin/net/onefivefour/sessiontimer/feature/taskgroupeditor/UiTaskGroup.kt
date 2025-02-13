@@ -3,8 +3,7 @@ package net.onefivefour.sessiontimer.feature.taskgroupeditor
 import androidx.compose.ui.graphics.Color
 import net.onefivefour.sessiontimer.core.common.domain.model.PlayMode
 import net.onefivefour.sessiontimer.core.common.domain.model.TaskGroup
-import java.util.Locale
-import kotlin.time.Duration
+import net.onefivefour.sessiontimer.core.common.extensions.toSixDigitsString
 
 internal data class UiTaskGroup(
     val id: Long,
@@ -25,11 +24,7 @@ internal fun TaskGroup.toUiTaskGroup() = UiTaskGroup(
     onColor = Color(this.onColor),
     playMode = this.playMode,
     numberOfRandomTasks = this.numberOfRandomTasks,
-    defaultTaskDuration = this.defaultTaskDuration.toUiTaskDuration(),
+    defaultTaskDuration = this.defaultTaskDuration.toSixDigitsString(),
     sortOrder = this.sortOrder,
     tasks = this.tasks.toUiTasks()
 )
-
-internal fun Duration.toUiTaskDuration() = toComponents { h, m, s, _ ->
-    String.format(Locale.getDefault(), "%02d%02d%02d", h, m, s)
-}

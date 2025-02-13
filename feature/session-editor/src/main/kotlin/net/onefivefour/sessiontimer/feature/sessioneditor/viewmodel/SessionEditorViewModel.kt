@@ -15,6 +15,7 @@ import net.onefivefour.sessiontimer.core.usecases.api.session.GetSessionUseCase
 import net.onefivefour.sessiontimer.core.usecases.api.session.SetSessionTitleUseCase
 import net.onefivefour.sessiontimer.core.usecases.api.task.DeleteTaskUseCase
 import net.onefivefour.sessiontimer.core.usecases.api.task.NewTaskUseCase
+import net.onefivefour.sessiontimer.core.usecases.api.task.SetTaskDurationUseCase
 import net.onefivefour.sessiontimer.core.usecases.api.task.SetTaskSortOrdersUseCase
 import net.onefivefour.sessiontimer.core.usecases.api.task.SetTaskTitleUseCase
 import net.onefivefour.sessiontimer.core.usecases.api.taskgroup.DeleteTaskGroupUseCase
@@ -22,6 +23,7 @@ import net.onefivefour.sessiontimer.core.usecases.api.taskgroup.NewTaskGroupUseC
 import net.onefivefour.sessiontimer.core.usecases.api.taskgroup.SetTaskGroupSortOrdersUseCase
 import net.onefivefour.sessiontimer.feature.sessioneditor.api.SessionEditorRoute
 import net.onefivefour.sessiontimer.feature.sessioneditor.model.toUiSession
+import kotlin.time.Duration
 
 @HiltViewModel
 internal class SessionEditorViewModel @Inject constructor(
@@ -32,6 +34,7 @@ internal class SessionEditorViewModel @Inject constructor(
     private val deleteTaskUseCase: DeleteTaskUseCase,
     private val deleteTaskGroupUseCase: DeleteTaskGroupUseCase,
     private val setTaskTitleUseCase: SetTaskTitleUseCase,
+    private val setTaskDurationUseCase: SetTaskDurationUseCase,
     private val setTaskGroupSortOrdersUseCase: SetTaskGroupSortOrdersUseCase,
     private val setTaskSortOrdersUseCase: SetTaskSortOrdersUseCase,
     private val setSessionTitleUseCase: SetSessionTitleUseCase
@@ -65,6 +68,13 @@ internal class SessionEditorViewModel @Inject constructor(
             is SessionEditorAction.UpdateTaskSortOrders -> setTaskSortOrders(action.taskIds)
             is SessionEditorAction.SetTaskTitle -> setTaskTitle(action.taskId, action.newTitle)
             is SessionEditorAction.SetSessionTitle -> setSessionTitle(action.newTitle)
+            is SessionEditorAction.SetTaskDuration -> setTaskDuration(action.taskId, action.newDuration)
+        }
+    }
+
+    private fun setTaskDuration(taskId: Long, newDuration: Duration) {
+        viewModelScope.launch {
+            setTaskDurationUseCase.execute(taskId, newDuration)
         }
     }
 

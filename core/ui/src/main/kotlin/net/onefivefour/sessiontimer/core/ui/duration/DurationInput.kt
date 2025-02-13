@@ -4,7 +4,6 @@ import android.content.res.Configuration.UI_MODE_NIGHT_YES
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.text.BasicTextField
@@ -44,7 +43,7 @@ internal val TILE_SIZE = 60.dp
 @Composable
 fun DurationInput(
     modifier: Modifier = Modifier,
-    defaultTaskDuration: String,
+    initialDuration: String,
     onDurationEntered: (String) -> Unit,
 ) {
 
@@ -54,12 +53,12 @@ fun DurationInput(
 
     val textFieldState = rememberTextFieldState()
 
-    LaunchedEffect(defaultTaskDuration) {
+    LaunchedEffect(initialDuration) {
         textFieldState.edit {
             replace(
                 start = 0,
                 end = length,
-                text = defaultTaskDuration
+                text = initialDuration
             )
         }
     }
@@ -174,7 +173,7 @@ private fun DurationInputPreview() {
     SessionTimerTheme {
         Surface {
             DurationInput(
-                defaultTaskDuration = "010203",
+                initialDuration = "010203",
                 onDurationEntered = { }
             )
         }

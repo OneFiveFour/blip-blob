@@ -30,6 +30,9 @@ internal class TaskRepositoryImpl @Inject constructor(
     override suspend fun setTaskSortOrders(taskIds: List<Long>) = taskDataSource
         .setTaskSortOrders(taskIds)
 
+    override suspend fun setTaskDuration(taskId: Long, duration: Duration) = taskDataSource
+        .setTaskDuration(taskId, duration.inWholeSeconds)
+
     override suspend fun deleteTask(taskId: Long) = taskDataSource
         .deleteById(taskId)
 

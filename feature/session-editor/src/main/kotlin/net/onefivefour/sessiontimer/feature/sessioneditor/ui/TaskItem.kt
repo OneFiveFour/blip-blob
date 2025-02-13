@@ -9,30 +9,18 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyItemScope
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.foundation.text.BasicTextField
-import androidx.compose.foundation.text.KeyboardOptions
-import androidx.compose.foundation.text.input.TextFieldLineLimits
-import androidx.compose.foundation.text.input.rememberTextFieldState
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.focus.focusProperties
-import androidx.compose.ui.focus.focusRequester
-import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.SolidColor
-import androidx.compose.ui.text.TextRange
-import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.unit.dp
 import net.onefivefour.sessiontimer.core.ui.draghandler.DragHandler
 import net.onefivefour.sessiontimer.core.ui.haptic.ReorderHapticFeedback
 import net.onefivefour.sessiontimer.core.ui.haptic.ReorderHapticFeedbackType
 import net.onefivefour.sessiontimer.core.ui.swipedismiss.SwipeToDismissContainer
 import net.onefivefour.sessiontimer.feature.sessioneditor.model.UiTask
-import net.onefivefour.sessiontimer.feature.sessioneditor.viewmodel.SessionEditorAction
 import sh.calvin.reorderable.ReorderableItem
 import sh.calvin.reorderable.ReorderableLazyListState
 
@@ -77,7 +65,10 @@ internal fun LazyItemScope.TaskItem(
                         interactionSource = interactionSource
                     )
                     .height(TASK_ITEM_HEIGHT)
-                    .background(MaterialTheme.colorScheme.background, shape = RoundedCornerShape(8.dp)),
+                    .background(
+                        MaterialTheme.colorScheme.background,
+                        shape = RoundedCornerShape(8.dp)
+                    ),
                 verticalAlignment = Alignment.CenterVertically
             ) {
 
@@ -94,13 +85,8 @@ internal fun LazyItemScope.TaskItem(
                         .copy(color = MaterialTheme.colorScheme.onSurface),
                 )
 
-                Text(
-                    modifier = Modifier.clickable {
-                        taskEditMode.value = TaskEditMode.TaskDuration
-                    },
-                    text = uiTask.duration.toString(),
-                    style = MaterialTheme.typography.labelSmall
-                        .copy(color = MaterialTheme.colorScheme.onSurface),
+                TaskDuration(
+                    uiTask = uiTask
                 )
             }
         }

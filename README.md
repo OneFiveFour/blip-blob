@@ -16,6 +16,8 @@
 
 # Open TODOs
 - [ ]
+- [ ] unify sql structure (names of methods setXxxYyy or only setYyy), names of params (taskId or only id), etc.
+- [ ] check if input parameter "initialDuration" of DurationInput can be of type Duration instead of String
 - [ ] individual task duration
 - [ ] Scroll to new TaskGroup when created
 - [ ] Select whole text when editing starts

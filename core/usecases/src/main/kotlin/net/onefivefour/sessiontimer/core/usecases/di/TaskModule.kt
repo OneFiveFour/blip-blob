@@ -7,10 +7,12 @@ import dagger.hilt.android.components.ViewModelComponent
 import dagger.hilt.android.scopes.ViewModelScoped
 import net.onefivefour.sessiontimer.core.usecases.api.task.DeleteTaskUseCase
 import net.onefivefour.sessiontimer.core.usecases.api.task.NewTaskUseCase
+import net.onefivefour.sessiontimer.core.usecases.api.task.SetTaskDurationUseCase
 import net.onefivefour.sessiontimer.core.usecases.api.task.SetTaskSortOrdersUseCase
 import net.onefivefour.sessiontimer.core.usecases.api.task.SetTaskTitleUseCase
 import net.onefivefour.sessiontimer.core.usecases.task.DeleteTaskUseCaseImpl
 import net.onefivefour.sessiontimer.core.usecases.task.NewTaskUseCaseImpl
+import net.onefivefour.sessiontimer.core.usecases.task.SetTaskDurationUseCaseImpl
 import net.onefivefour.sessiontimer.core.usecases.task.SetTaskSortOrdersUseCaseImpl
 import net.onefivefour.sessiontimer.core.usecases.task.SetTaskTitleUseCaseImpl
 
@@ -29,6 +31,10 @@ internal interface TaskModule {
     @Binds
     @ViewModelScoped
     fun bindSetTaskTitleUseCase(impl: SetTaskTitleUseCaseImpl): SetTaskTitleUseCase
+
+    @Binds
+    @ViewModelScoped
+    fun bindSetTaskDurationUseCase(impl: SetTaskDurationUseCaseImpl): SetTaskDurationUseCase
 
     @Binds
     @ViewModelScoped

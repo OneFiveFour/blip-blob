@@ -156,7 +156,7 @@ internal fun TaskGroupEditorReady(
 
             LabeledSection(labelRes = R.string.default_task_duration) {
                 DurationInput(
-                    defaultTaskDuration = uiTaskGroup.defaultTaskDuration,
+                    initialDuration = uiTaskGroup.defaultTaskDuration,
                     onDurationEntered = { newDurationString ->
                         onAction(
                             TaskGroupEditorAction.OnDurationEntered(

@@ -16,7 +16,8 @@ import kotlinx.coroutines.flow.debounce
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import net.onefivefour.sessiontimer.core.common.domain.model.PlayMode
-import net.onefivefour.sessiontimer.core.common.utils.toIntOrZero
+import net.onefivefour.sessiontimer.core.common.extensions.toDuration
+import net.onefivefour.sessiontimer.core.common.extensions.toIntOrZero
 import net.onefivefour.sessiontimer.core.usecases.api.taskgroup.GetTaskGroupUseCase
 import net.onefivefour.sessiontimer.core.usecases.api.taskgroup.SetTaskGroupColorUseCase
 import net.onefivefour.sessiontimer.core.usecases.api.taskgroup.SetTaskGroupDefaultTaskDurationUseCase
@@ -90,22 +91,7 @@ internal class TaskGroupEditorViewModel @Inject constructor(
     }
 
     private fun onDurationEntered(newNumberString: String) {
-
-        val newHours = newNumberString
-            .take(2)
-
-        val newMinutes = newNumberString
-            .dropLast(2)
-            .takeLast(2)
-
-        val newSeconds = newNumberString
-            .takeLast(2)
-
-        val newTotalSeconds = newHours.toIntOrZero() * 3600 +
-                newMinutes.toIntOrZero() * 60 +
-                newSeconds.toIntOrZero()
-
-        durationInputFlow.tryEmit(Duration.parse("${newTotalSeconds}s"))
+        durationInputFlow.tryEmit(newNumberString.toDuration())
     }
 
     private fun setTitle(newTitle: String) {

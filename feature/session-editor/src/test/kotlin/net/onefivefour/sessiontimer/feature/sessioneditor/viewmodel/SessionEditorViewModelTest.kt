@@ -19,6 +19,7 @@ import net.onefivefour.sessiontimer.core.usecases.api.session.GetSessionUseCase
 import net.onefivefour.sessiontimer.core.usecases.api.session.SetSessionTitleUseCase
 import net.onefivefour.sessiontimer.core.usecases.api.task.DeleteTaskUseCase
 import net.onefivefour.sessiontimer.core.usecases.api.task.NewTaskUseCase
+import net.onefivefour.sessiontimer.core.usecases.api.task.SetTaskDurationUseCase
 import net.onefivefour.sessiontimer.core.usecases.api.task.SetTaskSortOrdersUseCase
 import net.onefivefour.sessiontimer.core.usecases.api.task.SetTaskTitleUseCase
 import net.onefivefour.sessiontimer.core.usecases.api.taskgroup.DeleteTaskGroupUseCase
@@ -56,19 +57,22 @@ internal class SessionEditorViewModelTest {
 
     private val setTaskSortOrdersUseCase: SetTaskSortOrdersUseCase = mockk()
 
+    private val setTaskDurationUseCase: SetTaskDurationUseCase = mockk()
+
     private val setSessionTitleUseCase: SetSessionTitleUseCase = mockk()
 
     private fun sut() = SessionEditorViewModel(
-        savedStateHandleRule.savedStateHandleMock,
-        getSessionUseCase,
-        newTaskGroupUseCase,
-        newTaskUseCase,
-        deleteTaskUseCase,
-        deleteTaskGroupUseCase,
-        setTaskTitleUseCase,
-        setTaskGroupSortOrdersUseCase,
-        setTaskSortOrdersUseCase,
-        setSessionTitleUseCase
+        savedStateHandle = savedStateHandleRule.savedStateHandleMock,
+        getSessionUseCase = getSessionUseCase,
+        newTaskGroupUseCase = newTaskGroupUseCase,
+        newTaskUseCase = newTaskUseCase,
+        deleteTaskUseCase = deleteTaskUseCase,
+        deleteTaskGroupUseCase = deleteTaskGroupUseCase,
+        setTaskTitleUseCase = setTaskTitleUseCase,
+        setTaskDurationUseCase = setTaskDurationUseCase,
+        setTaskGroupSortOrdersUseCase = setTaskGroupSortOrdersUseCase,
+        setTaskSortOrdersUseCase = setTaskSortOrdersUseCase,
+        setSessionTitleUseCase = setSessionTitleUseCase
     )
 
     @Test

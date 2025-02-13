@@ -8,6 +8,8 @@ internal interface TaskDataSource {
 
     suspend fun setTaskSortOrders(taskIds: List<Long>)
 
+    suspend fun setTaskDuration(taskId: Long, durationInSeconds: Long)
+
     suspend fun deleteById(taskId: Long)
 
     suspend fun deleteByTaskGroupId(taskGroupId: Long)
