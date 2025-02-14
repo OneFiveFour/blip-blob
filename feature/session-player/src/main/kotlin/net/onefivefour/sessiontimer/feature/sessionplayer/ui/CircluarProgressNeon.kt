@@ -112,7 +112,7 @@ private fun Modifier.glow(
 @Preview
 @Preview(uiMode = UI_MODE_NIGHT_YES)
 @Composable
-private fun CircluarProgressNeonPreview() {
+private fun CircularProgressNeonPreview() {
     SessionTimerTheme {
         Surface {
             Box(
@@ -121,7 +121,7 @@ private fun CircluarProgressNeonPreview() {
                     .padding(16.dp)
             ) {
                 CircluarProgressNeon(
-                    strokeColor = MaterialTheme.taskGroupColors.color03,
+                    strokeColor = MaterialTheme.taskGroupColors.color03.first,
                     strokeWidth = 6.dp,
                     glowWidth = 10.dp,
                     glowRadius = 6.dp,
