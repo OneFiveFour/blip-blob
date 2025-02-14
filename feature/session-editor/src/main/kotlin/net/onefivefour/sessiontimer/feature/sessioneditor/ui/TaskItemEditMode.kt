@@ -1,5 +1,6 @@
 package net.onefivefour.sessiontimer.feature.sessioneditor.ui
 
+import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Row
@@ -14,12 +15,14 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.FocusDirection
 import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.graphics.SolidColor
+import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.text.TextRange
 import androidx.compose.ui.text.input.ImeAction
@@ -54,10 +57,19 @@ internal fun TaskItemEditMode(
 
         Spacer(Modifier.width(12.dp))
 
+
+        val scale by animateFloatAsState(if (taskEditMode.value is TaskEditMode.TaskDuration) 0.8f else 1f)
+        val alpha by animateFloatAsState(if (taskEditMode.value is TaskEditMode.TaskDuration) 0.5f else 1f)
+
         BasicTextField(
             modifier = Modifier
                 .weight(1f)
-                .focusRequester(focusRequester),
+                .focusRequester(focusRequester)
+                .graphicsLayer(
+                    scaleX = scale,
+                    scaleY = scale,
+                    alpha = alpha
+                ),
             inputTransformation = {
                 val newTitle = asCharSequence().toString()
                 onAction(SessionEditorAction.SetTaskTitle(uiTask.id, newTitle))
@@ -75,6 +87,7 @@ internal fun TaskItemEditMode(
                         focusManager.moveFocus(FocusDirection.Down)
                         return@BasicTextField
                     }
+
                     else -> TaskEditMode.TaskTitle(uiTask.id)
                 }
             },
@@ -90,7 +103,7 @@ internal fun TaskItemEditMode(
             onDurationChanged = { newDuration ->
                 onAction(SessionEditorAction.SetTaskDuration(uiTask.id, newDuration))
             }
-            )
+        )
     }
 
     LaunchedEffect(taskEditMode.value) {

@@ -21,6 +21,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
+import androidx.compose.runtime.snapshotFlow
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
@@ -29,38 +30,63 @@ import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.focus.onFocusChanged
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.SolidColor
+import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.platform.LocalTextToolbar
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import kotlinx.coroutines.FlowPreview
+import kotlinx.coroutines.flow.debounce
 import net.onefivefour.sessiontimer.core.theme.SessionTimerTheme
 import net.onefivefour.sessiontimer.core.ui.R
+import kotlin.time.Duration
+import kotlin.time.Duration.Companion.hours
 
 internal val TILE_SIZE = 60.dp
 
+@OptIn(FlowPreview::class)
 @Composable
 fun DurationInput(
     modifier: Modifier = Modifier,
-    initialDuration: String,
-    onDurationEntered: (String) -> Unit,
+    initialDuration: Duration,
+    requestFocus: Boolean = false,
+    onDurationEntered: (Duration) -> Unit,
 ) {
 
-    var isFocused by remember { mutableStateOf(false) }
+    var isFocused by remember { mutableStateOf(requestFocus) }
 
     val focusRequester = remember { FocusRequester() }
 
     val textFieldState = rememberTextFieldState()
+
+    val keyboardController = LocalSoftwareKeyboardController.current
 
     LaunchedEffect(initialDuration) {
         textFieldState.edit {
             replace(
                 start = 0,
                 end = length,
-                text = initialDuration
+                text = initialDuration.toSixDigitsString()
             )
         }
+    }
+
+    LaunchedEffect(requestFocus) {
+        if (requestFocus) {
+            focusRequester.requestFocus()
+        }
+    }
+
+    LaunchedEffect(textFieldState) {
+        snapshotFlow { textFieldState.text }
+            .debounce(1_000)
+            .collect {
+                val duration = it.toString().toDuration()
+                onDurationEntered(duration)
+            }
     }
 
     Box {
@@ -74,6 +100,12 @@ fun DurationInput(
             )
         ) {
             BasicTextField(
+                modifier = Modifier
+                    .alpha(0f)
+                    .focusRequester(focusRequester)
+                    .onFocusChanged { focusState ->
+                        isFocused = focusState.isFocused
+                    },
                 state = textFieldState,
                 inputTransformation = {
                     val digits = asCharSequence()
@@ -83,19 +115,15 @@ fun DurationInput(
                         .toString()
 
                     replace(0, length, digits)
-
-                    onDurationEntered(digits)
                 },
-                keyboardOptions = KeyboardOptions(
-                    keyboardType = KeyboardType.Number
+                keyboardOptions = KeyboardOptions.Default.copy(
+                    keyboardType = KeyboardType.Number,
+                    imeAction = ImeAction.Done
                 ),
+                onKeyboardAction = {
+                    keyboardController?.hide()
+                },
                 cursorBrush = SolidColor(Color.Transparent),
-                modifier = Modifier
-                    .alpha(0f)
-                    .focusRequester(focusRequester)
-                    .onFocusChanged { focusState ->
-                        isFocused = focusState.isFocused
-                    },
                 textStyle = MaterialTheme.typography.labelSmall
                     .copy(
                         color = MaterialTheme.colorScheme.onSurface,
@@ -173,7 +201,7 @@ private fun DurationInputPreview() {
     SessionTimerTheme {
         Surface {
             DurationInput(
-                initialDuration = "010203",
+                initialDuration = 1.3.hours,
                 onDurationEntered = { }
             )
         }

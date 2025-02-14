@@ -128,8 +128,8 @@ internal fun TaskGroupEditorReady(
                     onColorClick = { color, onColor ->
                         onAction(
                             TaskGroupEditorAction.SetColor(
-                                color,
-                                onColor
+                                newColor = color,
+                                newOnColor = onColor
                             )
                         )
                     }
@@ -145,8 +145,8 @@ internal fun TaskGroupEditorReady(
                     onPlayModeChanged = { playMode, numberOfRandomTasks ->
                         onAction(
                             TaskGroupEditorAction.SetPlayMode(
-                                playMode,
-                                numberOfRandomTasks
+                                newPlayMode = playMode,
+                                newNumberOfRandomTasks = numberOfRandomTasks
                             )
                         )
                     }
@@ -157,10 +157,10 @@ internal fun TaskGroupEditorReady(
             LabeledSection(labelRes = R.string.default_task_duration) {
                 DurationInput(
                     initialDuration = uiTaskGroup.defaultTaskDuration,
-                    onDurationEntered = { newDurationString ->
+                    onDurationEntered = { duration ->
                         onAction(
                             TaskGroupEditorAction.OnDurationEntered(
-                                newDurationString = newDurationString,
+                                newDuration = duration,
                             )
                         )
                     }

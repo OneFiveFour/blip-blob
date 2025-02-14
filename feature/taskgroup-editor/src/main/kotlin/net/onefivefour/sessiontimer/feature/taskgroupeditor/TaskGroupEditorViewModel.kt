@@ -16,8 +16,6 @@ import kotlinx.coroutines.flow.debounce
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import net.onefivefour.sessiontimer.core.common.domain.model.PlayMode
-import net.onefivefour.sessiontimer.core.common.extensions.toDuration
-import net.onefivefour.sessiontimer.core.common.extensions.toIntOrZero
 import net.onefivefour.sessiontimer.core.usecases.api.taskgroup.GetTaskGroupUseCase
 import net.onefivefour.sessiontimer.core.usecases.api.taskgroup.SetTaskGroupColorUseCase
 import net.onefivefour.sessiontimer.core.usecases.api.taskgroup.SetTaskGroupDefaultTaskDurationUseCase
@@ -85,13 +83,13 @@ internal class TaskGroupEditorViewModel @Inject constructor(
             }
 
             is TaskGroupEditorAction.OnDurationEntered -> {
-                onDurationEntered(action.newDurationString)
+                onDurationEntered(action.newDuration)
             }
         }
     }
 
-    private fun onDurationEntered(newNumberString: String) {
-        durationInputFlow.tryEmit(newNumberString.toDuration())
+    private fun onDurationEntered(newDuration: Duration) {
+        durationInputFlow.tryEmit(newDuration)
     }
 
     private fun setTitle(newTitle: String) {
