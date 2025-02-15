@@ -2,10 +2,9 @@ package net.onefivefour.sessiontimer.feature.taskgroupeditor
 
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
+import kotlin.time.Duration.Companion.minutes
 import net.onefivefour.sessiontimer.core.common.domain.model.PlayMode
 import net.onefivefour.sessiontimer.core.theme.taskGroupColors
-import kotlin.time.Duration.Companion.minutes
-
 
 internal val task1 = UiTask(
     id = 1L,
@@ -23,7 +22,7 @@ internal val task3 = UiTask(
 internal val fakeTasks = listOf(
     task1,
     task2,
-    task3,
+    task3
 )
 
 @Composable

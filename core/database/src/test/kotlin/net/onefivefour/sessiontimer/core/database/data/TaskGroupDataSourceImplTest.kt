@@ -4,6 +4,7 @@ import app.cash.sqldelight.driver.jdbc.sqlite.JdbcSqliteDriver
 import io.mockk.coEvery
 import io.mockk.coVerify
 import io.mockk.mockk
+import kotlin.time.Duration.Companion.minutes
 import kotlinx.coroutines.test.runTest
 import net.onefivefour.sessiontimer.core.common.domain.model.PlayMode
 import net.onefivefour.sessiontimer.core.database.Database
@@ -12,7 +13,6 @@ import net.onefivefour.sessiontimer.core.test.StandardTestDispatcherRule
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
-import kotlin.time.Duration.Companion.minutes
 
 internal class TaskGroupDataSourceImplTest {
 
@@ -93,7 +93,9 @@ internal class TaskGroupDataSourceImplTest {
     fun `GIVEN a sessionId WHEN getById is called THEN the call is delegated to taskGroupQueries`() =
         runTest {
             // GIVEN
-            coEvery { taskGroupQueries.denormalizedTaskGroupView(any()).executeAsOneOrNull() } returns null
+            coEvery {
+                taskGroupQueries.denormalizedTaskGroupView(any()).executeAsOneOrNull()
+            } returns null
             val sessionId = 123L
 
             // WHEN

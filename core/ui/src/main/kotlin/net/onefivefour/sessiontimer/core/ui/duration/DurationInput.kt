@@ -38,12 +38,12 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import kotlin.time.Duration
+import kotlin.time.Duration.Companion.hours
 import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.flow.debounce
 import net.onefivefour.sessiontimer.core.theme.SessionTimerTheme
 import net.onefivefour.sessiontimer.core.ui.R
-import kotlin.time.Duration
-import kotlin.time.Duration.Companion.hours
 
 internal val TILE_SIZE = 60.dp
 
@@ -53,9 +53,8 @@ fun DurationInput(
     modifier: Modifier = Modifier,
     initialDuration: Duration,
     requestFocus: Boolean = false,
-    onDurationEntered: (Duration) -> Unit,
+    onDurationEntered: (Duration) -> Unit
 ) {
-
     var isFocused by remember { mutableStateOf(requestFocus) }
 
     val focusRequester = remember { FocusRequester() }
@@ -90,13 +89,12 @@ fun DurationInput(
     }
 
     Box {
-
         // Hidden text field to capture keyboard input
         CompositionLocalProvider(
             LocalTextToolbar provides EmptyTextToolbar,
             LocalTextSelectionColors provides TextSelectionColors(
                 handleColor = Color.Transparent,
-                backgroundColor = Color.Transparent,
+                backgroundColor = Color.Transparent
             )
         ) {
             BasicTextField(
@@ -146,7 +144,6 @@ fun DurationInput(
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.spacedBy(8.dp)
         ) {
-
             // Hours
             CenteredTextBox(isFocused) {
                 Text(
@@ -157,7 +154,6 @@ fun DurationInput(
                     textAlign = TextAlign.Center
                 )
             }
-
 
             Text(
                 text = stringResource(R.string.colon),

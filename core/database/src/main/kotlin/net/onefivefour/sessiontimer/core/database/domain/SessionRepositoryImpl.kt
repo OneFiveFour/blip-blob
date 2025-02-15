@@ -15,7 +15,7 @@ import net.onefivefour.sessiontimer.core.database.Session as DatabaseSession
 import net.onefivefour.sessiontimer.core.database.data.SessionDataSource
 
 internal class SessionRepositoryImpl @Inject constructor(
-    private val sessionDataSource: SessionDataSource,
+    private val sessionDataSource: SessionDataSource
 ) : SessionRepository {
 
     override suspend fun newSession(title: String) {

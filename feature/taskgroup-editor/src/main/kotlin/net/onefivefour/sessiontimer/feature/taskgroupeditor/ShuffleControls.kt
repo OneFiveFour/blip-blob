@@ -31,7 +31,6 @@ internal fun ShuffleControls(
     onPlayModeChanged: (PlayMode, Int) -> Unit
 ) {
     Row(verticalAlignment = Alignment.CenterVertically) {
-
         // SEQUENCED
         Icon(
             modifier = Modifier
@@ -78,7 +77,6 @@ internal fun ShuffleControls(
         Spacer(modifier = Modifier.width(16.dp))
     }
 }
-
 
 @Preview
 @Preview(uiMode = UI_MODE_NIGHT_YES)

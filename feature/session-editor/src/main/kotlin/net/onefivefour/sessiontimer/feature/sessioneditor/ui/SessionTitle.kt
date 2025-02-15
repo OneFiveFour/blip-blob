@@ -25,15 +25,13 @@ import net.onefivefour.sessiontimer.feature.sessioneditor.model.UiSession
 import net.onefivefour.sessiontimer.feature.sessioneditor.viewmodel.SessionEditorAction
 
 @Composable
-internal fun SessionTitle(
-    uiSession: UiSession,
-    onAction: (SessionEditorAction) -> Unit,
-) {
+internal fun SessionTitle(uiSession: UiSession, onAction: (SessionEditorAction) -> Unit) {
     LabeledSection(
         modifier = Modifier.padding(horizontal = 24.dp),
-        labelRes = R.string.title,
+        labelRes = R.string.title
     ) {
         val textStyle = MaterialTheme.typography.titleMedium
+
         val offset = textStyle.topToAscentDp() - 4.dp
 
         val textFieldState = rememberTextFieldState()
@@ -53,8 +51,7 @@ internal fun SessionTitle(
                 .zIndex(1f)
                 .offset(y = offset)
                 .fillMaxWidth()
-                .clearFocusOnKeyboardDismiss()
-            ,
+                .clearFocusOnKeyboardDismiss(),
             inputTransformation = {
                 val newTitle = asCharSequence().toString()
                 onAction(SessionEditorAction.SetSessionTitle(newTitle))
@@ -63,11 +60,10 @@ internal fun SessionTitle(
             cursorBrush = SolidColor(MaterialTheme.colorScheme.onSurface),
             lineLimits = TextFieldLineLimits.SingleLine,
             textStyle = MaterialTheme.typography.titleMedium
-                .copy(color = MaterialTheme.colorScheme.onSurface),
+                .copy(color = MaterialTheme.colorScheme.onSurface)
         )
     }
 }
-
 
 @Preview
 @Preview(uiMode = UI_MODE_NIGHT_YES)

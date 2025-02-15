@@ -1,7 +1,7 @@
 package net.onefivefour.sessiontimer.core.common.domain.model
 
-import kotlinx.datetime.Clock
 import kotlin.time.Duration.Companion.seconds
+import kotlinx.datetime.Clock
 
 private val now = Clock.System.now()
 

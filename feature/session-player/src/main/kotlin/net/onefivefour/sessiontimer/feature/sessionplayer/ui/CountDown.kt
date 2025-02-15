@@ -12,15 +12,12 @@ import net.onefivefour.sessiontimer.core.theme.SessionTimerTheme
 import net.onefivefour.sessiontimer.feature.sessionplayer.model.UiTimerState
 
 @Composable
-internal fun CountDown(
-    modifier: Modifier = Modifier,
-    uiTimerState: UiTimerState
-) {
+internal fun CountDown(modifier: Modifier = Modifier, uiTimerState: UiTimerState) {
     if (uiTimerState !is UiTimerState.Active || uiTimerState.currentTask == null) {
         return
     }
     val remainingDuration = uiTimerState.currentTask.taskDuration - uiTimerState.elapsedTaskDuration
-    val formattedRemainer =DateUtils.formatElapsedTime(remainingDuration.inWholeSeconds + 1)
+    val formattedRemainer = DateUtils.formatElapsedTime(remainingDuration.inWholeSeconds + 1)
         .replace("(", "")
         .replace(")", "")
     Text(

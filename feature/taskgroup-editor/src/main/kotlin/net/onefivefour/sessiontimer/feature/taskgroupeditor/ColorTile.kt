@@ -14,7 +14,6 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
@@ -23,12 +22,7 @@ import net.onefivefour.sessiontimer.core.theme.SessionTimerTheme
 import net.onefivefour.sessiontimer.core.theme.taskGroupColors
 
 @Composable
-internal fun ColorTile(
-    color: Color,
-    isSelected: Boolean,
-    onClick: () -> Unit,
-) {
-
+internal fun ColorTile(color: Color, isSelected: Boolean, onClick: () -> Unit) {
     val animatedCornerRadius by animateDpAsState(
         targetValue = if (isSelected) 14.dp else 4.dp,
         animationSpec = tween(durationMillis = 300)

@@ -1,7 +1,6 @@
 package net.onefivefour.sessiontimer.core.ui.draghandler
 
-import android.content.res.Configuration
-import android.content.res.Configuration.*
+import android.content.res.Configuration.UI_MODE_NIGHT_YES
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column

@@ -1,7 +1,6 @@
 package net.onefivefour.sessiontimer.feature.taskgroupeditor
 
-import android.content.res.Configuration
-import android.content.res.Configuration.*
+import android.content.res.Configuration.UI_MODE_NIGHT_YES
 import androidx.annotation.DrawableRes
 import androidx.annotation.StringRes
 import androidx.compose.foundation.background
@@ -36,9 +35,13 @@ internal fun ShuffleButton(
             .padding(10.dp),
         painter = painterResource(id = iconRes),
         contentDescription = stringResource(contentDescriptionRes),
-        tint = if (isEnabled) MaterialTheme.colorScheme.onSurface else MaterialTheme.colorScheme.onSurface.copy(
-            alpha = 0.3f
-        )
+        tint = if (isEnabled) {
+            MaterialTheme.colorScheme.onSurface
+        } else {
+            MaterialTheme.colorScheme.onSurface.copy(
+                alpha = 0.3f
+            )
+        }
     )
 }
 

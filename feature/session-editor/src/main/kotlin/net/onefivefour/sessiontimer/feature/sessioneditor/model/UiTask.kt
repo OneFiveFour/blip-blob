@@ -1,7 +1,7 @@
 package net.onefivefour.sessiontimer.feature.sessioneditor.model
 
-import kotlinx.datetime.Instant
 import kotlin.time.Duration
+import kotlinx.datetime.Instant
 import net.onefivefour.sessiontimer.core.common.domain.model.Task
 
 internal data class UiTask(

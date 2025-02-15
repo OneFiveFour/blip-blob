@@ -6,6 +6,7 @@ import androidx.lifecycle.viewModelScope
 import androidx.navigation.toRoute
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
+import kotlin.time.Duration
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.collectLatest
@@ -23,7 +24,6 @@ import net.onefivefour.sessiontimer.core.usecases.api.taskgroup.NewTaskGroupUseC
 import net.onefivefour.sessiontimer.core.usecases.api.taskgroup.SetTaskGroupSortOrdersUseCase
 import net.onefivefour.sessiontimer.feature.sessioneditor.api.SessionEditorRoute
 import net.onefivefour.sessiontimer.feature.sessioneditor.model.toUiSession
-import kotlin.time.Duration
 
 @HiltViewModel
 internal class SessionEditorViewModel @Inject constructor(
@@ -64,11 +64,16 @@ internal class SessionEditorViewModel @Inject constructor(
             is SessionEditorAction.DeleteTaskGroup -> deleteTaskGroup(action.taskGroupId)
             is SessionEditorAction.CreateTask -> createTask(action.taskGroupId)
             is SessionEditorAction.DeleteTask -> deleteTask(action.taskId, action.taskGroupId)
-            is SessionEditorAction.UpdateTaskGroupSortOrders -> setTaskGroupSortOrders(action.taskGroupIds)
+            is SessionEditorAction.UpdateTaskGroupSortOrders -> setTaskGroupSortOrders(
+                action.taskGroupIds
+            )
             is SessionEditorAction.UpdateTaskSortOrders -> setTaskSortOrders(action.taskIds)
             is SessionEditorAction.SetTaskTitle -> setTaskTitle(action.taskId, action.newTitle)
             is SessionEditorAction.SetSessionTitle -> setSessionTitle(action.newTitle)
-            is SessionEditorAction.SetTaskDuration -> setTaskDuration(action.taskId, action.newDuration)
+            is SessionEditorAction.SetTaskDuration -> setTaskDuration(
+                action.taskId,
+                action.newDuration
+            )
         }
     }
 

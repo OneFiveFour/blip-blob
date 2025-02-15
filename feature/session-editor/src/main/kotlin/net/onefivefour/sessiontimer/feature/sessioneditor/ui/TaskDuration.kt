@@ -5,20 +5,19 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import kotlin.time.Duration
 import net.onefivefour.sessiontimer.core.ui.duration.DurationInput
 import net.onefivefour.sessiontimer.feature.sessioneditor.model.UiTask
-import kotlin.time.Duration
 
 @Composable
-internal fun TaskDuration(
-    uiTask: UiTask,
-    onDurationChanged: (Duration) -> Unit = { },
-) {
-
+internal fun TaskDuration(uiTask: UiTask, onDurationChanged: (Duration) -> Unit = { }) {
     val taskEditMode = LocalTaskEditMode.current
     val currentTaskEditMode = taskEditMode.value
 
-    if (currentTaskEditMode is TaskEditMode.TaskDuration && currentTaskEditMode.initialTaskId == uiTask.id) {
+    val isEditingDuration = currentTaskEditMode is TaskEditMode.TaskDuration &&
+        currentTaskEditMode.initialTaskId == uiTask.id
+
+    if (isEditingDuration) {
         DurationInput(
             initialDuration = uiTask.duration,
             requestFocus = true,
@@ -31,7 +30,7 @@ internal fun TaskDuration(
             },
             text = uiTask.duration.toString(),
             style = MaterialTheme.typography.labelSmall
-                .copy(color = MaterialTheme.colorScheme.onSurface),
+                .copy(color = MaterialTheme.colorScheme.onSurface)
         )
     }
 }

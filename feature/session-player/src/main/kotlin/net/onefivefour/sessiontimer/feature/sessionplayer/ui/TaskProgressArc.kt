@@ -11,7 +11,6 @@ import androidx.compose.ui.unit.dp
 import net.onefivefour.sessiontimer.core.theme.SessionTimerTheme
 import net.onefivefour.sessiontimer.feature.sessionplayer.model.UiTask
 import net.onefivefour.sessiontimer.feature.sessionplayer.model.UiTimerState
-import kotlin.time.Duration.Companion.seconds
 
 @Composable
 internal fun TaskProgressArc(

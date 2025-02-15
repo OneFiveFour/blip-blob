@@ -1,6 +1,6 @@
 package net.onefivefour.sessiontimer.core.ui.screentitle
 
-import android.content.res.Configuration.*
+import android.content.res.Configuration.UI_MODE_NIGHT_YES
 import androidx.annotation.StringRes
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -17,10 +17,7 @@ import net.onefivefour.sessiontimer.core.theme.SessionTimerTheme
 import net.onefivefour.sessiontimer.core.ui.R
 
 @Composable
-fun ScreenTitle(
-    modifier: Modifier = Modifier,
-    @StringRes titleRes: Int
-) {
+fun ScreenTitle(modifier: Modifier = Modifier, @StringRes titleRes: Int) {
     Text(
         modifier = modifier
             .fillMaxWidth()

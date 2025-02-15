@@ -5,15 +5,15 @@ import com.google.common.truth.Truth.assertThat
 import io.mockk.coEvery
 import io.mockk.coVerify
 import io.mockk.mockk
+import kotlin.time.Duration.Companion.minutes
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.test.runTest
-import net.onefivefour.sessiontimer.core.test.NOW_MILLIS
 import net.onefivefour.sessiontimer.core.common.domain.model.PlayMode
 import net.onefivefour.sessiontimer.core.database.DenormalizedTaskGroupView
 import net.onefivefour.sessiontimer.core.database.TaskGroup as DatabaseTaskGroup
 import net.onefivefour.sessiontimer.core.database.data.TaskGroupDataSource
+import net.onefivefour.sessiontimer.core.test.NOW_MILLIS
 import org.junit.Test
-import kotlin.time.Duration.Companion.minutes
 
 internal class TaskGroupRepositoryImplTest {
 
@@ -27,15 +27,17 @@ internal class TaskGroupRepositoryImplTest {
     fun `GIVEN task group data WHEN newTaskGroup is called THEN the call is delegated to taskGroupDataSource`() =
         runTest {
             // GIVEN
-            coEvery { taskGroupDataSource.insert(
-                title = any(),
-                color = any(),
-                onColor = any(),
-                playMode = any(),
-                numberOfRandomTasks = any(),
-                defaultTaskDuration = any(),
-                sessionId = any()
-            ) } returns Unit
+            coEvery {
+                taskGroupDataSource.insert(
+                    title = any(),
+                    color = any(),
+                    onColor = any(),
+                    playMode = any(),
+                    numberOfRandomTasks = any(),
+                    defaultTaskDuration = any(),
+                    sessionId = any()
+                )
+            } returns Unit
             val title = "Sample Task Group"
             val color = 0xFF0000L
             val onColor = 0xFFFF00L

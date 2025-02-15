@@ -8,8 +8,8 @@ import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.test.advanceUntilIdle
 import kotlinx.coroutines.test.runTest
-import net.onefivefour.sessiontimer.core.test.NOW
 import net.onefivefour.sessiontimer.core.common.domain.model.Session
+import net.onefivefour.sessiontimer.core.test.NOW
 import net.onefivefour.sessiontimer.core.test.StandardTestDispatcherRule
 import net.onefivefour.sessiontimer.core.usecases.api.session.DeleteSessionUseCase
 import net.onefivefour.sessiontimer.core.usecases.api.session.GetAllSessionsUseCase

@@ -2,7 +2,6 @@ package net.onefivefour.sessiontimer.feature.sessioneditor.viewmodel
 
 import kotlin.time.Duration
 
-
 internal sealed class SessionEditorAction {
     data object CreateTaskGroup : SessionEditorAction()
     data class DeleteTaskGroup(val taskGroupId: Long) : SessionEditorAction()

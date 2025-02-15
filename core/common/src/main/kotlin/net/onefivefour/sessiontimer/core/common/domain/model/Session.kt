@@ -1,7 +1,7 @@
 package net.onefivefour.sessiontimer.core.common.domain.model
 
-import kotlinx.datetime.Instant
 import kotlin.time.Duration
+import kotlinx.datetime.Instant
 
 data class Session(
     val id: Long,

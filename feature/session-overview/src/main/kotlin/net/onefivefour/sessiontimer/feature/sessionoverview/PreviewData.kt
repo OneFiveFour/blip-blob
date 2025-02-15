@@ -1,8 +1,7 @@
 package net.onefivefour.sessiontimer.feature.sessionoverview
 
-import kotlinx.datetime.Clock
 import kotlin.time.Duration.Companion.minutes
-
+import kotlinx.datetime.Clock
 
 private val uiSession1 = UiSession(
     id = 1L,

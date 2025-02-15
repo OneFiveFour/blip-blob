@@ -1,10 +1,9 @@
 package net.onefivefour.sessiontimer.feature.sessionplayer.ui
 
 import androidx.compose.ui.graphics.Color
+import kotlin.time.Duration.Companion.seconds
 import net.onefivefour.sessiontimer.feature.sessionplayer.model.UiTask
 import net.onefivefour.sessiontimer.feature.sessionplayer.model.UiTimerState
-import kotlin.time.Duration.Companion.seconds
-
 
 internal val task1 = UiTask(
     id = 1L,
@@ -33,7 +32,7 @@ internal val task3 = UiTask(
 internal val fakeTasks = listOf(
     task1,
     task2,
-    task3,
+    task3
 )
 
 internal val uiTimerStateActive = UiTimerState.Active(

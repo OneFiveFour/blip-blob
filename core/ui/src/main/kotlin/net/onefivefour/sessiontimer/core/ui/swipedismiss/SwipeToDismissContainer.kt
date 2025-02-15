@@ -1,6 +1,6 @@
 package net.onefivefour.sessiontimer.core.ui.swipedismiss
 
-//import androidx.compose.ui.graphics.lerp as lerpColor
+// import androidx.compose.ui.graphics.lerp as lerpColor
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.core.tween
 import androidx.compose.animation.fadeOut
@@ -40,7 +40,6 @@ fun <T> SwipeToDismissContainer(
     onDelete: (T) -> Unit,
     content: @Composable () -> Unit
 ) {
-
     var isRemoved by remember {
         mutableStateOf(false)
     }
@@ -81,7 +80,7 @@ fun <T> SwipeToDismissContainer(
                     swipeDismissState = state
                 )
             },
-            enableDismissFromStartToEnd = true,
+            enableDismissFromStartToEnd = true
         ) {
             content()
         }
@@ -89,11 +88,7 @@ fun <T> SwipeToDismissContainer(
 }
 
 @Composable
-private fun DeleteBackground(
-    modifier: Modifier,
-    swipeDismissState: SwipeToDismissBoxState
-) {
-
+private fun DeleteBackground(modifier: Modifier, swipeDismissState: SwipeToDismissBoxState) {
     val isStartToEnd = swipeDismissState.dismissDirection == SwipeToDismissBoxValue.StartToEnd
     val backgroundColor = when {
         isStartToEnd -> lerpColor(
@@ -117,11 +112,9 @@ private fun DeleteBackground(
             .fillMaxSize()
             .clip(RoundedCornerShape(8.dp))
             .background(backgroundColor)
-            .padding(start = 24.dp)
-        ,
+            .padding(start = 24.dp),
         contentAlignment = Alignment.CenterStart
     ) {
-
         Text(
             modifier = Modifier.offset(x = textOffset),
             text = stringResource(R.string.delete),

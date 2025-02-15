@@ -1,13 +1,13 @@
 package net.onefivefour.sessiontimer.feature.taskgroupeditor
 
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.toArgb
 import app.cash.turbine.test
 import com.google.common.truth.Truth.assertThat
 import io.mockk.coEvery
 import io.mockk.coVerify
 import io.mockk.mockk
 import kotlin.time.Duration
+import kotlin.time.Duration.Companion.minutes
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.test.advanceUntilIdle
@@ -26,7 +26,6 @@ import net.onefivefour.sessiontimer.core.usecases.api.taskgroup.SetTaskGroupTitl
 import net.onefivefour.sessiontimer.feature.taskgroupeditor.api.TaskGroupEditorRoute
 import org.junit.Rule
 import org.junit.Test
-import kotlin.time.Duration.Companion.minutes
 
 @OptIn(ExperimentalCoroutinesApi::class)
 internal class TaskGroupEditorViewModelTest {
@@ -47,7 +46,8 @@ internal class TaskGroupEditorViewModelTest {
 
     private val setTaskGroupPlayModeUseCase: SetTaskGroupPlayModeUseCase = mockk()
 
-    private val setTaskGroupDefaultTaskDurationUseCase: SetTaskGroupDefaultTaskDurationUseCase = mockk()
+    private val setTaskGroupDefaultTaskDurationUseCase: SetTaskGroupDefaultTaskDurationUseCase =
+        mockk()
 
     private fun sut() = TaskGroupEditorViewModel(
         savedStateHandle = savedStateHandleRule.savedStateHandleMock,

@@ -1,10 +1,10 @@
 package net.onefivefour.sessiontimer.core.database.test
 
-import net.onefivefour.sessiontimer.core.common.domain.model.PlayMode
-import net.onefivefour.sessiontimer.core.database.domain.DatabaseDefaultValues
 import kotlin.time.Duration
 import kotlin.time.Duration.Companion.minutes
 import kotlin.time.Duration.Companion.seconds
+import net.onefivefour.sessiontimer.core.common.domain.model.PlayMode
+import net.onefivefour.sessiontimer.core.database.domain.DatabaseDefaultValues
 
 val FAKE_DB_DEFAULT_VALUES = object : DatabaseDefaultValues {
 

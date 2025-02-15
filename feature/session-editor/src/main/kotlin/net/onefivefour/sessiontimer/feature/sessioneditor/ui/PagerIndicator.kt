@@ -34,7 +34,6 @@ internal fun PagerIndicator(
     uiSession: UiSession,
     pagerState: PagerState
 ) {
-
     val coroutineScope = rememberCoroutineScope()
 
     EnsureIndicatorCentered(
@@ -45,7 +44,10 @@ internal fun PagerIndicator(
     LazyRow(
         modifier = modifier,
         state = lazyListState,
-        horizontalArrangement = Arrangement.spacedBy(INDICATOR_SPACING_DP, alignment = Alignment.End),
+        horizontalArrangement = Arrangement.spacedBy(
+            INDICATOR_SPACING_DP,
+            alignment = Alignment.End
+        ),
         verticalAlignment = Alignment.CenterVertically
     ) {
         items(uiSession.taskGroups.size) { index ->
@@ -69,25 +71,21 @@ internal fun PagerIndicator(
 }
 
 @Composable
-private fun EnsureIndicatorCentered(
-    pagerState: PagerState,
-    lazyListState: LazyListState,
-) {
+private fun EnsureIndicatorCentered(pagerState: PagerState, lazyListState: LazyListState) {
     val itemSize = INDICATOR_SIZE_DP.toPx()
     val itemSpacing = INDICATOR_SPACING_DP.toPx()
 
     LaunchedEffect(pagerState.currentPage) {
-
         val targetIndex = pagerState.currentPage
 
         val viewportWidth =
             lazyListState.layoutInfo.viewportEndOffset -
-                    lazyListState.layoutInfo.viewportStartOffset
+                lazyListState.layoutInfo.viewportStartOffset
 
         val currentOffset =
             lazyListState.firstVisibleItemScrollOffset +
-                    (lazyListState.firstVisibleItemIndex * itemSize) +
-                    (lazyListState.firstVisibleItemIndex * itemSpacing)
+                (lazyListState.firstVisibleItemIndex * itemSize) +
+                (lazyListState.firstVisibleItemIndex * itemSpacing)
 
         val itemWidth = targetIndex * itemSize
         val spacingWidth = targetIndex * itemSpacing
@@ -102,11 +100,7 @@ private fun EnsureIndicatorCentered(
 }
 
 @Composable
-private fun calculateAnimatedSize(
-    index: Int,
-    pagerState: PagerState,
-): Dp {
-
+private fun calculateAnimatedSize(index: Int, pagerState: PagerState): Dp {
     val maxSize = 32.dp
     val halfSize = (maxSize + INDICATOR_SIZE_DP) / 2
 

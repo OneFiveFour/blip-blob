@@ -7,6 +7,8 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.navigation.toRoute
 import dagger.hilt.android.lifecycle.HiltViewModel
+import javax.inject.Inject
+import kotlin.time.Duration
 import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -22,8 +24,6 @@ import net.onefivefour.sessiontimer.core.usecases.api.taskgroup.SetTaskGroupDefa
 import net.onefivefour.sessiontimer.core.usecases.api.taskgroup.SetTaskGroupPlayModeUseCase
 import net.onefivefour.sessiontimer.core.usecases.api.taskgroup.SetTaskGroupTitleUseCase
 import net.onefivefour.sessiontimer.feature.taskgroupeditor.api.TaskGroupEditorRoute
-import javax.inject.Inject
-import kotlin.time.Duration
 
 @OptIn(FlowPreview::class)
 @HiltViewModel
@@ -33,7 +33,7 @@ internal class TaskGroupEditorViewModel @Inject constructor(
     private val setTitle: SetTaskGroupTitleUseCase,
     private val setColor: SetTaskGroupColorUseCase,
     private val setPlayMode: SetTaskGroupPlayModeUseCase,
-    private val setDefaultTaskDuration: SetTaskGroupDefaultTaskDurationUseCase,
+    private val setDefaultTaskDuration: SetTaskGroupDefaultTaskDurationUseCase
 ) : ViewModel() {
 
     private val taskGroupId = savedStateHandle.toRoute<TaskGroupEditorRoute>().taskGroupId
@@ -61,7 +61,7 @@ internal class TaskGroupEditorViewModel @Inject constructor(
                     doWhenReady { taskGroup ->
                         setDefaultTaskDuration(
                             taskGroupId = taskGroup.id,
-                            newDefaultTaskDuration = newDefaultTaskDuration,
+                            newDefaultTaskDuration = newDefaultTaskDuration
                         )
                     }
                 }

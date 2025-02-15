@@ -19,7 +19,7 @@ import net.onefivefour.sessiontimer.core.ui.R
 fun LabeledSection(
     modifier: Modifier = Modifier,
     @StringRes labelRes: Int,
-    content: @Composable () -> Unit,
+    content: @Composable () -> Unit
 ) {
     Column(modifier = modifier) {
         content()

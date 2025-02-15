@@ -8,5 +8,4 @@ internal sealed class TaskEditMode {
 
     val isEditing: Boolean
         get() = this !is None
-
 }

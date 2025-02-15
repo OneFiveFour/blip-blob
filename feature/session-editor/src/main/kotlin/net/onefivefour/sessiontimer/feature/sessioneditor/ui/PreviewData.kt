@@ -2,13 +2,13 @@ package net.onefivefour.sessiontimer.feature.sessioneditor.ui
 
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
+import kotlin.time.Duration.Companion.minutes
+import kotlin.time.Duration.Companion.seconds
 import kotlinx.datetime.Clock
 import net.onefivefour.sessiontimer.core.common.domain.model.PlayMode
 import net.onefivefour.sessiontimer.core.theme.taskGroupColors
-import kotlin.time.Duration.Companion.seconds
 import net.onefivefour.sessiontimer.feature.sessioneditor.model.UiTask
 import net.onefivefour.sessiontimer.feature.sessioneditor.model.UiTaskGroup
-import kotlin.time.Duration.Companion.minutes
 
 private val now = Clock.System.now()
 

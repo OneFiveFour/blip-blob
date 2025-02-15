@@ -33,7 +33,7 @@ internal fun TaskList(
     modifier: Modifier,
     lazyListState: LazyListState,
     uiTaskGroup: UiTaskGroup,
-    onAction: (SessionEditorAction) -> Unit,
+    onAction: (SessionEditorAction) -> Unit
 ) {
     var taskList by remember(uiTaskGroup.tasks) { mutableStateOf(uiTaskGroup.tasks) }
 
@@ -91,9 +91,7 @@ internal fun TaskList(
                     onAction = onAction,
                     focusRequester = focusRequester
                 )
-
             } else {
-
                 TaskItem(
                     modifier = Modifier,
                     reorderableData = reorderableState to haptic,
@@ -115,7 +113,6 @@ internal fun TaskList(
         }
     }
 }
-
 
 @Preview
 @Preview(uiMode = UI_MODE_NIGHT_YES)

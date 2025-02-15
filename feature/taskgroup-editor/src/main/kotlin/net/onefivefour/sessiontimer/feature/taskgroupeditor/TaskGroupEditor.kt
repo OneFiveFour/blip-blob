@@ -7,7 +7,7 @@ import androidx.compose.runtime.Composable
 internal fun TaskGroupEditor(
     uiState: UiState,
     onAction: (TaskGroupEditorAction) -> Unit,
-    goBack: () -> Unit,
+    goBack: () -> Unit
 ) {
     when (uiState) {
         UiState.Initial -> {
@@ -25,4 +25,3 @@ internal fun TaskGroupEditor(
         }
     }
 }
-

@@ -11,12 +11,12 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import kotlin.time.Duration.Companion.seconds
 import kotlinx.datetime.Clock
 import net.onefivefour.sessiontimer.core.theme.SessionTimerTheme
+import net.onefivefour.sessiontimer.core.ui.R as UiR
 import net.onefivefour.sessiontimer.core.ui.screentitle.ScreenTitle
 import net.onefivefour.sessiontimer.core.ui.sqarebutton.SquareButton
-import kotlin.time.Duration.Companion.seconds
-import net.onefivefour.sessiontimer.core.ui.R as UiR
 
 @Composable
 internal fun SessionOverviewReady(
@@ -48,7 +48,6 @@ internal fun SessionOverviewReady(
         )
     }
 }
-
 
 @Preview
 @Preview(uiMode = Configuration.UI_MODE_NIGHT_YES)

@@ -7,9 +7,9 @@ import io.mockk.coVerify
 import io.mockk.mockk
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.test.runTest
-import net.onefivefour.sessiontimer.core.test.NOW
 import net.onefivefour.sessiontimer.core.common.domain.model.Session
 import net.onefivefour.sessiontimer.core.database.domain.SessionRepository
+import net.onefivefour.sessiontimer.core.test.NOW
 import org.junit.Test
 
 internal class GetAllSessionsUseCaseTest {

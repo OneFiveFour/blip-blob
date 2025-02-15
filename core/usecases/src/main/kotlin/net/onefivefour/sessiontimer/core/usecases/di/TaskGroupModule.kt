@@ -48,11 +48,15 @@ internal interface TaskGroupModule {
 
     @Binds
     @ViewModelScoped
-    fun bindSetTaskGroupPlayModeUseCase(impl: SetTaskGroupPlayModeUseCaseImpl): SetTaskGroupPlayModeUseCase
+    fun bindSetTaskGroupPlayModeUseCase(
+        impl: SetTaskGroupPlayModeUseCaseImpl
+    ): SetTaskGroupPlayModeUseCase
 
     @Binds
     @ViewModelScoped
-    fun bindSetTaskGroupDefaultTaskDurationUseCase(impl: SetTaskGroupDefaultTaskDurationUseCaseImpl): SetTaskGroupDefaultTaskDurationUseCase
+    fun bindSetTaskGroupDefaultTaskDurationUseCase(
+        impl: SetTaskGroupDefaultTaskDurationUseCaseImpl
+    ): SetTaskGroupDefaultTaskDurationUseCase
 
     @Binds
     @ViewModelScoped

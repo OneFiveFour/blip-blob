@@ -9,7 +9,6 @@ import net.onefivefour.sessiontimer.feature.sessionplayer.model.UiState
 
 @Composable
 fun SessionPlayerScreen() {
-
     val viewModel: SessionScreenViewModel = hiltViewModel()
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
 

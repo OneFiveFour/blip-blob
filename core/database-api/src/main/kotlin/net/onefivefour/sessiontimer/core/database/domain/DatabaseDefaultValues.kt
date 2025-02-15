@@ -1,7 +1,7 @@
 package net.onefivefour.sessiontimer.core.database.domain
 
-import net.onefivefour.sessiontimer.core.common.domain.model.PlayMode
 import kotlin.time.Duration
+import net.onefivefour.sessiontimer.core.common.domain.model.PlayMode
 
 interface DatabaseDefaultValues {
 

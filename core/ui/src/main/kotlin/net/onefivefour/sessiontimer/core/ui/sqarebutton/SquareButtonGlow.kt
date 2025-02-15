@@ -19,7 +19,7 @@ internal fun ContentDrawScope.squareButtonGlow(
     glowColor: Color,
     backgroundColor: Color,
     animatedPercent: Animatable<Float, AnimationVector1D>,
-    cornerRadius: Dp,
+    cornerRadius: Dp
 ) {
     val cornerRadiusPx = cornerRadius.toPx()
 

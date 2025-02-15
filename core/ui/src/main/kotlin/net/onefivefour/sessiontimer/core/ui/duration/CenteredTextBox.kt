@@ -21,10 +21,7 @@ import androidx.compose.ui.unit.dp
 import net.onefivefour.sessiontimer.core.theme.SessionTimerTheme
 
 @Composable
-internal fun CenteredTextBox(
-    isFocused: Boolean,
-    content: @Composable () -> Unit,
-) {
+internal fun CenteredTextBox(isFocused: Boolean, content: @Composable () -> Unit) {
     Box(
         contentAlignment = Alignment.Center,
         modifier = Modifier
@@ -33,7 +30,7 @@ internal fun CenteredTextBox(
             .background(MaterialTheme.colorScheme.surfaceVariant)
             .border(
                 width = 2.dp,
-                color =  when (isFocused) {
+                color = when (isFocused) {
                     true -> MaterialTheme.colorScheme.onSurface
                     else -> Color.Transparent
                 },

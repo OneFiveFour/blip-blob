@@ -7,7 +7,7 @@ internal fun Duration.toSixDigitsString() = toComponents { h, m, s, _ ->
     String.format(Locale.getDefault(), "%02d%02d%02d", h, m, s)
 }
 
-internal fun String.toDuration() : Duration {
+internal fun String.toDuration(): Duration {
     val newHours = this
         .take(2)
 
@@ -19,8 +19,8 @@ internal fun String.toDuration() : Duration {
         .takeLast(2)
 
     val newTotalSeconds = newHours.toIntOrZero() * 3600 +
-            newMinutes.toIntOrZero() * 60 +
-            newSeconds.toIntOrZero()
+        newMinutes.toIntOrZero() * 60 +
+        newSeconds.toIntOrZero()
 
     return Duration.parse("${newTotalSeconds}s")
 }

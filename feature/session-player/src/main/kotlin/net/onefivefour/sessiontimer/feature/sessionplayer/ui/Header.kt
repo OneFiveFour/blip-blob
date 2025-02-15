@@ -11,11 +11,11 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
+import kotlin.time.Duration.Companion.seconds
 import net.onefivefour.sessiontimer.core.theme.SessionTimerTheme
 import net.onefivefour.sessiontimer.feature.sessionplayer.R
 import net.onefivefour.sessiontimer.feature.sessionplayer.model.UiState
 import net.onefivefour.sessiontimer.feature.sessionplayer.model.UiTimerState
-import kotlin.time.Duration.Companion.seconds
 
 @Composable
 internal fun Header(

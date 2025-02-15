@@ -1,11 +1,13 @@
 package net.onefivefour.sessiontimer.feature.taskgroupeditor
 
 import android.content.res.Configuration.UI_MODE_NIGHT_YES
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.size
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
-import androidx.compose.runtime.*
+import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
@@ -13,9 +15,8 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import net.onefivefour.sessiontimer.core.common.domain.model.PlayMode
-import net.onefivefour.sessiontimer.core.ui.R as UiR
 import net.onefivefour.sessiontimer.core.theme.SessionTimerTheme
-
+import net.onefivefour.sessiontimer.core.ui.R as UiR
 
 @Composable
 internal fun PlayModeSelection(
@@ -23,11 +24,9 @@ internal fun PlayModeSelection(
     numberOfRandomTasks: Int,
     numberOfTasks: Int,
     gapSize: Dp,
-    onPlayModeChanged: (PlayMode, Int) -> Unit,
+    onPlayModeChanged: (PlayMode, Int) -> Unit
 ) {
-
     Row(horizontalArrangement = Arrangement.spacedBy(gapSize)) {
-
         // Sequence Button
         PlayModeButton(
             isSelected = playMode == PlayMode.SEQUENCE,
@@ -54,12 +53,8 @@ internal fun PlayModeSelection(
                 }
             )
         }
-
     }
 }
-
-
-
 
 @Preview
 @Preview(uiMode = UI_MODE_NIGHT_YES)

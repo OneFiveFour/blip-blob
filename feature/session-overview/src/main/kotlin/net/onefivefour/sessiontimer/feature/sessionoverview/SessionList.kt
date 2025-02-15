@@ -1,15 +1,12 @@
 package net.onefivefour.sessiontimer.feature.sessionoverview
 
-import android.content.res.Configuration
-import android.content.res.Configuration.*
-import androidx.compose.foundation.background
+import android.content.res.Configuration.UI_MODE_NIGHT_YES
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.rememberLazyListState
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -53,14 +50,12 @@ internal fun SessionList(
         state = lazyListState,
         verticalArrangement = Arrangement.spacedBy(38.dp)
     ) {
-
         items(
             items = sessionList,
             key = { session -> session.createdAt.toEpochMilliseconds() }
         ) { session ->
 
             ReorderableItem(reorderableLazyColumnState, session.createdAt.toEpochMilliseconds()) {
-
                 val interactionSource = remember { MutableInteractionSource() }
 
                 SwipeToDismissContainer(
@@ -68,7 +63,6 @@ internal fun SessionList(
                     item = session,
                     onDelete = { onAction(SessionOverviewAction.DeleteSession(session.id)) }
                 ) {
-
                     SessionItem(
                         modifier = Modifier
                             .longPressDraggableHandle(
@@ -102,8 +96,8 @@ private fun SessionListPreview() {
         Surface {
             SessionList(
                 uiState = UiState.Ready(uiSessionList),
-                onAction = {  },
-                onStartSession = {  },
+                onAction = { },
+                onStartSession = { },
                 onEditSession = { _ -> }
             )
         }

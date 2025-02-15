@@ -29,10 +29,7 @@ internal class TaskDataSourceImpl @Inject constructor(
         }
     }
 
-    override suspend fun setTaskTitle(
-        taskId: Long,
-        title: String
-    ) {
+    override suspend fun setTaskTitle(taskId: Long, title: String) {
         withContext(dispatcher) {
             queries.setTaskTitle(
                 title = title,

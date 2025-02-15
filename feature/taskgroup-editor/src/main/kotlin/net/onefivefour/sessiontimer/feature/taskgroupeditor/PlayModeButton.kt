@@ -20,7 +20,7 @@ import net.onefivefour.sessiontimer.core.theme.SessionTimerTheme
 internal fun PlayModeButton(
     isSelected: Boolean,
     onClick: () -> Unit,
-    content: @Composable (() -> Unit)? = null,
+    content: @Composable (() -> Unit)? = null
 ) {
     Box(
         modifier = selectionBorder(isSelected)
@@ -56,8 +56,8 @@ private fun PlayModeButtonPreview() {
         Surface {
             PlayModeButton(
                 isSelected = false,
-                onClick = {  },
-                content = {  }
+                onClick = { },
+                content = { }
             )
         }
     }

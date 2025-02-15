@@ -31,9 +31,8 @@ fun SquareButton(
     @ColorInt backgroundColor: Color = MaterialTheme.colorScheme.surface,
     size: Dp = 64.dp,
     cornerRadius: Dp = 8.dp,
-    onClick: () -> Unit,
+    onClick: () -> Unit
 ) {
-
     val interactionSource = remember { MutableInteractionSource() }
 
     Box(
@@ -50,7 +49,6 @@ fun SquareButton(
             ),
         contentAlignment = Alignment.Center
     ) {
-
         if (iconRes != null) {
             Icon(
                 painter = painterResource(iconRes),

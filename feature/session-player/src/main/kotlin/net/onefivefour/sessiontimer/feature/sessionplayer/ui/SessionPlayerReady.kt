@@ -14,15 +14,14 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import kotlin.time.Duration.Companion.seconds
 import net.onefivefour.sessiontimer.core.theme.SessionTimerTheme
 import net.onefivefour.sessiontimer.feature.sessionplayer.SessionTimerViewModel
 import net.onefivefour.sessiontimer.feature.sessionplayer.model.UiState
 import net.onefivefour.sessiontimer.feature.sessionplayer.model.UiTimerState
-import kotlin.time.Duration.Companion.seconds
 
 @Composable
 internal fun SessionPlayerReady(uiState: UiState.Ready) {
-
     val timerViewModel: SessionTimerViewModel = hiltViewModel()
     val uiTimerState by timerViewModel.uiTimerState.collectAsStateWithLifecycle()
 
@@ -46,7 +45,6 @@ private fun SessionPlayerReadyInternal(
     onAction: (SessionPlayerAction) -> Unit
 ) {
     Box(Modifier.fillMaxSize()) {
-
         Header(
             modifier = Modifier.align(Alignment.TopCenter),
             uiState = uiState,
@@ -62,8 +60,7 @@ private fun SessionPlayerReadyInternal(
         Controls(
             modifier = Modifier
                 .align(Alignment.BottomCenter)
-                .padding(bottom = 16.dp)
-            ,
+                .padding(bottom = 16.dp),
             uiTimerState = { uiTimerState },
             onAction = onAction
         )

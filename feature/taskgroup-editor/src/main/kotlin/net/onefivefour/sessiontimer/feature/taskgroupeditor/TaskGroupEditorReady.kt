@@ -30,13 +30,13 @@ import androidx.compose.ui.zIndex
 import net.onefivefour.sessiontimer.core.taskgroupeditor.R
 import net.onefivefour.sessiontimer.core.theme.SessionTimerTheme
 import net.onefivefour.sessiontimer.core.theme.taskGroupColors
+import net.onefivefour.sessiontimer.core.ui.R as UiR
 import net.onefivefour.sessiontimer.core.ui.duration.DurationInput
 import net.onefivefour.sessiontimer.core.ui.label.LabeledSection
 import net.onefivefour.sessiontimer.core.ui.modifier.clearFocusOnKeyboardDismiss
 import net.onefivefour.sessiontimer.core.ui.screentitle.ScreenTitle
 import net.onefivefour.sessiontimer.core.ui.sqarebutton.SquareButton
 import net.onefivefour.sessiontimer.core.ui.utils.topToAscentDp
-import net.onefivefour.sessiontimer.core.ui.R as UiR
 
 internal val TILE_SIZE_DP = 56.dp
 
@@ -46,9 +46,8 @@ internal val MINIMAL_GAP_SIZE_DP = 8.dp
 internal fun TaskGroupEditorReady(
     uiTaskGroup: UiTaskGroup,
     onAction: (TaskGroupEditorAction) -> Unit,
-    goBack: () -> Unit,
+    goBack: () -> Unit
 ) {
-
     val scrollState = rememberScrollState()
 
     BoxWithConstraints(
@@ -60,7 +59,6 @@ internal fun TaskGroupEditorReady(
                 bottom = 24.dp
             )
     ) {
-
         val density = LocalDensity.current
 
         val (columnCount, gapSizeDp) = remember(constraints.maxWidth, density) {
@@ -85,7 +83,6 @@ internal fun TaskGroupEditorReady(
                 .verticalScroll(scrollState),
             verticalArrangement = Arrangement.spacedBy(21.dp)
         ) {
-
             LabeledSection(labelRes = R.string.title) {
                 val textStyle = MaterialTheme.typography.titleMedium
                 val offset = textStyle.topToAscentDp() - 4.dp
@@ -115,7 +112,7 @@ internal fun TaskGroupEditorReady(
                     cursorBrush = SolidColor(MaterialTheme.colorScheme.onSurface),
                     lineLimits = TextFieldLineLimits.SingleLine,
                     textStyle = MaterialTheme.typography.titleMedium
-                        .copy(color = MaterialTheme.colorScheme.onSurface),
+                        .copy(color = MaterialTheme.colorScheme.onSurface)
                 )
             }
 
@@ -153,14 +150,13 @@ internal fun TaskGroupEditorReady(
                 )
             }
 
-
             LabeledSection(labelRes = R.string.default_task_duration) {
                 DurationInput(
                     initialDuration = uiTaskGroup.defaultTaskDuration,
                     onDurationEntered = { duration ->
                         onAction(
                             TaskGroupEditorAction.OnDurationEntered(
-                                newDuration = duration,
+                                newDuration = duration
                             )
                         )
                     }

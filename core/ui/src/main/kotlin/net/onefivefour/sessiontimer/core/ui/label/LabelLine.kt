@@ -22,10 +22,7 @@ import net.onefivefour.sessiontimer.core.ui.R
 import net.onefivefour.sessiontimer.core.ui.utils.topToAscentDp
 
 @Composable
-internal fun LabelLine(
-    modifier: Modifier = Modifier,
-    @StringRes labelRes: Int,
-) {
+internal fun LabelLine(modifier: Modifier = Modifier, @StringRes labelRes: Int) {
     val labelTextStyle = MaterialTheme.typography.labelSmall
 
     val textMeasurer = rememberTextMeasurer()

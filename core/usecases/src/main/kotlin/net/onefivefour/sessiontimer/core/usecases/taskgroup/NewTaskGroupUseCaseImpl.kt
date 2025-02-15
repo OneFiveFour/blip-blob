@@ -11,7 +11,7 @@ import net.onefivefour.sessiontimer.core.usecases.api.taskgroup.NewTaskGroupUseC
 class NewTaskGroupUseCaseImpl @Inject constructor(
     private val taskGroupRepository: TaskGroupRepository,
     private val taskRepository: TaskRepository,
-    private val defaultValues: DatabaseDefaultValues,
+    private val defaultValues: DatabaseDefaultValues
 ) : NewTaskGroupUseCase {
 
     override suspend fun execute(sessionId: Long) {

@@ -9,7 +9,6 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
-import androidx.compose.foundation.layout.widthIn
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
@@ -17,23 +16,19 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
+import kotlin.time.Duration.Companion.seconds
 import net.onefivefour.sessiontimer.core.theme.SessionTimerTheme
 import net.onefivefour.sessiontimer.feature.sessionplayer.model.UiState
 import net.onefivefour.sessiontimer.feature.sessionplayer.model.UiTimerState
-import kotlin.time.Duration.Companion.seconds
 
 @Composable
 internal fun ProgressBar(
     modifier: Modifier = Modifier,
     uiState: UiState.Ready,
-    uiTimerState: UiTimerState,
+    uiTimerState: UiTimerState
 ) {
-
     Box(
         modifier = modifier
             .fillMaxWidth()
@@ -85,7 +80,6 @@ internal fun ProgressBar(
         )
     }
 }
-
 
 @Preview
 @Preview(uiMode = UI_MODE_NIGHT_YES)

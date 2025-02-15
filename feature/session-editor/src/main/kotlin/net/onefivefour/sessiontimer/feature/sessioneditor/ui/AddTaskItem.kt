@@ -27,20 +27,16 @@ import net.onefivefour.sessiontimer.feature.sessioneditor.viewmodel.SessionEdito
 internal fun AddTaskItem(
     modifier: Modifier = Modifier,
     uiTaskGroup: UiTaskGroup,
-    onAction: (SessionEditorAction) -> Unit,
+    onAction: (SessionEditorAction) -> Unit
 ) {
-
     Row(
         modifier = modifier
             .alpha(0.4f)
-            .height(64.dp)
+            .height(TASK_ITEM_HEIGHT)
             .background(MaterialTheme.colorScheme.background)
-            .clickable {
-                onAction(SessionEditorAction.CreateTask(uiTaskGroup.id))
-            },
+            .clickable { onAction(SessionEditorAction.CreateTask(uiTaskGroup.id)) },
         verticalAlignment = Alignment.CenterVertically
     ) {
-
         DragHandler()
 
         Spacer(Modifier.width(12.dp))
@@ -50,13 +46,13 @@ internal fun AddTaskItem(
                 .weight(1f),
             text = stringResource(R.string.add_task),
             style = MaterialTheme.typography.titleSmall
-                .copy(color = MaterialTheme.colorScheme.onSurface),
+                .copy(color = MaterialTheme.colorScheme.onSurface)
         )
 
         Text(
             text = uiTaskGroup.defaultTaskDuration.toString(),
             style = MaterialTheme.typography.labelSmall
-                .copy(color = MaterialTheme.colorScheme.onSurface),
+                .copy(color = MaterialTheme.colorScheme.onSurface)
         )
     }
 }

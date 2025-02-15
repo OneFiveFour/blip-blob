@@ -23,9 +23,8 @@ internal fun ColorGrid(
     selectedColor: Color,
     columnsCount: Int,
     gapSize: Dp,
-    onColorClick: (Color, Color) -> Unit,
+    onColorClick: (Color, Color) -> Unit
 ) {
-
     val rowsCount = (colors.size + columnsCount - 1) / columnsCount
 
     Column(
@@ -53,7 +52,6 @@ internal fun ColorGrid(
         }
     }
 }
-
 
 @Preview
 @Preview(uiMode = UI_MODE_NIGHT_YES)

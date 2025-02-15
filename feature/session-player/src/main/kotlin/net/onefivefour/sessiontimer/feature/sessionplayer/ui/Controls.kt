@@ -26,7 +26,7 @@ import net.onefivefour.sessiontimer.feature.sessionplayer.ui.modifier.clickableW
 internal fun Controls(
     modifier: Modifier = Modifier,
     uiTimerState: () -> UiTimerState,
-    onAction: (SessionPlayerAction) -> Unit,
+    onAction: (SessionPlayerAction) -> Unit
 ) {
     val state = uiTimerState()
     val isRunning = when (state) {

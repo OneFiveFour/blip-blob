@@ -1,7 +1,7 @@
 package net.onefivefour.sessiontimer.core.common.domain.model
 
-import kotlinx.datetime.Clock
 import kotlin.time.Duration.Companion.minutes
+import kotlinx.datetime.Clock
 
 /**
  * Contains 1 TaskGroup with 2 Tasks.

@@ -5,12 +5,11 @@ import androidx.compose.ui.graphics.toArgb
 import dagger.hilt.android.qualifiers.ApplicationContext
 import javax.inject.Inject
 import javax.inject.Singleton
+import kotlin.time.Duration.Companion.minutes
+import kotlin.time.Duration.Companion.seconds
 import net.onefivefour.sessiontimer.core.common.domain.model.PlayMode.SEQUENCE
 import net.onefivefour.sessiontimer.core.database.domain.DatabaseDefaultValues
 import net.onefivefour.sessiontimer.core.theme.TaskGroupColors
-import kotlin.time.Duration
-import kotlin.time.Duration.Companion.minutes
-import kotlin.time.Duration.Companion.seconds
 
 @Singleton
 internal class DatabaseDefaultValuesImpl @Inject constructor(
@@ -22,7 +21,7 @@ internal class DatabaseDefaultValuesImpl @Inject constructor(
     override fun getTaskGroupTitle() = context.getString(R.string.default_taskgroup_title)
 
     override fun getTaskGroupColors(): Pair<Long, Long> {
-        val colors =  TaskGroupColors().getAll().random()
+        val colors = TaskGroupColors().getAll().random()
         return colors.first.toArgb().toLong() to colors.second.toArgb().toLong()
     }
 

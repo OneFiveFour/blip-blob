@@ -3,7 +3,6 @@ package net.onefivefour.sessiontimer.feature.sessionplayer.ui
 import android.content.res.Configuration.UI_MODE_NIGHT_YES
 import android.graphics.BlurMaskFilter
 import android.graphics.RectF
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding

@@ -1,9 +1,9 @@
 package net.onefivefour.sessiontimer.feature.taskgroupeditor
 
 import androidx.compose.ui.graphics.Color
+import kotlin.time.Duration
 import net.onefivefour.sessiontimer.core.common.domain.model.PlayMode
 import net.onefivefour.sessiontimer.core.common.domain.model.TaskGroup
-import kotlin.time.Duration
 
 internal data class UiTaskGroup(
     val id: Long,

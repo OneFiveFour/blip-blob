@@ -18,20 +18,19 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import net.onefivefour.sessiontimer.core.theme.SessionTimerTheme
+import net.onefivefour.sessiontimer.core.ui.R as UiR
 import net.onefivefour.sessiontimer.core.ui.sqarebutton.SquareButton
 import net.onefivefour.sessiontimer.feature.sessioneditor.R
 import net.onefivefour.sessiontimer.feature.sessioneditor.model.UiTaskGroup
 import net.onefivefour.sessiontimer.feature.sessioneditor.viewmodel.SessionEditorAction
-import net.onefivefour.sessiontimer.core.ui.R as UiR
 
 @Composable
 internal fun TaskGroupPage(
     modifier: Modifier = Modifier,
     uiTaskGroup: UiTaskGroup,
     openTaskGroupEditor: (Long) -> Unit,
-    onAction: (SessionEditorAction) -> Unit,
+    onAction: (SessionEditorAction) -> Unit
 ) {
-
     val lazyListState = rememberLazyListState()
 
     val taskEditMode = LocalTaskEditMode.current
@@ -41,7 +40,6 @@ internal fun TaskGroupPage(
             .fillMaxSize()
             .padding(horizontal = 12.dp)
     ) {
-
         TaskList(
             modifier = Modifier
                 .weight(1f)
@@ -67,7 +65,6 @@ internal fun TaskGroupPage(
                 .background(uiTaskGroup.color, RoundedCornerShape(8.dp))
                 .padding(start = 12.dp, end = 8.dp, top = 8.dp, bottom = 8.dp)
         ) {
-
             Text(
                 modifier = Modifier.weight(1f),
                 text = uiTaskGroup.title,
@@ -77,13 +74,12 @@ internal fun TaskGroupPage(
 
             SquareButton(
                 iconRes = UiR.drawable.ic_edit,
-                contentDescription = stringResource(R.string.edit_task_group),
+                contentDescription = stringResource(R.string.edit_task_group)
             ) {
                 openTaskGroupEditor(uiTaskGroup.id)
             }
         }
     }
-
 }
 
 @Preview

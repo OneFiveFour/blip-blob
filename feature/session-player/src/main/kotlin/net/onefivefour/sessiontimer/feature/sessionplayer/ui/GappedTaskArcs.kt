@@ -8,22 +8,20 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import net.onefivefour.sessiontimer.core.common.domain.model.Task
+import kotlin.time.Duration.Companion.seconds
 import net.onefivefour.sessiontimer.core.theme.SessionTimerTheme
 import net.onefivefour.sessiontimer.feature.sessionplayer.model.UiState
-import net.onefivefour.sessiontimer.feature.sessionplayer.model.UiTask
 import net.onefivefour.sessiontimer.feature.sessionplayer.model.UiTimerState
 import net.onefivefour.sessiontimer.feature.sessionplayer.ui.modifier.arc
-import kotlin.time.Duration.Companion.seconds
 
 @Composable
 internal fun GappedTaskArcs(uiState: UiState.Ready, uiTimerState: () -> UiTimerState) {
-    Box(modifier = Modifier
-        .padding(44.dp)
-        .aspectRatio(1f)
+    Box(
+        modifier = Modifier
+            .padding(44.dp)
+            .aspectRatio(1f)
     ) {
         val gapAngle = 5f
         var startAngle = gapAngle / 2
@@ -65,7 +63,6 @@ internal fun GappedTaskArcs(uiState: UiState.Ready, uiTimerState: () -> UiTimerS
 private fun GappedTaskArcsFinishedPreview() {
     SessionTimerTheme {
         Surface {
-
             val timerState = UiTimerState.Finished
 
             val uiState = UiState.Ready(
@@ -78,7 +75,6 @@ private fun GappedTaskArcsFinishedPreview() {
                 uiState = uiState,
                 uiTimerState = { timerState }
             )
-
         }
     }
 }
@@ -99,7 +95,6 @@ private fun GappedTaskArcsActivePreview() {
                 uiState = uiState,
                 uiTimerState = { uiTimerStateActive }
             )
-
         }
     }
 }

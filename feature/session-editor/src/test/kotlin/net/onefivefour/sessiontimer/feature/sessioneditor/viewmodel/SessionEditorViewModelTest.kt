@@ -5,14 +5,15 @@ import com.google.common.truth.Truth.assertThat
 import io.mockk.coEvery
 import io.mockk.coVerify
 import io.mockk.mockk
+import kotlin.time.Duration.Companion.minutes
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.test.advanceUntilIdle
 import kotlinx.coroutines.test.runTest
-import net.onefivefour.sessiontimer.core.test.NOW
 import net.onefivefour.sessiontimer.core.common.domain.model.PlayMode
 import net.onefivefour.sessiontimer.core.common.domain.model.Session
 import net.onefivefour.sessiontimer.core.common.domain.model.TaskGroup
+import net.onefivefour.sessiontimer.core.test.NOW
 import net.onefivefour.sessiontimer.core.test.SavedStateHandleRule
 import net.onefivefour.sessiontimer.core.test.StandardTestDispatcherRule
 import net.onefivefour.sessiontimer.core.usecases.api.session.GetSessionUseCase
@@ -28,7 +29,6 @@ import net.onefivefour.sessiontimer.core.usecases.api.taskgroup.SetTaskGroupSort
 import net.onefivefour.sessiontimer.feature.sessioneditor.api.SessionEditorRoute
 import org.junit.Rule
 import org.junit.Test
-import kotlin.time.Duration.Companion.minutes
 
 @OptIn(ExperimentalCoroutinesApi::class)
 internal class SessionEditorViewModelTest {

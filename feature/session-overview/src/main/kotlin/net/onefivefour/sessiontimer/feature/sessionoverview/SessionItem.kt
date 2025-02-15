@@ -1,6 +1,6 @@
 package net.onefivefour.sessiontimer.feature.sessionoverview
 
-import android.content.res.Configuration.*
+import android.content.res.Configuration.UI_MODE_NIGHT_YES
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Row
@@ -21,9 +21,9 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import kotlinx.datetime.Clock
 import net.onefivefour.sessiontimer.core.theme.SessionTimerTheme
+import net.onefivefour.sessiontimer.core.ui.R as UiR
 import net.onefivefour.sessiontimer.core.ui.draghandler.DragHandler
 import net.onefivefour.sessiontimer.core.ui.sqarebutton.SquareButton
-import net.onefivefour.sessiontimer.core.ui.R as UiR
 
 @Composable
 internal fun SessionItem(
@@ -32,7 +32,6 @@ internal fun SessionItem(
     onStartSession: (Long) -> Unit,
     onEditSession: (Long) -> Unit
 ) {
-
     Row(
         modifier = modifier
             .clip(RoundedCornerShape(8.dp))

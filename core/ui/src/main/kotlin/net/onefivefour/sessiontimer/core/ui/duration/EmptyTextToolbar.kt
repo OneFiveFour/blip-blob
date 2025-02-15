@@ -14,6 +14,6 @@ object EmptyTextToolbar : TextToolbar {
         onCopyRequested: (() -> Unit)?,
         onPasteRequested: (() -> Unit)?,
         onCutRequested: (() -> Unit)?,
-        onSelectAllRequested: (() -> Unit)?,
+        onSelectAllRequested: (() -> Unit)?
     ) {}
 }

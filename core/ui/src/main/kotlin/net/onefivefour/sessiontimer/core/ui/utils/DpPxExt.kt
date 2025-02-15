@@ -9,7 +9,6 @@ import androidx.compose.ui.unit.Dp
 
 @Composable
 fun TextStyle.topToAscentDp(): Dp {
-
     val textMeasurer = rememberTextMeasurer()
 
     val measurements = remember(textMeasurer, this) {
@@ -23,4 +22,9 @@ fun TextStyle.topToAscentDp(): Dp {
     return with(LocalDensity.current) {
         result.toDp()
     }
+}
+
+@Composable
+fun Dp.toPx(): Float {
+    return with(LocalDensity.current) { this@toPx.toPx() }
 }
