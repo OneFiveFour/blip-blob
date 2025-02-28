@@ -1,9 +1,7 @@
 package net.onefivefour.sessiontimer.core.database.data
 
 import app.cash.sqldelight.driver.jdbc.sqlite.JdbcSqliteDriver
-import io.mockk.coEvery
 import io.mockk.coVerify
-import io.mockk.mockk
 import io.mockk.spyk
 import kotlinx.coroutines.test.runTest
 import net.onefivefour.sessiontimer.core.database.Database

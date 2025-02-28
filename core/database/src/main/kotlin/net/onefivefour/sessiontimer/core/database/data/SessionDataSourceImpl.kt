@@ -11,7 +11,7 @@ import net.onefivefour.sessiontimer.core.di.IoDispatcher
 
 internal class SessionDataSourceImpl @Inject constructor(
     private val queries: SessionQueries,
-    @IoDispatcher private val dispatcher: CoroutineDispatcher,
+    @IoDispatcher private val dispatcher: CoroutineDispatcher
 ) : SessionDataSource {
 
     override fun insert(title: String) {

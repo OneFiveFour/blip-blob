@@ -3,7 +3,10 @@ package net.onefivefour.sessiontimer.core.usecases.task
 import io.mockk.coEvery
 import io.mockk.coVerify
 import io.mockk.mockk
+import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.test.runTest
+import net.onefivefour.sessiontimer.core.common.domain.model.PlayMode
+import net.onefivefour.sessiontimer.core.common.domain.model.TaskGroup
 import net.onefivefour.sessiontimer.core.database.domain.TaskGroupRepository
 import net.onefivefour.sessiontimer.core.database.domain.TaskRepository
 import net.onefivefour.sessiontimer.core.database.test.FAKE_DB_DEFAULT_VALUES
@@ -13,7 +16,24 @@ internal class NewTaskUseCaseTest {
 
     private val taskRepository: TaskRepository = mockk()
 
-    private val taskGroupRepository: TaskGroupRepository = mockk()
+    private val taskGroupRepository = mockk<TaskGroupRepository>(relaxed = true).apply {
+        coEvery { getTaskGroupById(any()) } returns flowOf(
+            TaskGroup(
+                id = 1L,
+                title = FAKE_DB_DEFAULT_VALUES.getTaskTitle(),
+                color = 0xFFFFFFFF,
+                onColor = 0xFF000000,
+                playMode = PlayMode.N_TASKS_SHUFFLED,
+                tasks = emptyList(),
+                numberOfRandomTasks = 0,
+                defaultTaskDuration = FAKE_DB_DEFAULT_VALUES.getTaskDuration(),
+                sortOrder = 1,
+                sessionId = 1L
+            )
+        )
+    }
+
+    // TODO make repos un-relaxed and check for all code paths in sut.
 
     private fun sut() = NewTaskUseCaseImpl(
         taskRepository,
