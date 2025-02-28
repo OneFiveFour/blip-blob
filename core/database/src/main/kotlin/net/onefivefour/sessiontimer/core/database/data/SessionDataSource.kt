@@ -6,7 +6,7 @@ import net.onefivefour.sessiontimer.core.database.Session
 
 internal interface SessionDataSource {
 
-    suspend fun insert(title: String)
+    fun insert(title: String)
 
     fun getAll(): Flow<List<Session>>
 

@@ -49,5 +49,6 @@
 
 # Feature Requests
 - [ ]
+- [ ] Foreground Service for running sessions
 - [ ] Statistics about what task was executed when/how often/etc.
 - [ ] enable/disable tasks to avoid deleting/recreate them when temporarily not needed

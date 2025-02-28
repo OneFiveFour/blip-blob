@@ -4,6 +4,7 @@ import app.cash.sqldelight.driver.jdbc.sqlite.JdbcSqliteDriver
 import io.mockk.coEvery
 import io.mockk.coVerify
 import io.mockk.mockk
+import io.mockk.spyk
 import kotlinx.coroutines.test.runTest
 import net.onefivefour.sessiontimer.core.database.Database
 import net.onefivefour.sessiontimer.core.database.TaskQueries
@@ -17,7 +18,9 @@ internal class TaskDataSourceImplTest {
     @get:Rule
     val standardTestDispatcherRule = StandardTestDispatcherRule()
 
-    private val taskQueries: TaskQueries = mockk()
+    private val driver = JdbcSqliteDriver(JdbcSqliteDriver.IN_MEMORY)
+
+    private val taskQueries = spyk(TaskQueries(driver))
 
     private fun sut() = TaskDataSourceImpl(
         taskQueries,
@@ -25,7 +28,6 @@ internal class TaskDataSourceImplTest {
     )
 
     private fun useJvmDatabaseDriver() {
-        val driver = JdbcSqliteDriver(JdbcSqliteDriver.IN_MEMORY)
         Database.Schema.create(driver)
     }
 
@@ -38,7 +40,6 @@ internal class TaskDataSourceImplTest {
     fun `GIVEN data for a task WHEN insert is called THEN the call is delegated to taskQueries`() =
         runTest {
             // GIVEN
-            coEvery { taskQueries.new(any(), any(), any(), any(), any(), any()) } returns mockk()
             val taskGroupId = 321L
             val duration = 123L
             val taskTitle = "Test Task Title"
@@ -64,7 +65,6 @@ internal class TaskDataSourceImplTest {
     fun `GIVEN task data WHEN setTaskTitle is called THEN the call is delegated to taskQueries`() =
         runTest {
             // GIVEN
-            coEvery { taskQueries.setTaskTitle(any(), any()) } returns mockk()
             val taskId = 123L
             val title = "Test Title"
 
@@ -78,9 +78,6 @@ internal class TaskDataSourceImplTest {
     @Test
     fun `GIVEN a taskId WHEN deleteById is called THEN the call is delegated to taskQueries`() =
         runTest {
-            // GIVEN
-            coEvery { taskQueries.deleteById(any()) } returns mockk()
-
             // WHEN
             val taskId = 123L
             sut().deleteById(taskId)
@@ -92,9 +89,6 @@ internal class TaskDataSourceImplTest {
     @Test
     fun `GIVEN a list of taskIds WHEN deleteByIds is called THEN the call is delegated to taskQueries`() =
         runTest {
-            // GIVEN
-            coEvery { taskQueries.deleteByIds(any()) } returns mockk()
-
             // WHEN
             val taskIds = listOf(123L)
             sut().deleteByIds(taskIds)
@@ -106,9 +100,6 @@ internal class TaskDataSourceImplTest {
     @Test
     fun `GIVEN a taskId WHEN deleteByTaskGroup is called THEN the call is delegated to taskQueries`() =
         runTest {
-            // GIVEN
-            coEvery { taskQueries.deleteByTaskGroupId(any()) } returns mockk()
-
             // WHEN
             val taskId = 123L
             sut().deleteByTaskGroupId(taskId)

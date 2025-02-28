@@ -4,6 +4,7 @@ import app.cash.sqldelight.driver.jdbc.sqlite.JdbcSqliteDriver
 import io.mockk.coEvery
 import io.mockk.coVerify
 import io.mockk.mockk
+import io.mockk.spyk
 import kotlin.time.Duration.Companion.minutes
 import kotlinx.coroutines.test.runTest
 import net.onefivefour.sessiontimer.core.common.domain.model.PlayMode
@@ -19,7 +20,9 @@ internal class TaskGroupDataSourceImplTest {
     @get:Rule
     val standardTestDispatcherRule = StandardTestDispatcherRule()
 
-    private val taskGroupQueries: TaskGroupQueries = mockk()
+    private val driver = JdbcSqliteDriver(JdbcSqliteDriver.IN_MEMORY)
+
+    private val taskGroupQueries = spyk(TaskGroupQueries(driver))
 
     private fun sut() = TaskGroupDataSourceImpl(
         taskGroupQueries,
@@ -27,7 +30,6 @@ internal class TaskGroupDataSourceImplTest {
     )
 
     private fun useJvmDatabaseDriver() {
-        val driver = JdbcSqliteDriver(JdbcSqliteDriver.IN_MEMORY)
         Database.Schema.create(driver)
     }
 
@@ -40,19 +42,6 @@ internal class TaskGroupDataSourceImplTest {
     fun `GIVEN taskGroup data WHEN insert is called THEN the call is delegated to taskGroupQueries`() =
         runTest {
             // GIVEN
-            coEvery {
-                taskGroupQueries.new(
-                    id = any(),
-                    title = any(),
-                    color = any(),
-                    onColor = any(),
-                    playMode = any(),
-                    numberOfRandomTasks = any(),
-                    defaultTaskDuration = any(),
-                    sortOrder = any(),
-                    sessionId = any()
-                )
-            } returns mockk()
             val sessionId = 321L
             val title = "Test TaskGroup Title"
             val color = 123L
@@ -93,9 +82,6 @@ internal class TaskGroupDataSourceImplTest {
     fun `GIVEN a sessionId WHEN getById is called THEN the call is delegated to taskGroupQueries`() =
         runTest {
             // GIVEN
-            coEvery {
-                taskGroupQueries.denormalizedTaskGroupView(any()).executeAsOneOrNull()
-            } returns null
             val sessionId = 123L
 
             // WHEN
@@ -109,7 +95,6 @@ internal class TaskGroupDataSourceImplTest {
     fun `GIVEN a sessionId WHEN getBySessionId is called THEN the call is delegated to taskGroupQueries`() =
         runTest {
             // GIVEN
-            coEvery { taskGroupQueries.getBySessionId(any()).executeAsOneOrNull() } returns null
             val sessionId = 123L
 
             // WHEN
@@ -123,7 +108,6 @@ internal class TaskGroupDataSourceImplTest {
     fun `GIVEN a taskGroupId WHEN deleteById is called THEN the call is delegated to taskGroupQueries`() =
         runTest {
             // GIVEN
-            coEvery { taskGroupQueries.deleteById(any()) } returns mockk()
             val taskGroupId = 123L
 
             // WHEN
@@ -136,9 +120,6 @@ internal class TaskGroupDataSourceImplTest {
     @Test
     fun `GIVEN a sessionId WHEN deleteBySessionId is called the call is delegated to taskGroupQueries`() =
         runTest {
-            // GIVEN
-            coEvery { taskGroupQueries.deleteBySessionId(any()) } returns mockk()
-
             // WHEN
             val sessionId = 123L
             sut().deleteBySessionId(sessionId)

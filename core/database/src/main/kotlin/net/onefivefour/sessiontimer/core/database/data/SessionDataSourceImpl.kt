@@ -11,21 +11,19 @@ import net.onefivefour.sessiontimer.core.di.IoDispatcher
 
 internal class SessionDataSourceImpl @Inject constructor(
     private val queries: SessionQueries,
-    @IoDispatcher private val dispatcher: CoroutineDispatcher
+    @IoDispatcher private val dispatcher: CoroutineDispatcher,
 ) : SessionDataSource {
 
-    override suspend fun insert(title: String) {
-        withContext(dispatcher) {
-            queries.transaction {
-                val maxSortOrder = queries.findMaxSortOrder().executeAsOne().MAX ?: 0L
-                val createdAt = Clock.System.now().toEpochMilliseconds()
-                queries.new(
-                    id = null,
-                    title = title,
-                    sortOrder = maxSortOrder + 1,
-                    createdAt = createdAt
-                )
-            }
+    override fun insert(title: String) {
+        queries.transaction {
+            val maxSortOrder = queries.findMaxSortOrder().executeAsOne().MAX ?: 0L
+            val createdAt = Clock.System.now().toEpochMilliseconds()
+            queries.new(
+                id = null,
+                title = title,
+                sortOrder = maxSortOrder + 1,
+                createdAt = createdAt
+            )
         }
     }
 

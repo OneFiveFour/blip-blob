@@ -1,9 +1,19 @@
 package net.onefivefour.sessiontimer.core.database.data
 
 import app.cash.sqldelight.driver.jdbc.sqlite.JdbcSqliteDriver
+import io.mockk.Runs
 import io.mockk.coEvery
 import io.mockk.coVerify
+import io.mockk.confirmVerified
+import io.mockk.every
+import io.mockk.just
 import io.mockk.mockk
+import io.mockk.slot
+import io.mockk.spyk
+import io.mockk.verify
+import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.test.advanceUntilIdle
 import kotlinx.coroutines.test.runTest
 import net.onefivefour.sessiontimer.core.database.Database
 import net.onefivefour.sessiontimer.core.database.SessionQueries
@@ -17,7 +27,9 @@ internal class SessionDataSourceImplTest {
     @get:Rule
     val standardTestDispatcherRule = StandardTestDispatcherRule()
 
-    private val sessionQueries: SessionQueries = mockk()
+    private val driver = JdbcSqliteDriver(JdbcSqliteDriver.IN_MEMORY)
+
+    private val sessionQueries = spyk(SessionQueries(driver))
 
     private fun sut() = SessionDataSourceImpl(
         sessionQueries,
@@ -25,7 +37,6 @@ internal class SessionDataSourceImplTest {
     )
 
     private fun useJvmDatabaseDriver() {
-        val driver = JdbcSqliteDriver(JdbcSqliteDriver.IN_MEMORY)
         Database.Schema.create(driver)
     }
 
@@ -34,26 +45,25 @@ internal class SessionDataSourceImplTest {
         useJvmDatabaseDriver()
     }
 
+    @OptIn(ExperimentalCoroutinesApi::class)
     @Test
     fun `GIVEN data for new session WHEN insert is called THEN the call is delegated to sessionQueries`() =
         runTest {
             // GIVEN
-            coEvery { sessionQueries.new(any(), any(), any(), any()) } returns mockk()
             val title = "title"
 
             // WHEN
             sut().insert(title)
 
             // THEN
-            coVerify(exactly = 1) { sessionQueries.new(null, title, 1L, any()) }
+            verify(exactly = 1) { sessionQueries.transaction(any(), any()) }
+            verify(exactly = 1) { sessionQueries.findMaxSortOrder() }
+            verify(exactly = 1) { sessionQueries.new(any(), title, any(), any()) }
         }
 
     @Test
     fun `GIVEN mocked sessions WHEN getAll is called THEN the call is delegated to sessionQueries`() =
         runTest {
-            // GIVEN
-            coEvery { sessionQueries.getAll() } returns mockk()
-
             // WHEN
             sut().getAll()
 
@@ -64,10 +74,6 @@ internal class SessionDataSourceImplTest {
     @Test
     fun `GIVEN a sessionId WHEN getDenormalizedSessionView is called THEN the call is delegated to sessionQueries`() =
         runTest {
-            // GIVEN
-            coEvery {
-                sessionQueries.denormalizedSessionView(any()).executeAsOneOrNull()
-            } returns null
             val sessionId = 123L
 
             // WHEN
@@ -80,8 +86,6 @@ internal class SessionDataSourceImplTest {
     @Test
     fun `GIVEN a sessionId WHEN deleteById is called THEN the call is delegated to sessionQueries`() =
         runTest {
-            // GIVEN
-            coEvery { sessionQueries.deleteById(any()) } returns mockk()
             val sessionId = 123L
 
             // WHEN
@@ -94,8 +98,6 @@ internal class SessionDataSourceImplTest {
     @Test
     fun `GIVEN a sessionId and title WHEN setTitle is called THEN the call is delegated to sessionQueries`() =
         runTest {
-            // GIVEN
-            coEvery { sessionQueries.setTitle(any(), any()) } returns mockk()
             val sessionId = 123L
             val title = "Test Title"
 
