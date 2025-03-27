@@ -22,8 +22,8 @@ INSERT INTO taskGroup (
     sessionId
 )
 VALUES
-    (1,"TaskGroup 1", 16711680, 0, "SEQUENCE", 1, 60, 1, 1),
-    (2,"TaskGroup 2", 16711680, 0, "SEQUENCE", 1, 60, 2, 1)
+    (1,"TaskGroup 1", -13727304, -14731519, "SEQUENCE", 1, 60, 1, 1),
+    (2,"TaskGroup 2", -2228214, -14731519, "SEQUENCE", 1, 60, 2, 1)
 ;
 
 new:
