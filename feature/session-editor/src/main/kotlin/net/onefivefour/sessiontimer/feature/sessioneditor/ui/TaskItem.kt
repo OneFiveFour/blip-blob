@@ -7,6 +7,7 @@ import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyItemScope
@@ -19,6 +20,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import net.onefivefour.sessiontimer.core.theme.SessionTimerTheme
@@ -31,6 +33,7 @@ import net.onefivefour.sessiontimer.feature.sessioneditor.model.UiTask
 import sh.calvin.reorderable.ReorderableItem
 import sh.calvin.reorderable.ReorderableLazyListState
 import sh.calvin.reorderable.rememberReorderableLazyListState
+import kotlin.math.max
 
 internal val TASK_ITEM_HEIGHT = 64.dp
 
@@ -83,8 +86,11 @@ internal fun LazyItemScope.TaskItem(
                 Text(
                     modifier = Modifier
                         .weight(1f)
+                        .padding(end = 4.dp)
                         .clickable { taskEditMode.value = TaskEditMode.TaskTitle(uiTask.id) },
                     text = uiTask.title,
+                    maxLines = 1,
+                    overflow = TextOverflow.Ellipsis,
                     style = MaterialTheme.typography.titleSmall
                         .copy(color = MaterialTheme.colorScheme.onSurface)
                 )
@@ -106,7 +112,7 @@ private fun TaskItemPreview() {
             LazyColumn {
                 item {
                     TaskItem(
-                        uiTask = uiTask3,
+                        uiTask = uiTask3.copy(title = "This is a Task with a long title"),
                         reorderableData =
                         rememberReorderableLazyListState(rememberLazyListState()) { _, _ ->
                         } to rememberReorderHapticFeedback(),

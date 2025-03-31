@@ -18,8 +18,6 @@
 - [ ] 
 - [ ] activate / deactivate task groups
 - [ ] battery consumption verbessern
-- [ ] system insets auf samsung a54 checken
-- [ ] Task Composable single line mache
 - [ ] Wake Lock
 - [ ] unify naming style of preview data (fake or not fake prefix)
 - [ ] unify sql structure (names of methods setXxxYyy or only setYyy), names of params (taskId or only id), etc.
