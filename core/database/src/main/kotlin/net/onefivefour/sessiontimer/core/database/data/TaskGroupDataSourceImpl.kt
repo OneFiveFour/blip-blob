@@ -24,9 +24,9 @@ internal class TaskGroupDataSourceImpl @Inject constructor(
         numberOfRandomTasks: Long,
         defaultTaskDuration: Long,
         sessionId: Long
-    ) {
-        withContext(dispatcher) {
-            queries.transaction {
+    ) : Long {
+        return withContext(dispatcher) {
+            queries.transactionWithResult {
                 val maxSortOrder = queries.findMaxSortOrder(sessionId).executeAsOne().MAX ?: 0L
                 queries.new(
                     id = null,
@@ -39,6 +39,7 @@ internal class TaskGroupDataSourceImpl @Inject constructor(
                     sortOrder = maxSortOrder + 1,
                     sessionId = sessionId
                 )
+                queries.getLastInsertRowId().executeAsOne()
             }
         }
     }

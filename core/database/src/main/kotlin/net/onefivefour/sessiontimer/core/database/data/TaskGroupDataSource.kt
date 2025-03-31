@@ -14,7 +14,7 @@ internal interface TaskGroupDataSource {
         numberOfRandomTasks: Long,
         defaultTaskDuration: Long,
         sessionId: Long
-    )
+    ) : Long
 
     suspend fun getDenormalizedTaskGroup(taskGroupId: Long): Flow<List<DenormalizedTaskGroupView>>
 

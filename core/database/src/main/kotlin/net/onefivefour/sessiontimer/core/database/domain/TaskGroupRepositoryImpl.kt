@@ -26,8 +26,8 @@ internal class TaskGroupRepositoryImpl @Inject constructor(
         numberOfRandomTasks: Int,
         defaultTaskDuration: Duration,
         sessionId: Long
-    ) {
-        taskGroupDataSource.insert(
+    ): Long {
+        return taskGroupDataSource.insert(
             title = title,
             color = color,
             onColor = onColor,

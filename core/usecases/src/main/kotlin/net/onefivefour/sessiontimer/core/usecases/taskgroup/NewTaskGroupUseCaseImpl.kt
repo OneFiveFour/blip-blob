@@ -13,7 +13,7 @@ class NewTaskGroupUseCaseImpl @Inject constructor(
     private val defaultValues: DatabaseDefaultValues
 ) : NewTaskGroupUseCase {
 
-    override suspend fun execute(sessionId: Long) {
+    override suspend fun execute(sessionId: Long) : Long {
         val taskGroupTitle = defaultValues.getTaskGroupTitle()
         val taskGroupColors = defaultValues.getTaskGroupColors()
         val taskGroupColor = taskGroupColors.first
@@ -22,7 +22,7 @@ class NewTaskGroupUseCaseImpl @Inject constructor(
         val taskGroupNumberOfRandomTasks = defaultValues.getTaskGroupNumberOfRandomTasks()
         val taskGroupDefaultTaskDuration = defaultValues.getTaskGroupDefaultTaskDuration()
 
-        taskGroupRepository.newTaskGroup(
+        return taskGroupRepository.newTaskGroup(
             title = taskGroupTitle,
             color = taskGroupColor,
             onColor = taskGroupOnColor,
@@ -31,6 +31,5 @@ class NewTaskGroupUseCaseImpl @Inject constructor(
             defaultTaskDuration = taskGroupDefaultTaskDuration,
             sessionId = sessionId
         )
-
     }
 }

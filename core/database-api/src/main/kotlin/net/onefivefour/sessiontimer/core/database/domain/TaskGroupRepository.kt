@@ -14,7 +14,7 @@ interface TaskGroupRepository {
         numberOfRandomTasks: Int,
         defaultTaskDuration: Duration,
         sessionId: Long
-    )
+    ) : Long
 
     suspend fun getTaskGroupById(taskGroupId: Long): Flow<TaskGroup>
 

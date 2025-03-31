@@ -5,9 +5,11 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.navigation.toRoute
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.flow.MutableSharedFlow
 import javax.inject.Inject
 import kotlin.time.Duration
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.update
@@ -44,6 +46,9 @@ internal class SessionEditorViewModel @Inject constructor(
 
     private var _uiState = MutableStateFlow<UiState>(UiState.Initial)
     val uiState = _uiState.asStateFlow()
+
+    private val _onTaskGroupCreated = MutableSharedFlow<Long>()
+    val onTaskGroupCreated = _onTaskGroupCreated.asSharedFlow()
 
     init {
         viewModelScope.launch {
@@ -85,7 +90,8 @@ internal class SessionEditorViewModel @Inject constructor(
 
     private fun createTaskGroup() {
         viewModelScope.launch {
-            newTaskGroupUseCase.execute(sessionId)
+            val taskGroupId = newTaskGroupUseCase.execute(sessionId)
+            _onTaskGroupCreated.emit(taskGroupId)
         }
     }
 

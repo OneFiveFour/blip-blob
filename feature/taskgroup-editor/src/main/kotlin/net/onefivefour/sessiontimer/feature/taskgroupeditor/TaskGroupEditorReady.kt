@@ -1,6 +1,7 @@
 package net.onefivefour.sessiontimer.feature.taskgroupeditor
 
 import android.content.res.Configuration.UI_MODE_NIGHT_YES
+import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.BoxWithConstraints
 import androidx.compose.foundation.layout.Column
@@ -29,6 +30,7 @@ import androidx.compose.ui.unit.times
 import androidx.compose.ui.zIndex
 import net.onefivefour.sessiontimer.core.taskgroupeditor.R
 import net.onefivefour.sessiontimer.core.theme.SessionTimerTheme
+import net.onefivefour.sessiontimer.core.theme.TaskGroupColorProvider
 import net.onefivefour.sessiontimer.core.theme.taskGroupColors
 import net.onefivefour.sessiontimer.core.ui.R as UiR
 import net.onefivefour.sessiontimer.core.ui.duration.DurationInput
@@ -118,7 +120,7 @@ internal fun TaskGroupEditorReady(
 
             LabeledSection(labelRes = R.string.color) {
                 ColorGrid(
-                    colors = MaterialTheme.taskGroupColors.getAll(),
+                    colors = TaskGroupColorProvider(isSystemInDarkTheme()).getAll(),
                     selectedColor = uiTaskGroup.color,
                     columnsCount = columnCount,
                     gapSize = gapSizeDp,
