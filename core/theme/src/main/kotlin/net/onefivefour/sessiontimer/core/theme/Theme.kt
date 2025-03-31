@@ -1,5 +1,7 @@
 package net.onefivefour.sessiontimer.core.theme
 
+import android.content.Context
+import android.content.res.Configuration
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.text.selection.LocalTextSelectionColors
 import androidx.compose.foundation.text.selection.TextSelectionColors
@@ -45,7 +47,7 @@ fun SessionTimerTheme(darkTheme: Boolean = isSystemInDarkTheme(), content: @Comp
     }
 
     val customColors = if (darkTheme) CustomColorsDark else CustomColorsLight
-    val taskGroupColors = MaterialTheme.taskGroupColors
+    val taskGroupColors = if (darkTheme) TaskGroupColorsDark else TaskGroupColorsLight
     val textSelectionColors = TextSelectionColors(
         handleColor = if (darkTheme) darkScheme.onSurface else lightScheme.onSurface,
         backgroundColor = if (darkTheme) darkScheme.surfaceVariant else lightScheme.surfaceVariant
@@ -62,4 +64,9 @@ fun SessionTimerTheme(darkTheme: Boolean = isSystemInDarkTheme(), content: @Comp
             content = content
         )
     }
+}
+
+fun isDarkMode(context: Context): Boolean {
+    val nightModeFlags = context.resources.configuration.uiMode and Configuration.UI_MODE_NIGHT_MASK
+    return nightModeFlags == Configuration.UI_MODE_NIGHT_YES
 }

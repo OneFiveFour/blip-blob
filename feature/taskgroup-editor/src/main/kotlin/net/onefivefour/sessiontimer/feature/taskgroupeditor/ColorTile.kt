@@ -7,18 +7,28 @@ import androidx.compose.animation.core.tween
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.ExperimentalLayoutApi
+import androidx.compose.foundation.layout.FlowRow
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import net.onefivefour.sessiontimer.core.theme.LocalTaskGroupColors
 import net.onefivefour.sessiontimer.core.theme.SessionTimerTheme
+import net.onefivefour.sessiontimer.core.theme.TaskGroupColorProvider
+import net.onefivefour.sessiontimer.core.theme.isDarkMode
 import net.onefivefour.sessiontimer.core.theme.taskGroupColors
 
 @Composable
@@ -34,6 +44,7 @@ internal fun ColorTile(color: Color, isSelected: Boolean, onClick: () -> Unit) {
             green = color.green / 2,
             blue = color.blue / 2
         )
+
         else -> color
     }
 
@@ -58,32 +69,40 @@ internal fun ColorTile(color: Color, isSelected: Boolean, onClick: () -> Unit) {
     )
 }
 
+@OptIn(ExperimentalLayoutApi::class)
 @Preview
 @Preview(uiMode = UI_MODE_NIGHT_YES)
 @Composable
 private fun ColorTilePreview() {
     SessionTimerTheme {
         Surface {
-            ColorTile(
-                color = MaterialTheme.taskGroupColors.color12.first,
-                isSelected = false,
-                onClick = {}
-            )
+            FlowRow(
+                modifier = Modifier.padding(4.dp),
+                verticalArrangement = Arrangement.spacedBy(4.dp),
+                horizontalArrangement = Arrangement.spacedBy(4.dp),
+                maxItemsInEachRow = 3
+            ) {
+
+                val isDarkMode = isDarkMode(LocalContext.current)
+                val testData = TaskGroupColorProvider(isDarkMode).getAll()
+
+                testData.forEach { (color, onColor) ->
+                    Box(
+                        contentAlignment = Alignment.Center
+                    ) {
+                        ColorTile(
+                            color = color,
+                            isSelected = false,
+                            onClick = {}
+                        )
+                        Text(
+                            text = "ABC",
+                            style = MaterialTheme.typography.labelSmall.copy(color = onColor)
+                        )
+                    }
+                }
+            }
         }
     }
 }
 
-@Preview
-@Preview(uiMode = UI_MODE_NIGHT_YES)
-@Composable
-private fun ColorTileSelectedPreview() {
-    SessionTimerTheme {
-        Surface {
-            ColorTile(
-                color = MaterialTheme.taskGroupColors.color10.first,
-                isSelected = true,
-                onClick = {}
-            )
-        }
-    }
-}
