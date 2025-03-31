@@ -16,6 +16,7 @@
 
 # Open TODOs
 - [ ] 
+- [ ] implement delete task groups
 - [ ] activate / deactivate task groups
 - [ ] battery consumption verbessern
 - [ ] Wake Lock
@@ -23,7 +24,6 @@
 - [ ] unify sql structure (names of methods setXxxYyy or only setYyy), names of params (taskId or only id), etc.
 - [ ] Navigate to new TaskGroup when created
 - [ ] Select whole text when editing starts
-- [ ] No intial task, because default task duration is not set
 - [ ] Decide for uppercase "Edit session" vs. "Edit Session" in the whole app
 - [ ] create onAction accordingly onNavigate to group composable action params
 - [ ] clear separation on when taskGroup colors are handled as pair and when as singular units (Ui Domain Data)

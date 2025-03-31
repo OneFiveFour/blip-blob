@@ -10,7 +10,6 @@ import net.onefivefour.sessiontimer.core.usecases.api.taskgroup.NewTaskGroupUseC
 @ViewModelScoped
 class NewTaskGroupUseCaseImpl @Inject constructor(
     private val taskGroupRepository: TaskGroupRepository,
-    private val taskRepository: TaskRepository,
     private val defaultValues: DatabaseDefaultValues
 ) : NewTaskGroupUseCase {
 
@@ -33,14 +32,5 @@ class NewTaskGroupUseCaseImpl @Inject constructor(
             sessionId = sessionId
         )
 
-        val taskGroupId = taskGroupRepository.getLastInsertId()
-        val taskTitle = defaultValues.getTaskTitle()
-        val taskDuration = defaultValues.getTaskDuration()
-
-        taskRepository.newTask(
-            taskTitle,
-            taskDuration,
-            taskGroupId
-        )
     }
 }

@@ -5,23 +5,20 @@ import io.mockk.coVerify
 import io.mockk.mockk
 import kotlinx.coroutines.test.runTest
 import net.onefivefour.sessiontimer.core.database.domain.TaskGroupRepository
-import net.onefivefour.sessiontimer.core.database.domain.TaskRepository
 import net.onefivefour.sessiontimer.core.database.test.FAKE_DB_DEFAULT_VALUES
 import org.junit.Test
 
 internal class NewTaskGroupUseCaseTest {
 
     private val taskGroupRepository: TaskGroupRepository = mockk()
-    private val taskRepository: TaskRepository = mockk()
 
     private fun sut() = NewTaskGroupUseCaseImpl(
         taskGroupRepository,
-        taskRepository,
         FAKE_DB_DEFAULT_VALUES
     )
 
     @Test
-    fun `GIVEN a sessionId WHEN executing the UseCase THEN it creates a new task group and the first of its tasks`() =
+    fun `GIVEN a sessionId WHEN executing the UseCase THEN it creates a new task group`() =
         runTest {
             // GIVEN
             val sessionId = 1L
@@ -42,14 +39,6 @@ internal class NewTaskGroupUseCaseTest {
                 taskGroupRepository.getLastInsertId()
             } returns taskGroupId
 
-            coEvery {
-                taskRepository.newTask(
-                    title = any(),
-                    duration = any(),
-                    taskGroupId = any()
-                )
-            } returns Unit
-
             // WHEN
             sut().execute(sessionId)
 
@@ -64,11 +53,6 @@ internal class NewTaskGroupUseCaseTest {
                     numberOfRandomTasks = FAKE_DB_DEFAULT_VALUES.getTaskGroupNumberOfRandomTasks(),
                     defaultTaskDuration = FAKE_DB_DEFAULT_VALUES.getTaskGroupDefaultTaskDuration(),
                     sessionId = sessionId
-                )
-                taskRepository.newTask(
-                    title = FAKE_DB_DEFAULT_VALUES.getTaskTitle(),
-                    duration = FAKE_DB_DEFAULT_VALUES.getTaskDuration(),
-                    taskGroupId = taskGroupId
                 )
             }
         }
