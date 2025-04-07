@@ -18,7 +18,6 @@
 
 ## Next Steps
 - [ ] battery consumption verbessern
-- [ ] Select whole text when editing starts
 - [ ] create tutorial sessions that are sorted always on top
 - [ ] implement delete task groups
 - [ ] Wake Lock

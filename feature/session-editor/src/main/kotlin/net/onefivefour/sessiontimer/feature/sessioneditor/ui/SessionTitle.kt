@@ -10,8 +10,10 @@ import androidx.compose.foundation.text.input.rememberTextFieldState
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.focus.FocusRequester
+import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.graphics.SolidColor
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -20,6 +22,7 @@ import net.onefivefour.sessiontimer.core.theme.SessionTimerTheme
 import net.onefivefour.sessiontimer.core.ui.R
 import net.onefivefour.sessiontimer.core.ui.label.LabeledSection
 import net.onefivefour.sessiontimer.core.ui.modifier.clearFocusOnKeyboardDismiss
+import net.onefivefour.sessiontimer.core.ui.modifier.selectAllOnFocus
 import net.onefivefour.sessiontimer.core.ui.utils.topToAscentDp
 import net.onefivefour.sessiontimer.feature.sessioneditor.model.UiSession
 import net.onefivefour.sessiontimer.feature.sessioneditor.viewmodel.SessionEditorAction
@@ -34,24 +37,21 @@ internal fun SessionTitle(uiSession: UiSession, onAction: (SessionEditorAction) 
 
         val offset = textStyle.topToAscentDp() - 4.dp
 
-        val textFieldState = rememberTextFieldState()
+        val textFieldState = rememberTextFieldState(
+            initialText = uiSession.title
+        )
 
-        LaunchedEffect(uiSession.title) {
-            textFieldState.edit {
-                replace(
-                    start = 0,
-                    end = length,
-                    text = uiSession.title
-                )
-            }
-        }
+        val focusRequester = remember { FocusRequester() }
 
         BasicTextField(
             modifier = Modifier
                 .zIndex(1f)
                 .offset(y = offset)
                 .fillMaxWidth()
-                .clearFocusOnKeyboardDismiss(),
+                .focusRequester(focusRequester)
+                .selectAllOnFocus(textFieldState)
+                .clearFocusOnKeyboardDismiss()
+            ,
             inputTransformation = {
                 val newTitle = asCharSequence().toString()
                 onAction(SessionEditorAction.SetSessionTitle(newTitle))

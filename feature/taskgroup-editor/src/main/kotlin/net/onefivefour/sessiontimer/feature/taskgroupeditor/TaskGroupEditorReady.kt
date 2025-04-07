@@ -13,6 +13,7 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.text.BasicTextField
 import androidx.compose.foundation.text.input.TextFieldLineLimits
 import androidx.compose.foundation.text.input.rememberTextFieldState
+import androidx.compose.foundation.text.input.selectAll
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
@@ -21,6 +22,9 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.focus.FocusRequester
+import androidx.compose.ui.focus.focusRequester
+import androidx.compose.ui.focus.onFocusChanged
 import androidx.compose.ui.graphics.SolidColor
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.res.stringResource
@@ -36,6 +40,7 @@ import net.onefivefour.sessiontimer.core.ui.R as UiR
 import net.onefivefour.sessiontimer.core.ui.duration.DurationInput
 import net.onefivefour.sessiontimer.core.ui.label.LabeledSection
 import net.onefivefour.sessiontimer.core.ui.modifier.clearFocusOnKeyboardDismiss
+import net.onefivefour.sessiontimer.core.ui.modifier.selectAllOnFocus
 import net.onefivefour.sessiontimer.core.ui.screentitle.ScreenTitle
 import net.onefivefour.sessiontimer.core.ui.sqarebutton.SquareButton
 import net.onefivefour.sessiontimer.core.ui.utils.topToAscentDp
@@ -87,25 +92,24 @@ internal fun TaskGroupEditorReady(
         ) {
             LabeledSection(labelRes = R.string.title) {
                 val textStyle = MaterialTheme.typography.titleMedium
+
                 val offset = textStyle.topToAscentDp() - 4.dp
 
-                val textFieldState = rememberTextFieldState()
+                val textFieldState = rememberTextFieldState(
+                    initialText = uiTaskGroup.title
+                )
 
-                LaunchedEffect(uiTaskGroup.title) {
-                    textFieldState.edit {
-                        replace(
-                            start = 0,
-                            end = length,
-                            text = uiTaskGroup.title
-                        )
-                    }
-                }
+                val focusRequester = remember { FocusRequester() }
+
                 BasicTextField(
                     modifier = Modifier
                         .zIndex(1f)
                         .offset(y = offset)
                         .fillMaxWidth()
-                        .clearFocusOnKeyboardDismiss(),
+                        .focusRequester(focusRequester)
+                        .selectAllOnFocus(textFieldState)
+                        .clearFocusOnKeyboardDismiss()
+                    ,
                     inputTransformation = {
                         val newTitle = asCharSequence().toString()
                         onAction(TaskGroupEditorAction.SetTaskGroupTitle(newTitle))

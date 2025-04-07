@@ -29,6 +29,7 @@ import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import net.onefivefour.sessiontimer.core.theme.SessionTimerTheme
+import net.onefivefour.sessiontimer.core.ui.modifier.selectAllOnFocus
 import net.onefivefour.sessiontimer.feature.sessioneditor.model.UiTask
 import net.onefivefour.sessiontimer.feature.sessioneditor.viewmodel.SessionEditorAction
 
@@ -68,6 +69,7 @@ internal fun TaskItemEditMode(
             modifier = Modifier
                 .weight(1f)
                 .focusRequester(focusRequester)
+                .selectAllOnFocus(textFieldState)
                 .graphicsLayer(
                     scaleX = scale,
                     scaleY = scale,
